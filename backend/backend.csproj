@@ -14,16 +14,8 @@
   <ItemGroup>
     <ProtobufDef Include="$(ProjectDir)../common/protobuf/*.proto"/>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="$(ProjectDir)Generated/*.cs" /> <!-- Are included during Codegen -->
-  </ItemGroup>
   <Target Name="Codegen" BeforeTargets="BeforeBuild;BeforeRebuild">
     <MakeDir Directories="$(ProjectDir)Generated"/>
     <Exec Command="protoc --csharp_out=Generated --proto_path=$(ProjectDir)../common/protobuf %(ProtobufDef.Identity)"/>
-    <ItemGroup>
-      <Compile Include="$(ProjectDir)Generated/*.cs"/>
-      <!-- FIXME: Clean doesn't clean up generated files -->
-      <FileWrites Include="$(ProjectDir)Generated/*.cs"/>
-    </ItemGroup>
   </Target>
 </Project>
