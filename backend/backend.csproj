@@ -11,10 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.10"/>
     <PackageReference Include="Google.Protobuf" Version="3.14.0"/>
   </ItemGroup>
-  <ItemGroup>
-    <ProtobufDef Include="$(ProjectDir)../common/protobuf/*.proto"/>
-  </ItemGroup>
-  <Target Name="Codegen" BeforeTargets="BeforeBuild;BeforeRebuild">
+  <Target Name="Codegen">
     <MakeDir Directories="$(ProjectDir)Generated"/>
     <Exec Command="protoc --csharp_out=Generated --proto_path=$(ProjectDir)../common/protobuf %(ProtobufDef.Identity)"/>
   </Target>
