@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using backend.Communication;
+
 namespace backend
 {
     public class Startup
@@ -26,6 +28,9 @@ namespace backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSingleton<ExhibitConnectionManager>();
+            services.AddHostedService<ExhibitConnectionManager>(provider => provider.GetService<ExhibitConnectionManager>());            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +43,7 @@ namespace backend
 
             app.UseHttpsRedirection();
 
+            app.UsePathBase("/api");
             app.UseRouting();
 
             app.UseAuthentication();
