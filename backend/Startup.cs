@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NSwag.AspNetCore.Middlewares;
 
 using backend.Communication;
 
@@ -30,7 +31,9 @@ namespace backend
             services.AddControllers();
 
             services.AddSingleton<ExhibitConnectionManager>();
-            services.AddHostedService<ExhibitConnectionManager>(provider => provider.GetService<ExhibitConnectionManager>());            
+            services.AddHostedService<ExhibitConnectionManager>(provider => provider.GetService<ExhibitConnectionManager>());
+
+            services.AddOpenApiDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

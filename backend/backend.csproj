@@ -10,9 +10,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10"/>
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.10"/>
     <PackageReference Include="Google.Protobuf" Version="3.14.0"/>
+    <PackageReference Include="NSwag.AspNetCore" Version="13.10.7"/>
+    <PackageReference Include="NSwag.MSBuild" Version="13.10.7"/>
   </ItemGroup>
   <Target Name="Codegen">
     <MakeDir Directories="$(ProjectDir)Generated"/>
     <Exec Command="protoc --csharp_out=Generated --proto_path=$(ProjectDir)../common/protobuf %(ProtobufDef.Identity)"/>
+  </Target>
+  <Target Name="NSwag">
+    <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Core31) aspnetcore2openapi /AspNetCoreEnvironment:Development /project:. /output:Api/openapi.json"/>
   </Target>
 </Project>

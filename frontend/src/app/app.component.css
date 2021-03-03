@@ -1,0 +1,18 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.fill-toolbar {
+    flex: 1 1 auto;
+}
+
+.fill-content {
+    flex: 1 1 auto;
+    flex-direction: column;
+}
