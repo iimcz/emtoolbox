@@ -13,6 +13,8 @@ namespace backend.Communication
 {
     public class ExhibitConnectionManager : IHostedService
     {
+        public event Action OnIncomingConnectionEvent;
+
         // TODO: Configurable port
         private const int ServerListenPort = 3917;
         private ILogger<ExhibitConnectionManager> logger;
@@ -77,6 +79,8 @@ namespace backend.Communication
                         logger.LogWarning("Received pending connection which is already connected ID: {}", excon.ConnectionId);
                     }
                     pendingConnections.Add(excon.ConnectionId, excon);
+                    
+                    OnIncomingConnectionEvent?.Invoke();
 
                     logger.LogInformation("Received connection ID: {}", excon.ConnectionId);
                 }
@@ -122,9 +126,10 @@ namespace backend.Communication
 
         private void cleanupConnections()
         {
-            Func<ExhibitConnection, bool> selector = (conn) => conn.IsConnected;
-            establishedConnections.RemoveByValue(selector);
-            pendingConnections.RemoveByValue(selector);
+            // TODO: implement this properly - this code doesn't work correctly (breaks the dictionary)
+            // Func<ExhibitConnection, bool> selector = (conn) => conn.IsConnected;
+            // establishedConnections.RemoveByValue(selector);
+            // pendingConnections.RemoveByValue(selector);
         }
     }
 }

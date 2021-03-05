@@ -13,8 +13,6 @@ namespace backend.Communication
     public class ExhibitConnection : IDisposable
     {
         TcpClient connectionClient;
-        CodedInputStream inputStream;
-        CodedOutputStream outputStream;
 
 
         public string ConnectionId { get; set; }
@@ -25,9 +23,6 @@ namespace backend.Communication
         {
             connectionClient = client;
 
-            inputStream = new CodedInputStream(client.GetStream(), true);
-            outputStream = new CodedOutputStream(client.GetStream(), true);
-
             RecvConnectionRequest();
         }
 
@@ -35,7 +30,7 @@ namespace backend.Communication
         {
             try
             {
-                var request = ConnectionRequest.Parser.ParseFrom(inputStream);
+                var request = ConnectionRequest.Parser.ParseDelimitedFrom(connectionClient.GetStream());
                 ConnectionId = request.ConnectionId;
             }
             catch (InvalidProtocolBufferException)
@@ -46,23 +41,11 @@ namespace backend.Communication
             var ack = new ConnectionAcknowledgement();
             ack.Verified = false;
 
-            ack.WriteTo(outputStream);
+            ack.WriteDelimitedTo(connectionClient.GetStream());
         }
 
         public void Dispose()
         {
-            try
-            {
-                inputStream.Dispose();
-            }
-            catch (IOException) { }
-
-            try
-            {
-                outputStream.Dispose();
-            }
-            catch (IOException) { }
-
             connectionClient.Dispose();
         }
 
@@ -74,7 +57,7 @@ namespace backend.Communication
 
             try
             {
-                ack.WriteTo(outputStream);
+                ack.WriteDelimitedTo(connectionClient.GetStream());
             }
             catch (Exception)
             {

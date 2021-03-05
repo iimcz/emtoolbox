@@ -14,7 +14,9 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ConnectionClient {
     private http: HttpClient;
     private baseUrl: string;
@@ -129,7 +131,7 @@ export class ConnectionClient {
         return _observableOf<string[]>(<any>null);
     }
 
-    acceptPending(id: string | null | undefined): Observable<FileResponse> {
+    acceptPending(id?: string | null | undefined): Observable<FileResponse> {
         let url_ = this.baseUrl + "/Connection/accept?";
         if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";

@@ -8,7 +8,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { ClientListComponent } from './client-list/client-list.component';
+import { HttpClientModule } from '@angular/common/http';
+import { API_BASE_URL } from './services/api.generated.service';
+import { environment } from 'src/environments/environment';
+import { WS_BASE_URL } from './services/event-socket.service';
 
 @NgModule({
   declarations: [
@@ -19,12 +26,19 @@ import { ClientListComponent } from './client-list/client-list.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
+    MatCardModule,
+    MatListModule,
+    MatGridListModule,
   ],
-  providers: [],
+  providers: [
+    { provide: API_BASE_URL, useValue: environment.apiBaseUrl },
+    { provide: WS_BASE_URL, useValue: environment.wsBaseUrl },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

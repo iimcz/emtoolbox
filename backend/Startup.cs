@@ -43,11 +43,19 @@ namespace backend
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                // Allow http in dev
+                app.UseHttpsRedirection();
+            }
 
-            app.UseHttpsRedirection();
 
             app.UsePathBase("/api");
             app.UseRouting();
+            app.UseWebSockets();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin());
 
             app.UseAuthentication();
             app.UseAuthorization();
