@@ -24,27 +24,38 @@ namespace Naki3D.Common.Protocol {
     static ResourceReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5yZXNvdXJjZS5wcm90bxIWbmFraTNkLmNvbW1vbi5wcm90b2NvbCK6AQoI",
+            "Cg5yZXNvdXJjZS5wcm90bxIWbmFraTNkLmNvbW1vbi5wcm90b2NvbCKuAgoI",
             "UmVzb3VyY2USMAoFc2NlbmUYASABKAsyHy5uYWtpM2QuY29tbW9uLnByb3Rv",
-            "Y29sLlNjZW5lM0RIABIuCgVpbWFnZRgCIAEoCzIdLm5ha2kzZC5jb21tb24u",
-            "cHJvdG9jb2wuSW1hZ2VIABIuCgV2aWRlbxgDIAEoCzIdLm5ha2kzZC5jb21t",
-            "b24ucHJvdG9jb2wuVmlkZW9IABIUCgxpbnRlcmFjdGlvbnMYBCABKAlCBgoE",
-            "ZGF0YSIXCgdTY2VuZTNEEgwKBGdsdGYYASABKAwijAEKBUltYWdlEg4KBmlt",
-            "YWdlcxgBIAMoDBJGChJpbWFnZV9wcmVzZW50YXRpb24YAiABKA4yKi5uYWtp",
-            "M2QuY29tbW9uLnByb3RvY29sLkltYWdlLlByZXNlbnRhdGlvbiIrCgxQcmVz",
-            "ZW50YXRpb24SDQoJU0xJREVTSE9XEAASDAoIUEFOX1pPT00QASLLAQoFVmlk",
-            "ZW8SDAoEZGF0YRgBIAEoDBI9Cgt2aWRlb19jb2RlYxgCIAEoDjIoLm5ha2kz",
-            "ZC5jb21tb24ucHJvdG9jb2wuVmlkZW8uVmlkZW9Db2RlYxI9CgthdWRpb19j",
-            "b2RlYxgDIAEoDjIoLm5ha2kzZC5jb21tb24ucHJvdG9jb2wuVmlkZW8uQXVk",
-            "aW9Db2RlYyIeCgpWaWRlb0NvZGVjEgcKA1ZQORAAEgcKA0FWMRABIhYKCkF1",
-            "ZGlvQ29kZWMSCAoET1BVUxAAYgZwcm90bzM="));
+            "Y29sLlNjZW5lM0RIABIwCgVtb2RlbBgCIAEoCzIfLm5ha2kzZC5jb21tb24u",
+            "cHJvdG9jb2wuTW9kZWwzREgAEi4KBWltYWdlGAMgASgLMh0ubmFraTNkLmNv",
+            "bW1vbi5wcm90b2NvbC5JbWFnZUgAEi4KBXZpZGVvGAQgASgLMh0ubmFraTNk",
+            "LmNvbW1vbi5wcm90b2NvbC5WaWRlb0gAEhUKDWlucHV0X21hcHBpbmcYBSAB",
+            "KAkSPwoSYWRkaXRpb25hbF9zY3JpcHRzGAYgAygLMiMubmFraTNkLmNvbW1v",
+            "bi5wcm90b2NvbC5FdmVudFNjcmlwdEIGCgRkYXRhIhcKB01vZGVsM0QSDAoE",
+            "Z2x0ZhgBIAEoDCKMAQoFSW1hZ2USDgoGaW1hZ2VzGAEgAygMEkYKEmltYWdl",
+            "X3ByZXNlbnRhdGlvbhgCIAEoDjIqLm5ha2kzZC5jb21tb24ucHJvdG9jb2wu",
+            "SW1hZ2UuUHJlc2VudGF0aW9uIisKDFByZXNlbnRhdGlvbhINCglTTElERVNI",
+            "T1cQABIMCghQQU5fWk9PTRABIssBCgVWaWRlbxIMCgRkYXRhGAEgASgMEj0K",
+            "C3ZpZGVvX2NvZGVjGAIgASgOMigubmFraTNkLmNvbW1vbi5wcm90b2NvbC5W",
+            "aWRlby5WaWRlb0NvZGVjEj0KC2F1ZGlvX2NvZGVjGAMgASgOMigubmFraTNk",
+            "LmNvbW1vbi5wcm90b2NvbC5WaWRlby5BdWRpb0NvZGVjIh4KClZpZGVvQ29k",
+            "ZWMSBwoDVlA5EAASBwoDQVYxEAEiFgoKQXVkaW9Db2RlYxIICgRPUFVTEAAi",
+            "WAoHU2NlbmUzRBI4CgtlbnZpcm9ubWVudBgBIAEoCzIjLm5ha2kzZC5jb21t",
+            "b24ucHJvdG9jb2wuRW52aXJvbm1lbnQSEwoLZGF0YXBhY2tfaWQYAiABKAki",
+            "ewoLRW52aXJvbm1lbnQSPwoLZW5naW5lX3R5cGUYASABKA4yKi5uYWtpM2Qu",
+            "Y29tbW9uLnByb3RvY29sLkVudmlyb25tZW50LkVuZ2luZRIWCg5lbmdpbmVf",
+            "dmVyc2lvbhgCIAEoCSITCgZFbmdpbmUSCQoFVU5JVFkQACInCgtFdmVudFNj",
+            "cmlwdBIMCgRuYW1lGAEgASgJEgoKAmlkGAMgASgJYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Resource), global::Naki3D.Common.Protocol.Resource.Parser, new[]{ "Scene", "Image", "Video", "Interactions" }, new[]{ "Data" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Scene3D), global::Naki3D.Common.Protocol.Scene3D.Parser, new[]{ "Gltf" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Resource), global::Naki3D.Common.Protocol.Resource.Parser, new[]{ "Scene", "Model", "Image", "Video", "InputMapping", "AdditionalScripts" }, new[]{ "Data" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Model3D), global::Naki3D.Common.Protocol.Model3D.Parser, new[]{ "Gltf" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Image), global::Naki3D.Common.Protocol.Image.Parser, new[]{ "Images", "ImagePresentation" }, null, new[]{ typeof(global::Naki3D.Common.Protocol.Image.Types.Presentation) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Video), global::Naki3D.Common.Protocol.Video.Parser, new[]{ "Data", "VideoCodec", "AudioCodec" }, null, new[]{ typeof(global::Naki3D.Common.Protocol.Video.Types.VideoCodec), typeof(global::Naki3D.Common.Protocol.Video.Types.AudioCodec) }, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Video), global::Naki3D.Common.Protocol.Video.Parser, new[]{ "Data", "VideoCodec", "AudioCodec" }, null, new[]{ typeof(global::Naki3D.Common.Protocol.Video.Types.VideoCodec), typeof(global::Naki3D.Common.Protocol.Video.Types.AudioCodec) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Scene3D), global::Naki3D.Common.Protocol.Scene3D.Parser, new[]{ "Environment", "DatapackId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Environment), global::Naki3D.Common.Protocol.Environment.Parser, new[]{ "EngineType", "EngineVersion" }, null, new[]{ typeof(global::Naki3D.Common.Protocol.Environment.Types.Engine) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.EventScript), global::Naki3D.Common.Protocol.EventScript.Parser, new[]{ "Name", "Id" }, null, null, null, null)
           }));
     }
     #endregion
@@ -76,10 +87,14 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Resource(Resource other) : this() {
-      interactions_ = other.interactions_;
+      inputMapping_ = other.inputMapping_;
+      additionalScripts_ = other.additionalScripts_.Clone();
       switch (other.DataCase) {
         case DataOneofCase.Scene:
           Scene = other.Scene.Clone();
+          break;
+        case DataOneofCase.Model:
+          Model = other.Model.Clone();
           break;
         case DataOneofCase.Image:
           Image = other.Image.Clone();
@@ -108,8 +123,19 @@ namespace Naki3D.Common.Protocol {
       }
     }
 
+    /// <summary>Field number for the "model" field.</summary>
+    public const int ModelFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.Model3D Model {
+      get { return dataCase_ == DataOneofCase.Model ? (global::Naki3D.Common.Protocol.Model3D) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.Model;
+      }
+    }
+
     /// <summary>Field number for the "image" field.</summary>
-    public const int ImageFieldNumber = 2;
+    public const int ImageFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Naki3D.Common.Protocol.Image Image {
       get { return dataCase_ == DataOneofCase.Image ? (global::Naki3D.Common.Protocol.Image) data_ : null; }
@@ -120,7 +146,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     /// <summary>Field number for the "video" field.</summary>
-    public const int VideoFieldNumber = 3;
+    public const int VideoFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Naki3D.Common.Protocol.Video Video {
       get { return dataCase_ == DataOneofCase.Video ? (global::Naki3D.Common.Protocol.Video) data_ : null; }
@@ -130,18 +156,28 @@ namespace Naki3D.Common.Protocol {
       }
     }
 
-    /// <summary>Field number for the "interactions" field.</summary>
-    public const int InteractionsFieldNumber = 4;
-    private string interactions_ = "";
+    /// <summary>Field number for the "input_mapping" field.</summary>
+    public const int InputMappingFieldNumber = 5;
+    private string inputMapping_ = "";
     /// <summary>
     /// Probably JSON, we've agreed there's no point in binding it on protobuf layer
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Interactions {
-      get { return interactions_; }
+    public string InputMapping {
+      get { return inputMapping_; }
       set {
-        interactions_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        inputMapping_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
+    }
+
+    /// <summary>Field number for the "additional_scripts" field.</summary>
+    public const int AdditionalScriptsFieldNumber = 6;
+    private static readonly pb::FieldCodec<global::Naki3D.Common.Protocol.EventScript> _repeated_additionalScripts_codec
+        = pb::FieldCodec.ForMessage(50, global::Naki3D.Common.Protocol.EventScript.Parser);
+    private readonly pbc::RepeatedField<global::Naki3D.Common.Protocol.EventScript> additionalScripts_ = new pbc::RepeatedField<global::Naki3D.Common.Protocol.EventScript>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Naki3D.Common.Protocol.EventScript> AdditionalScripts {
+      get { return additionalScripts_; }
     }
 
     private object data_;
@@ -149,8 +185,9 @@ namespace Naki3D.Common.Protocol {
     public enum DataOneofCase {
       None = 0,
       Scene = 1,
-      Image = 2,
-      Video = 3,
+      Model = 2,
+      Image = 3,
+      Video = 4,
     }
     private DataOneofCase dataCase_ = DataOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -178,9 +215,11 @@ namespace Naki3D.Common.Protocol {
         return true;
       }
       if (!object.Equals(Scene, other.Scene)) return false;
+      if (!object.Equals(Model, other.Model)) return false;
       if (!object.Equals(Image, other.Image)) return false;
       if (!object.Equals(Video, other.Video)) return false;
-      if (Interactions != other.Interactions) return false;
+      if (InputMapping != other.InputMapping) return false;
+      if(!additionalScripts_.Equals(other.additionalScripts_)) return false;
       if (DataCase != other.DataCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -189,9 +228,11 @@ namespace Naki3D.Common.Protocol {
     public override int GetHashCode() {
       int hash = 1;
       if (dataCase_ == DataOneofCase.Scene) hash ^= Scene.GetHashCode();
+      if (dataCase_ == DataOneofCase.Model) hash ^= Model.GetHashCode();
       if (dataCase_ == DataOneofCase.Image) hash ^= Image.GetHashCode();
       if (dataCase_ == DataOneofCase.Video) hash ^= Video.GetHashCode();
-      if (Interactions.Length != 0) hash ^= Interactions.GetHashCode();
+      if (InputMapping.Length != 0) hash ^= InputMapping.GetHashCode();
+      hash ^= additionalScripts_.GetHashCode();
       hash ^= (int) dataCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -210,18 +251,23 @@ namespace Naki3D.Common.Protocol {
         output.WriteRawTag(10);
         output.WriteMessage(Scene);
       }
-      if (dataCase_ == DataOneofCase.Image) {
+      if (dataCase_ == DataOneofCase.Model) {
         output.WriteRawTag(18);
+        output.WriteMessage(Model);
+      }
+      if (dataCase_ == DataOneofCase.Image) {
+        output.WriteRawTag(26);
         output.WriteMessage(Image);
       }
       if (dataCase_ == DataOneofCase.Video) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(Video);
       }
-      if (Interactions.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Interactions);
+      if (InputMapping.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(InputMapping);
       }
+      additionalScripts_.WriteTo(output, _repeated_additionalScripts_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -233,15 +279,19 @@ namespace Naki3D.Common.Protocol {
       if (dataCase_ == DataOneofCase.Scene) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Scene);
       }
+      if (dataCase_ == DataOneofCase.Model) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Model);
+      }
       if (dataCase_ == DataOneofCase.Image) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Image);
       }
       if (dataCase_ == DataOneofCase.Video) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Video);
       }
-      if (Interactions.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Interactions);
+      if (InputMapping.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(InputMapping);
       }
+      size += additionalScripts_.CalculateSize(_repeated_additionalScripts_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -253,15 +303,22 @@ namespace Naki3D.Common.Protocol {
       if (other == null) {
         return;
       }
-      if (other.Interactions.Length != 0) {
-        Interactions = other.Interactions;
+      if (other.InputMapping.Length != 0) {
+        InputMapping = other.InputMapping;
       }
+      additionalScripts_.Add(other.additionalScripts_);
       switch (other.DataCase) {
         case DataOneofCase.Scene:
           if (Scene == null) {
             Scene = new global::Naki3D.Common.Protocol.Scene3D();
           }
           Scene.MergeFrom(other.Scene);
+          break;
+        case DataOneofCase.Model:
+          if (Model == null) {
+            Model = new global::Naki3D.Common.Protocol.Model3D();
+          }
+          Model.MergeFrom(other.Model);
           break;
         case DataOneofCase.Image:
           if (Image == null) {
@@ -298,6 +355,15 @@ namespace Naki3D.Common.Protocol {
             break;
           }
           case 18: {
+            global::Naki3D.Common.Protocol.Model3D subBuilder = new global::Naki3D.Common.Protocol.Model3D();
+            if (dataCase_ == DataOneofCase.Model) {
+              subBuilder.MergeFrom(Model);
+            }
+            input.ReadMessage(subBuilder);
+            Model = subBuilder;
+            break;
+          }
+          case 26: {
             global::Naki3D.Common.Protocol.Image subBuilder = new global::Naki3D.Common.Protocol.Image();
             if (dataCase_ == DataOneofCase.Image) {
               subBuilder.MergeFrom(Image);
@@ -306,7 +372,7 @@ namespace Naki3D.Common.Protocol {
             Image = subBuilder;
             break;
           }
-          case 26: {
+          case 34: {
             global::Naki3D.Common.Protocol.Video subBuilder = new global::Naki3D.Common.Protocol.Video();
             if (dataCase_ == DataOneofCase.Video) {
               subBuilder.MergeFrom(Video);
@@ -315,8 +381,12 @@ namespace Naki3D.Common.Protocol {
             Video = subBuilder;
             break;
           }
-          case 34: {
-            Interactions = input.ReadString();
+          case 42: {
+            InputMapping = input.ReadString();
+            break;
+          }
+          case 50: {
+            additionalScripts_.AddEntriesFrom(input, _repeated_additionalScripts_codec);
             break;
           }
         }
@@ -325,11 +395,11 @@ namespace Naki3D.Common.Protocol {
 
   }
 
-  public sealed partial class Scene3D : pb::IMessage<Scene3D> {
-    private static readonly pb::MessageParser<Scene3D> _parser = new pb::MessageParser<Scene3D>(() => new Scene3D());
+  public sealed partial class Model3D : pb::IMessage<Model3D> {
+    private static readonly pb::MessageParser<Model3D> _parser = new pb::MessageParser<Model3D>(() => new Model3D());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Scene3D> Parser { get { return _parser; } }
+    public static pb::MessageParser<Model3D> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -342,21 +412,21 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Scene3D() {
+    public Model3D() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Scene3D(Scene3D other) : this() {
+    public Model3D(Model3D other) : this() {
       gltf_ = other.gltf_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Scene3D Clone() {
-      return new Scene3D(this);
+    public Model3D Clone() {
+      return new Model3D(this);
     }
 
     /// <summary>Field number for the "gltf" field.</summary>
@@ -375,11 +445,11 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as Scene3D);
+      return Equals(other as Model3D);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Scene3D other) {
+    public bool Equals(Model3D other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -429,7 +499,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Scene3D other) {
+    public void MergeFrom(Model3D other) {
       if (other == null) {
         return;
       }
@@ -819,6 +889,510 @@ namespace Naki3D.Common.Protocol {
 
     }
     #endregion
+
+  }
+
+  public sealed partial class Scene3D : pb::IMessage<Scene3D> {
+    private static readonly pb::MessageParser<Scene3D> _parser = new pb::MessageParser<Scene3D>(() => new Scene3D());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Scene3D> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Naki3D.Common.Protocol.ResourceReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Scene3D() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Scene3D(Scene3D other) : this() {
+      environment_ = other.environment_ != null ? other.environment_.Clone() : null;
+      datapackId_ = other.datapackId_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Scene3D Clone() {
+      return new Scene3D(this);
+    }
+
+    /// <summary>Field number for the "environment" field.</summary>
+    public const int EnvironmentFieldNumber = 1;
+    private global::Naki3D.Common.Protocol.Environment environment_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.Environment Environment {
+      get { return environment_; }
+      set {
+        environment_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "datapack_id" field.</summary>
+    public const int DatapackIdFieldNumber = 2;
+    private string datapackId_ = "";
+    /// <summary>
+    /// alternatively
+    ///bytes datapack_payload = 2;
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DatapackId {
+      get { return datapackId_; }
+      set {
+        datapackId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Scene3D);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Scene3D other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Environment, other.Environment)) return false;
+      if (DatapackId != other.DatapackId) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (environment_ != null) hash ^= Environment.GetHashCode();
+      if (DatapackId.Length != 0) hash ^= DatapackId.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (environment_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Environment);
+      }
+      if (DatapackId.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(DatapackId);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (environment_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Environment);
+      }
+      if (DatapackId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DatapackId);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Scene3D other) {
+      if (other == null) {
+        return;
+      }
+      if (other.environment_ != null) {
+        if (environment_ == null) {
+          Environment = new global::Naki3D.Common.Protocol.Environment();
+        }
+        Environment.MergeFrom(other.Environment);
+      }
+      if (other.DatapackId.Length != 0) {
+        DatapackId = other.DatapackId;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (environment_ == null) {
+              Environment = new global::Naki3D.Common.Protocol.Environment();
+            }
+            input.ReadMessage(Environment);
+            break;
+          }
+          case 18: {
+            DatapackId = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Environment : pb::IMessage<Environment> {
+    private static readonly pb::MessageParser<Environment> _parser = new pb::MessageParser<Environment>(() => new Environment());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Environment> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Naki3D.Common.Protocol.ResourceReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Environment() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Environment(Environment other) : this() {
+      engineType_ = other.engineType_;
+      engineVersion_ = other.engineVersion_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Environment Clone() {
+      return new Environment(this);
+    }
+
+    /// <summary>Field number for the "engine_type" field.</summary>
+    public const int EngineTypeFieldNumber = 1;
+    private global::Naki3D.Common.Protocol.Environment.Types.Engine engineType_ = global::Naki3D.Common.Protocol.Environment.Types.Engine.Unity;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.Environment.Types.Engine EngineType {
+      get { return engineType_; }
+      set {
+        engineType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "engine_version" field.</summary>
+    public const int EngineVersionFieldNumber = 2;
+    private string engineVersion_ = "";
+    /// <summary>
+    /// Following could be added later to allow windows support.
+    /// We'd have to solve rebooting, running other content on win as well, etc.
+    ///enum OS {
+    ///  LINUX = 0;
+    ///  WINDOWS = 1;
+    ///}
+    ///OS target_os = 3;
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string EngineVersion {
+      get { return engineVersion_; }
+      set {
+        engineVersion_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Environment);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Environment other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (EngineType != other.EngineType) return false;
+      if (EngineVersion != other.EngineVersion) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (EngineType != global::Naki3D.Common.Protocol.Environment.Types.Engine.Unity) hash ^= EngineType.GetHashCode();
+      if (EngineVersion.Length != 0) hash ^= EngineVersion.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (EngineType != global::Naki3D.Common.Protocol.Environment.Types.Engine.Unity) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) EngineType);
+      }
+      if (EngineVersion.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(EngineVersion);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (EngineType != global::Naki3D.Common.Protocol.Environment.Types.Engine.Unity) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EngineType);
+      }
+      if (EngineVersion.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(EngineVersion);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Environment other) {
+      if (other == null) {
+        return;
+      }
+      if (other.EngineType != global::Naki3D.Common.Protocol.Environment.Types.Engine.Unity) {
+        EngineType = other.EngineType;
+      }
+      if (other.EngineVersion.Length != 0) {
+        EngineVersion = other.EngineVersion;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            EngineType = (global::Naki3D.Common.Protocol.Environment.Types.Engine) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            EngineVersion = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the Environment message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static partial class Types {
+      public enum Engine {
+        /// <summary>
+        /// The only initially supported option.
+        /// </summary>
+        [pbr::OriginalName("UNITY")] Unity = 0,
+      }
+
+    }
+    #endregion
+
+  }
+
+  public sealed partial class EventScript : pb::IMessage<EventScript> {
+    private static readonly pb::MessageParser<EventScript> _parser = new pb::MessageParser<EventScript>(() => new EventScript());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<EventScript> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Naki3D.Common.Protocol.ResourceReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public EventScript() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public EventScript(EventScript other) : this() {
+      name_ = other.name_;
+      id_ = other.id_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public EventScript Clone() {
+      return new EventScript(this);
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 3;
+    private string id_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Id {
+      get { return id_; }
+      set {
+        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as EventScript);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(EventScript other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Name != other.Name) return false;
+      if (Id != other.Id) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Id.Length != 0) hash ^= Id.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Name.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      if (Id.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Id);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Id.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(EventScript other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.Id.Length != 0) {
+        Id = other.Id;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 26: {
+            Id = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
 
   }
 
