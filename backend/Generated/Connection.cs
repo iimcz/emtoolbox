@@ -33,17 +33,17 @@ namespace Naki3D.Common.Protocol {
             "b3ISMAoEdHlwZRgBIAEoDjIiLm5ha2kzZC5jb21tb24ucHJvdG9jb2wuRGV2",
             "aWNlVHlwZRI+Cg5wZXJmb3JtYW5jZUNhcBgCIAEoDjImLm5ha2kzZC5jb21t",
             "b24ucHJvdG9jb2wuUGVyZm9ybWFuY2VDYXASOAoMbG9jYWxTZW5zb3JzGAMg",
-            "AygOMiIubmFraTNkLmNvbW1vbi5wcm90b2NvbC5TZW5zb3JUeXBlIkMKDkVu",
-            "Y3J5cHRpb25JbmZvEhkKEWRldmljZUNlcnRpZmljYXRlGAEgASgMEhYKDm1h",
-            "bmFnZW1lbnRLZXlzGAIgAygMKmAKDlBlcmZvcm1hbmNlQ2FwEhgKFFBFUkZP",
-            "Uk1BTkNFX0NBUF9TTE9XEAASGgoWUEVSRk9STUFOQ0VfQ0FQX01FRElVTRAB",
-            "EhgKFFBFUkZPUk1BTkNFX0NBUF9GQVNUEAIqmgEKClNlbnNvclR5cGUSFwoT",
-            "U0VOU09SX1RZUEVfR0VTVFVSRRAAEhUKEVNFTlNPUl9UWVBFX0lNQUdFEAES",
-            "FQoRU0VOU09SX1RZUEVfREVQVEgQAhIVChFTRU5TT1JfVFlQRV9MSUdIVBAD",
-            "EhoKFlNFTlNPUl9UWVBFX01JQ1JPUEhPTkUQBBISCg5TRU5TT1JfVFlQRV9J",
-            "UhAFKk8KCkRldmljZVR5cGUSFwoTREVWSUNFX1RZUEVfVU5LTk9XThAAEhMK",
-            "D0RFVklDRV9UWVBFX0lQVxABEhMKD0RFVklDRV9UWVBFX1BHRRACYgZwcm90",
-            "bzM="));
+            "AygOMiIubmFraTNkLmNvbW1vbi5wcm90b2NvbC5TZW5zb3JUeXBlIh0KBFBp",
+            "bmcSFQoNY29ubmVjdGlvbl9pZBgBIAEoCSJDCg5FbmNyeXB0aW9uSW5mbxIZ",
+            "ChFkZXZpY2VDZXJ0aWZpY2F0ZRgBIAEoDBIWCg5tYW5hZ2VtZW50S2V5cxgC",
+            "IAMoDCpgCg5QZXJmb3JtYW5jZUNhcBIYChRQRVJGT1JNQU5DRV9DQVBfU0xP",
+            "VxAAEhoKFlBFUkZPUk1BTkNFX0NBUF9NRURJVU0QARIYChRQRVJGT1JNQU5D",
+            "RV9DQVBfRkFTVBACKpoBCgpTZW5zb3JUeXBlEhcKE1NFTlNPUl9UWVBFX0dF",
+            "U1RVUkUQABIVChFTRU5TT1JfVFlQRV9JTUFHRRABEhUKEVNFTlNPUl9UWVBF",
+            "X0RFUFRIEAISFQoRU0VOU09SX1RZUEVfTElHSFQQAxIaChZTRU5TT1JfVFlQ",
+            "RV9NSUNST1BIT05FEAQSEgoOU0VOU09SX1RZUEVfSVIQBSpPCgpEZXZpY2VU",
+            "eXBlEhcKE0RFVklDRV9UWVBFX1VOS05PV04QABITCg9ERVZJQ0VfVFlQRV9J",
+            "UFcQARITCg9ERVZJQ0VfVFlQRV9QR0UQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Naki3D.Common.Protocol.PerformanceCap), typeof(global::Naki3D.Common.Protocol.SensorType), typeof(global::Naki3D.Common.Protocol.DeviceType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -51,6 +51,7 @@ namespace Naki3D.Common.Protocol {
             new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.ConnectionRequest), global::Naki3D.Common.Protocol.ConnectionRequest.Parser, new[]{ "ConnectionId", "PublicKey" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.ConnectionAcknowledgement), global::Naki3D.Common.Protocol.ConnectionAcknowledgement.Parser, new[]{ "ConnectionId", "Verified" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.DeviceDescriptor), global::Naki3D.Common.Protocol.DeviceDescriptor.Parser, new[]{ "Type", "PerformanceCap", "LocalSensors" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Ping), global::Naki3D.Common.Protocol.Ping.Parser, new[]{ "ConnectionId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.EncryptionInfo), global::Naki3D.Common.Protocol.EncryptionInfo.Parser, new[]{ "DeviceCertificate", "ManagementKeys" }, null, null, null, null)
           }));
     }
@@ -312,7 +313,7 @@ namespace Naki3D.Common.Protocol {
   }
 
   /// <summary>
-  /// Device -> Server
+  /// (1) Device -> Server
   /// </summary>
   public sealed partial class ConnectionRequest : pb::IMessage<ConnectionRequest> {
     private static readonly pb::MessageParser<ConnectionRequest> _parser = new pb::MessageParser<ConnectionRequest>(() => new ConnectionRequest());
@@ -478,7 +479,7 @@ namespace Naki3D.Common.Protocol {
   }
 
   /// <summary>
-  /// Server -> Device
+  /// (2) Server -> Device
   /// </summary>
   public sealed partial class ConnectionAcknowledgement : pb::IMessage<ConnectionAcknowledgement> {
     private static readonly pb::MessageParser<ConnectionAcknowledgement> _parser = new pb::MessageParser<ConnectionAcknowledgement>(() => new ConnectionAcknowledgement());
@@ -644,7 +645,6 @@ namespace Naki3D.Common.Protocol {
   }
 
   /// <summary>
-  /// Device -> Server
   /// Information for the server to filter out what content
   /// the device is capable of (interactively) displaying.
   /// </summary>
@@ -831,7 +831,138 @@ namespace Naki3D.Common.Protocol {
   }
 
   /// <summary>
-  /// Server -> Device
+  /// Basically an empty ping message, just to maintain connection.
+  /// </summary>
+  public sealed partial class Ping : pb::IMessage<Ping> {
+    private static readonly pb::MessageParser<Ping> _parser = new pb::MessageParser<Ping>(() => new Ping());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Ping> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Naki3D.Common.Protocol.ConnectionReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Ping() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Ping(Ping other) : this() {
+      connectionId_ = other.connectionId_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Ping Clone() {
+      return new Ping(this);
+    }
+
+    /// <summary>Field number for the "connection_id" field.</summary>
+    public const int ConnectionIdFieldNumber = 1;
+    private string connectionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ConnectionId {
+      get { return connectionId_; }
+      set {
+        connectionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Ping);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Ping other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (ConnectionId != other.ConnectionId) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ConnectionId.Length != 0) hash ^= ConnectionId.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ConnectionId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(ConnectionId);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ConnectionId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ConnectionId);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Ping other) {
+      if (other == null) {
+        return;
+      }
+      if (other.ConnectionId.Length != 0) {
+        ConnectionId = other.ConnectionId;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            ConnectionId = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
   /// For setting up p2p encryption in case of 
   /// </summary>
   public sealed partial class EncryptionInfo : pb::IMessage<EncryptionInfo> {
@@ -842,7 +973,7 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.ConnectionReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Naki3D.Common.Protocol.ConnectionReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

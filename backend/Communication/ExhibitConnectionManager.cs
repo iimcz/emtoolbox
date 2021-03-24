@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using backend.Utils;
+using System.Collections.Concurrent;
 
 namespace backend.Communication
 {
@@ -22,15 +23,17 @@ namespace backend.Communication
         private TcpListener incomingListener;
         private IAsyncResult incomingAsyncAccept;
 
-        private Dictionary<string, ExhibitConnection> pendingConnections;
-        private Dictionary<string, ExhibitConnection> establishedConnections;
+        private ConcurrentDictionary<string, ExhibitConnection> pendingConnections;
+        private ConcurrentDictionary<string, ExhibitConnection> establishedConnections;
+
+        private ExhibitConnection _dummy;
 
         public ExhibitConnectionManager(ILogger<ExhibitConnectionManager> logger)
         {
             this.logger = logger;
 
-            pendingConnections = new Dictionary<string, ExhibitConnection>();
-            establishedConnections = new Dictionary<string, ExhibitConnection>();
+            pendingConnections = new ConcurrentDictionary<string, ExhibitConnection>();
+            establishedConnections = new ConcurrentDictionary<string, ExhibitConnection>();
         }
 
         public List<string> GetPendingConnections()
@@ -52,8 +55,8 @@ namespace backend.Communication
             {
                 // TODO: thread safety
                 conn.AcceptConnection();
-                establishedConnections.Add(connId, conn);
-                pendingConnections.Remove(connId);
+                establishedConnections.TryAdd(connId, conn);
+                pendingConnections.TryRemove(connId, out _dummy);
             }
         }
 
@@ -67,18 +70,20 @@ namespace backend.Communication
 
                 logger.LogInformation("Processing new incoming connection from {}", client.Client.RemoteEndPoint);
                 var excon = new ExhibitConnection(client);
+                excon.ReceiveConnectionRequest();
+
                 if (excon.IsConnected)
                 {
                     if (pendingConnections.ContainsKey(excon.ConnectionId))
                     {
                         logger.LogWarning("Received pending connection with duplicate ID ({}). Removing the old one.", excon.ConnectionId);
-                        pendingConnections.Remove(excon.ConnectionId);
+                        pendingConnections.TryRemove(excon.ConnectionId, out _dummy);
                     }
                     if (establishedConnections.ContainsKey(excon.ConnectionId))
                     {
                         logger.LogWarning("Received pending connection which is already connected ID: {}", excon.ConnectionId);
                     }
-                    pendingConnections.Add(excon.ConnectionId, excon);
+                    pendingConnections.TryAdd(excon.ConnectionId, excon);
                     
                     OnIncomingConnectionEvent?.Invoke();
 
