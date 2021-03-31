@@ -150,5 +150,34 @@ namespace backend.Communication
 
             accepted = true;
         }
+
+        public void SendEncryptionInfo()
+        {
+            ServerMessage message = new ServerMessage();
+            message.EncryptionInfo = new EncryptionInfo();
+
+            // TODO: actual certificate
+            message.EncryptionInfo.DeviceCertificate = ByteString.CopyFromUtf8("");
+        }
+
+        // TODO: proper signature
+        public void LoadPackage(bool isPreview, Resource data)
+        {
+            ServerMessage message = new ServerMessage();
+            message.LoadPackage = new LoadPackage();
+            message.LoadPackage.IsPreview = isPreview;
+            message.LoadPackage.Data = data;
+
+            message.WriteJsonTo(connectionStream);
+        }
+
+        public void ClearPackage(bool purge)
+        {
+            ServerMessage message = new ServerMessage();
+            message.ClearPackage = new ClearPackage();
+            message.ClearPackage.PurgeData = purge;
+
+            message.WriteJsonTo(connectionStream);
+        }
     }
 }

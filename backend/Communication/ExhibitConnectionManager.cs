@@ -70,6 +70,7 @@ namespace backend.Communication
 
                 logger.LogInformation("Processing new incoming connection from {}", client.Client.RemoteEndPoint);
                 var excon = new ExhibitConnection(client);
+                subscribeToEvents(excon);
                 excon.ReceiveConnectionRequest();
 
                 if (excon.IsConnected)
@@ -96,6 +97,23 @@ namespace backend.Communication
 
                 incomingListener.BeginAcceptTcpClient(IncomingConnectionCallback, null);
             }
+        }
+
+        private void subscribeToEvents(ExhibitConnection excon)
+        {
+            excon.DescriptorChanged += (object obj, EventArgs e) => {
+                ExhibitConnection sender = (ExhibitConnection) obj;
+                sender.SendEncryptionInfo();
+            };
+
+            excon.ExhibitTimedOut += (object obj, EventArgs e) => {
+                ExhibitConnection sender = (ExhibitConnection) obj;
+                ExhibitConnection _dummy;
+                establishedConnections.TryRemove(sender.ConnectionId, out _dummy);
+                pendingConnections.TryRemove(sender.ConnectionId, out _dummy);
+
+                logger.LogWarning("Exhibit (ID: {0}) timed out.", sender.ConnectionId);
+            };
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
