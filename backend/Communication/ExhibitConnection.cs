@@ -5,10 +5,11 @@ using System.Timers;
 
 using System;
 using Google.Protobuf;
-using Microsoft.Extensions.Logging;
 using System.IO;
 
 using Naki3D.Common.Protocol;
+using System.Text;
+using backend.Extensions;
 
 namespace backend.Communication
 {
@@ -18,24 +19,31 @@ namespace backend.Communication
 
         TcpClient connectionClient;
         Stream connectionStream;
+        JsonObjectStringReader jsonReader;
         Timer timeoutTimer;
         Task receiveLoopTask;
         bool accepted = false;
 
-        public string ConnectionId { get; set; }
+        DeviceDescriptor descriptor = null;
+
+        public string ConnectionId { get; private set; }
+        public string PublicKey { get; private set; }
+
 
         public bool IsConnected { get { return connectionClient.Connected; } }
 
         // Events
         public event EventHandler ExhibitTimedOut;
+        public event EventHandler DescriptorChanged;
 
         public ExhibitConnection(TcpClient client)
         {
             connectionClient = client;
             connectionStream = client.GetStream();
+            jsonReader = new JsonObjectStringReader(connectionStream);
             timeoutTimer = new Timer(TIMEOUT_INTERVAL);
             timeoutTimer.Elapsed += (object sender, ElapsedEventArgs e) => {
-                ExhibitTimedOut?.Invoke(this, null);
+                ExhibitTimedOut?.Invoke(this, new EventArgs());
                 Dispose();
             };
         }
@@ -52,23 +60,33 @@ namespace backend.Communication
                 DeviceMessage message = null;
                 try 
                 {
-                    message = DeviceMessage.Parser.ParseDelimitedFrom(connectionStream);
+                    message = DeviceMessage.Parser.ParseJson(jsonReader.NextJsonObject());
                 }
                 catch (InvalidProtocolBufferException)
                 {
-                    // TODO: log
+                    Console.WriteLine("InvalidProtobuf");
+                    // TODO: proper loging
+                    // Failed either due to message having invalid format
+                    // If the stream is still open, it will eventually time out.
+                    return;
+                }
+                catch (InvalidDataException)
+                {
+                    Console.WriteLine("InvalidData");
+                    // TODO: proper loging
                     // Failed either due to the stream closing or because of another error.
                     // If the stream is still open, it will eventually time out.
                     return;
                 }
-
+                
                 switch (message.MessageCase)
                 {
                     case DeviceMessage.MessageOneofCase.DeviceDescriptor:
                         ResetTimeout();
                         if (!accepted)
                             continue; // Ignore if coming from an unaccepted client
-                        // TODO: save/use descriptor
+                        descriptor = message.DeviceDescriptor;
+                        DescriptorChanged?.Invoke(this, new EventArgs());
                         break;
                     case DeviceMessage.MessageOneofCase.Ping:
                         ResetTimeout();
@@ -81,18 +99,26 @@ namespace backend.Communication
         {
             try
             {
-                var request = ConnectionRequest.Parser.ParseDelimitedFrom(connectionStream);
+                var request = ConnectionRequest.Parser.ParseJson(jsonReader.NextJsonObject());
                 ConnectionId = request.ConnectionId;
+                PublicKey = request.PublicKey.ToStringUtf8();
             }
             catch (InvalidProtocolBufferException)
             {
+                // TODO: logging
                 Dispose();
-                throw;
+                return;
+            }
+            catch (InvalidDataException)
+            {
+                // TODO: logging
+                Dispose();
+                return;
             }
 
             var ack = new ConnectionAcknowledgement();
             ack.Verified = false;
-            ack.WriteDelimitedTo(connectionStream);
+            ack.WriteJsonTo(connectionStream);
 
             timeoutTimer.Start();
 
@@ -102,7 +128,7 @@ namespace backend.Communication
         public void Dispose()
         {
             connectionClient.Dispose();
-            if (!receiveLoopTask.IsCompleted)
+            if (receiveLoopTask != null && !receiveLoopTask.IsCompleted)
                 receiveLoopTask.RunSynchronously();
         }
 
@@ -114,7 +140,7 @@ namespace backend.Communication
 
             try
             {
-                ack.WriteDelimitedTo(connectionClient.GetStream());
+                ack.WriteJsonTo(connectionStream);
             }
             catch (Exception)
             {
