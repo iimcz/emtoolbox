@@ -50,7 +50,11 @@ namespace Naki3D.Common.Protocol {
   /// Server -> Device
   /// Message wrapper to allow identifying which message was sent using protobuf.
   /// </summary>
-  public sealed partial class ServerMessage : pb::IMessage<ServerMessage> {
+  public sealed partial class ServerMessage : pb::IMessage<ServerMessage>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
     private static readonly pb::MessageParser<ServerMessage> _parser = new pb::MessageParser<ServerMessage>(() => new ServerMessage());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -208,6 +212,9 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
       if (ConnectionId.Length != 0) {
         output.WriteRawTag(10);
         output.WriteString(ConnectionId);
@@ -227,7 +234,33 @@ namespace Naki3D.Common.Protocol {
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
+    #endif
     }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (ConnectionId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(ConnectionId);
+      }
+      if (messageCase_ == MessageOneofCase.EncryptionInfo) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(EncryptionInfo);
+      }
+      if (messageCase_ == MessageOneofCase.LoadPackage) {
+        output.WriteRawTag(138, 1);
+        output.WriteMessage(LoadPackage);
+      }
+      if (messageCase_ == MessageOneofCase.ClearPackage) {
+        output.WriteRawTag(146, 1);
+        output.WriteMessage(ClearPackage);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -284,6 +317,9 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -323,7 +359,53 @@ namespace Naki3D.Common.Protocol {
           }
         }
       }
+    #endif
     }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            ConnectionId = input.ReadString();
+            break;
+          }
+          case 130: {
+            global::Naki3D.Common.Protocol.EncryptionInfo subBuilder = new global::Naki3D.Common.Protocol.EncryptionInfo();
+            if (messageCase_ == MessageOneofCase.EncryptionInfo) {
+              subBuilder.MergeFrom(EncryptionInfo);
+            }
+            input.ReadMessage(subBuilder);
+            EncryptionInfo = subBuilder;
+            break;
+          }
+          case 138: {
+            global::Naki3D.Common.Protocol.LoadPackage subBuilder = new global::Naki3D.Common.Protocol.LoadPackage();
+            if (messageCase_ == MessageOneofCase.LoadPackage) {
+              subBuilder.MergeFrom(LoadPackage);
+            }
+            input.ReadMessage(subBuilder);
+            LoadPackage = subBuilder;
+            break;
+          }
+          case 146: {
+            global::Naki3D.Common.Protocol.ClearPackage subBuilder = new global::Naki3D.Common.Protocol.ClearPackage();
+            if (messageCase_ == MessageOneofCase.ClearPackage) {
+              subBuilder.MergeFrom(ClearPackage);
+            }
+            input.ReadMessage(subBuilder);
+            ClearPackage = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+    #endif
 
   }
 
@@ -331,7 +413,11 @@ namespace Naki3D.Common.Protocol {
   /// Device -> Server
   /// Message wrapper, same as above.
   /// </summary>
-  public sealed partial class DeviceMessage : pb::IMessage<DeviceMessage> {
+  public sealed partial class DeviceMessage : pb::IMessage<DeviceMessage>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
     private static readonly pb::MessageParser<DeviceMessage> _parser = new pb::MessageParser<DeviceMessage>(() => new DeviceMessage());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -469,6 +555,9 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
       if (ConnectionId.Length != 0) {
         output.WriteRawTag(10);
         output.WriteString(ConnectionId);
@@ -484,7 +573,29 @@ namespace Naki3D.Common.Protocol {
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
+    #endif
     }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (ConnectionId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(ConnectionId);
+      }
+      if (messageCase_ == MessageOneofCase.DeviceDescriptor) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(DeviceDescriptor);
+      }
+      if (messageCase_ == MessageOneofCase.Ping) {
+        output.WriteRawTag(138, 1);
+        output.WriteMessage(Ping);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
@@ -532,6 +643,9 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -562,7 +676,44 @@ namespace Naki3D.Common.Protocol {
           }
         }
       }
+    #endif
     }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            ConnectionId = input.ReadString();
+            break;
+          }
+          case 130: {
+            global::Naki3D.Common.Protocol.DeviceDescriptor subBuilder = new global::Naki3D.Common.Protocol.DeviceDescriptor();
+            if (messageCase_ == MessageOneofCase.DeviceDescriptor) {
+              subBuilder.MergeFrom(DeviceDescriptor);
+            }
+            input.ReadMessage(subBuilder);
+            DeviceDescriptor = subBuilder;
+            break;
+          }
+          case 138: {
+            global::Naki3D.Common.Protocol.Ping subBuilder = new global::Naki3D.Common.Protocol.Ping();
+            if (messageCase_ == MessageOneofCase.Ping) {
+              subBuilder.MergeFrom(Ping);
+            }
+            input.ReadMessage(subBuilder);
+            Ping = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+    #endif
 
   }
 
