@@ -97,6 +97,13 @@ namespace backend.Communication
 
         public void ReceiveConnectionRequest()
         {
+            var verInfo = PerformVersionExchange();
+            if (!IsVersionCompatible(verInfo))
+            {
+                Dispose();
+                return;
+            }
+
             try
             {
                 var request = ConnectionRequest.Parser.ParseJson(jsonReader.NextJsonObject());
@@ -123,6 +130,29 @@ namespace backend.Communication
             timeoutTimer.Start();
 
             receiveLoopTask = Task.Run(MessageReceiveLoop);
+        }
+
+        private bool IsVersionCompatible(object verInfo)
+        {
+            if (verInfo == null)
+                return false;
+            return true;
+        }
+
+        private object PerformVersionExchange()
+        {
+            var clientInfo = VersionInfo.Parser.ParseJson(jsonReader.NextJsonObject());
+
+            // TODO: make these build-time constants
+            var serverInfo = new VersionInfo();
+            serverInfo.Major = 0;
+            serverInfo.Minor = 0;
+            serverInfo.Patch = 0;
+            serverInfo.Build = "";
+
+            serverInfo.WriteJsonTo(connectionStream);
+
+            return clientInfo;
         }
 
         public void Dispose()
