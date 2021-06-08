@@ -25,21 +25,40 @@ namespace Naki3D.Common.Protocol {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg53cmFwcGVycy5wcm90bxIWbmFraTNkLmNvbW1vbi5wcm90b2NvbBoQY29u",
-            "bmVjdGlvbi5wcm90bxoOY29tbWFuZHMucHJvdG8i8AEKDVNlcnZlck1lc3Nh",
-            "Z2USFQoNY29ubmVjdGlvbl9pZBgBIAEoCRJBCg9lbmNyeXB0aW9uX2luZm8Y",
-            "ECABKAsyJi5uYWtpM2QuY29tbW9uLnByb3RvY29sLkVuY3J5cHRpb25JbmZv",
-            "SAASOwoMbG9hZF9wYWNrYWdlGBEgASgLMiMubmFraTNkLmNvbW1vbi5wcm90",
-            "b2NvbC5Mb2FkUGFja2FnZUgAEj0KDWNsZWFyX3BhY2thZ2UYEiABKAsyJC5u",
-            "YWtpM2QuY29tbW9uLnByb3RvY29sLkNsZWFyUGFja2FnZUgAQgkKB21lc3Nh",
-            "Z2UipgEKDURldmljZU1lc3NhZ2USFQoNY29ubmVjdGlvbl9pZBgBIAEoCRJF",
-            "ChFkZXZpY2VfZGVzY3JpcHRvchgQIAEoCzIoLm5ha2kzZC5jb21tb24ucHJv",
-            "dG9jb2wuRGV2aWNlRGVzY3JpcHRvckgAEiwKBHBpbmcYESABKAsyHC5uYWtp",
-            "M2QuY29tbW9uLnByb3RvY29sLlBpbmdIAEIJCgdtZXNzYWdlYgZwcm90bzM="));
+            "bmVjdGlvbi5wcm90bxoOY29tbWFuZHMucHJvdG8aDHNlbnNvci5wcm90bxoM",
+            "Y2FtZXJhLnByb3RvGg5rZXlib2FyZC5wcm90bxoLbW91c2UucHJvdG8i8AEK",
+            "DVNlcnZlck1lc3NhZ2USFQoNY29ubmVjdGlvbl9pZBgBIAEoCRJBCg9lbmNy",
+            "eXB0aW9uX2luZm8YECABKAsyJi5uYWtpM2QuY29tbW9uLnByb3RvY29sLkVu",
+            "Y3J5cHRpb25JbmZvSAASOwoMbG9hZF9wYWNrYWdlGBEgASgLMiMubmFraTNk",
+            "LmNvbW1vbi5wcm90b2NvbC5Mb2FkUGFja2FnZUgAEj0KDWNsZWFyX3BhY2th",
+            "Z2UYEiABKAsyJC5uYWtpM2QuY29tbW9uLnByb3RvY29sLkNsZWFyUGFja2Fn",
+            "ZUgAQgkKB21lc3NhZ2UipgEKDURldmljZU1lc3NhZ2USFQoNY29ubmVjdGlv",
+            "bl9pZBgBIAEoCRJFChFkZXZpY2VfZGVzY3JpcHRvchgQIAEoCzIoLm5ha2kz",
+            "ZC5jb21tb24ucHJvdG9jb2wuRGV2aWNlRGVzY3JpcHRvckgAEiwKBHBpbmcY",
+            "ESABKAsyHC5uYWtpM2QuY29tbW9uLnByb3RvY29sLlBpbmdIAEIJCgdtZXNz",
+            "YWdlIogECg1TZW5zb3JNZXNzYWdlEhEKCXNlbnNvcl9pZBgBIAEoCRIRCgl0",
+            "aW1lc3RhbXAYAiABKAQSNgoHZ2VzdHVyZRgQIAEoCzIjLm5ha2kzZC5jb21t",
+            "b24ucHJvdG9jb2wuR2VzdHVyZURhdGFIABJBCg1oYW5kX21vdmVtZW50GBEg",
+            "ASgLMigubmFraTNkLmNvbW1vbi5wcm90b2NvbC5IYW5kTW92ZW1lbnREYXRh",
+            "SAASSAoRYmVzdF91c2VyX2NoYW5nZWQYEiABKAsyKy5uYWtpM2QuY29tbW9u",
+            "LnByb3RvY29sLkJlc3RVc2VyQ2hhbmdlZERhdGFIABJFCg9rZXlib2FyZF91",
+            "cGRhdGUYEyABKAsyKi5uYWtpM2QuY29tbW9uLnByb3RvY29sLktleWJvYXJk",
+            "VXBkYXRlRGF0YUgAEjsKCm1vdXNlX21vdmUYFCABKAsyJS5uYWtpM2QuY29t",
+            "bW9uLnByb3RvY29sLk1vdXNlTW92ZURhdGFIABI/Cgxtb3VzZV9idXR0b24Y",
+            "FSABKAsyJy5uYWtpM2QuY29tbW9uLnByb3RvY29sLk1vdXNlQnV0dG9uRGF0",
+            "YUgAEj8KDG1vdXNlX3Njcm9sbBgWIAEoCzInLm5ha2kzZC5jb21tb24ucHJv",
+            "dG9jb2wuTW91c2VTY3JvbGxEYXRhSABCBgoEZGF0YSKwAQoUU2Vuc29yQ29u",
+            "dHJvbE1lc3NhZ2USEAoIaG9zdG5hbWUYASABKAkSQAoLc2Vuc29yX2xpc3QY",
+            "ECABKAsyKS5uYWtpM2QuY29tbW9uLnByb3RvY29sLlNlbnNvckxpc3RSZXF1",
+            "ZXN0SAASOQoLY2VjX21lc3NhZ2UYESABKAsyIi5uYWtpM2QuY29tbW9uLnBy",
+            "b3RvY29sLkNFQ01lc3NhZ2VIAEIJCgdtZXNzYWdlYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Naki3D.Common.Protocol.ConnectionReflection.Descriptor, global::Naki3D.Common.Protocol.CommandsReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Naki3D.Common.Protocol.ConnectionReflection.Descriptor, global::Naki3D.Common.Protocol.CommandsReflection.Descriptor, global::Naki3D.Common.Protocol.SensorReflection.Descriptor, global::Naki3D.Common.Protocol.CameraReflection.Descriptor, global::Naki3D.Common.Protocol.KeyboardReflection.Descriptor, global::Naki3D.Common.Protocol.MouseReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.ServerMessage), global::Naki3D.Common.Protocol.ServerMessage.Parser, new[]{ "ConnectionId", "EncryptionInfo", "LoadPackage", "ClearPackage" }, new[]{ "Message" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.DeviceMessage), global::Naki3D.Common.Protocol.DeviceMessage.Parser, new[]{ "ConnectionId", "DeviceDescriptor", "Ping" }, new[]{ "Message" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.DeviceMessage), global::Naki3D.Common.Protocol.DeviceMessage.Parser, new[]{ "ConnectionId", "DeviceDescriptor", "Ping" }, new[]{ "Message" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.SensorMessage), global::Naki3D.Common.Protocol.SensorMessage.Parser, new[]{ "SensorId", "Timestamp", "Gesture", "HandMovement", "BestUserChanged", "KeyboardUpdate", "MouseMove", "MouseButton", "MouseScroll" }, new[]{ "Data" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.SensorControlMessage), global::Naki3D.Common.Protocol.SensorControlMessage.Parser, new[]{ "Hostname", "SensorList", "CecMessage" }, new[]{ "Message" }, null, null, null)
           }));
     }
     #endregion
@@ -708,6 +727,918 @@ namespace Naki3D.Common.Protocol {
             }
             input.ReadMessage(subBuilder);
             Ping = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  /// <summary>
+  /// RasPi -> Device
+  /// Message wrapper, same as above.
+  /// </summary>
+  public sealed partial class SensorMessage : pb::IMessage<SensorMessage>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SensorMessage> _parser = new pb::MessageParser<SensorMessage>(() => new SensorMessage());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SensorMessage> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Naki3D.Common.Protocol.WrappersReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SensorMessage() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SensorMessage(SensorMessage other) : this() {
+      sensorId_ = other.sensorId_;
+      timestamp_ = other.timestamp_;
+      switch (other.DataCase) {
+        case DataOneofCase.Gesture:
+          Gesture = other.Gesture.Clone();
+          break;
+        case DataOneofCase.HandMovement:
+          HandMovement = other.HandMovement.Clone();
+          break;
+        case DataOneofCase.BestUserChanged:
+          BestUserChanged = other.BestUserChanged.Clone();
+          break;
+        case DataOneofCase.KeyboardUpdate:
+          KeyboardUpdate = other.KeyboardUpdate.Clone();
+          break;
+        case DataOneofCase.MouseMove:
+          MouseMove = other.MouseMove.Clone();
+          break;
+        case DataOneofCase.MouseButton:
+          MouseButton = other.MouseButton.Clone();
+          break;
+        case DataOneofCase.MouseScroll:
+          MouseScroll = other.MouseScroll.Clone();
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SensorMessage Clone() {
+      return new SensorMessage(this);
+    }
+
+    /// <summary>Field number for the "sensor_id" field.</summary>
+    public const int SensorIdFieldNumber = 1;
+    private string sensorId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SensorId {
+      get { return sensorId_; }
+      set {
+        sensorId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 2;
+    private ulong timestamp_;
+    /// <summary>
+    /// Microseconds since startup (Camera timing is in microseconds, may as well keep it)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "gesture" field.</summary>
+    public const int GestureFieldNumber = 16;
+    /// <summary>
+    /// Keeping some space for extra info
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.GestureData Gesture {
+      get { return dataCase_ == DataOneofCase.Gesture ? (global::Naki3D.Common.Protocol.GestureData) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.Gesture;
+      }
+    }
+
+    /// <summary>Field number for the "hand_movement" field.</summary>
+    public const int HandMovementFieldNumber = 17;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.HandMovementData HandMovement {
+      get { return dataCase_ == DataOneofCase.HandMovement ? (global::Naki3D.Common.Protocol.HandMovementData) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.HandMovement;
+      }
+    }
+
+    /// <summary>Field number for the "best_user_changed" field.</summary>
+    public const int BestUserChangedFieldNumber = 18;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.BestUserChangedData BestUserChanged {
+      get { return dataCase_ == DataOneofCase.BestUserChanged ? (global::Naki3D.Common.Protocol.BestUserChangedData) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.BestUserChanged;
+      }
+    }
+
+    /// <summary>Field number for the "keyboard_update" field.</summary>
+    public const int KeyboardUpdateFieldNumber = 19;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.KeyboardUpdateData KeyboardUpdate {
+      get { return dataCase_ == DataOneofCase.KeyboardUpdate ? (global::Naki3D.Common.Protocol.KeyboardUpdateData) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.KeyboardUpdate;
+      }
+    }
+
+    /// <summary>Field number for the "mouse_move" field.</summary>
+    public const int MouseMoveFieldNumber = 20;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.MouseMoveData MouseMove {
+      get { return dataCase_ == DataOneofCase.MouseMove ? (global::Naki3D.Common.Protocol.MouseMoveData) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.MouseMove;
+      }
+    }
+
+    /// <summary>Field number for the "mouse_button" field.</summary>
+    public const int MouseButtonFieldNumber = 21;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.MouseButtonData MouseButton {
+      get { return dataCase_ == DataOneofCase.MouseButton ? (global::Naki3D.Common.Protocol.MouseButtonData) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.MouseButton;
+      }
+    }
+
+    /// <summary>Field number for the "mouse_scroll" field.</summary>
+    public const int MouseScrollFieldNumber = 22;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.MouseScrollData MouseScroll {
+      get { return dataCase_ == DataOneofCase.MouseScroll ? (global::Naki3D.Common.Protocol.MouseScrollData) data_ : null; }
+      set {
+        data_ = value;
+        dataCase_ = value == null ? DataOneofCase.None : DataOneofCase.MouseScroll;
+      }
+    }
+
+    private object data_;
+    /// <summary>Enum of possible cases for the "data" oneof.</summary>
+    public enum DataOneofCase {
+      None = 0,
+      Gesture = 16,
+      HandMovement = 17,
+      BestUserChanged = 18,
+      KeyboardUpdate = 19,
+      MouseMove = 20,
+      MouseButton = 21,
+      MouseScroll = 22,
+    }
+    private DataOneofCase dataCase_ = DataOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public DataOneofCase DataCase {
+      get { return dataCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void ClearData() {
+      dataCase_ = DataOneofCase.None;
+      data_ = null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SensorMessage);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SensorMessage other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (SensorId != other.SensorId) return false;
+      if (Timestamp != other.Timestamp) return false;
+      if (!object.Equals(Gesture, other.Gesture)) return false;
+      if (!object.Equals(HandMovement, other.HandMovement)) return false;
+      if (!object.Equals(BestUserChanged, other.BestUserChanged)) return false;
+      if (!object.Equals(KeyboardUpdate, other.KeyboardUpdate)) return false;
+      if (!object.Equals(MouseMove, other.MouseMove)) return false;
+      if (!object.Equals(MouseButton, other.MouseButton)) return false;
+      if (!object.Equals(MouseScroll, other.MouseScroll)) return false;
+      if (DataCase != other.DataCase) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (SensorId.Length != 0) hash ^= SensorId.GetHashCode();
+      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+      if (dataCase_ == DataOneofCase.Gesture) hash ^= Gesture.GetHashCode();
+      if (dataCase_ == DataOneofCase.HandMovement) hash ^= HandMovement.GetHashCode();
+      if (dataCase_ == DataOneofCase.BestUserChanged) hash ^= BestUserChanged.GetHashCode();
+      if (dataCase_ == DataOneofCase.KeyboardUpdate) hash ^= KeyboardUpdate.GetHashCode();
+      if (dataCase_ == DataOneofCase.MouseMove) hash ^= MouseMove.GetHashCode();
+      if (dataCase_ == DataOneofCase.MouseButton) hash ^= MouseButton.GetHashCode();
+      if (dataCase_ == DataOneofCase.MouseScroll) hash ^= MouseScroll.GetHashCode();
+      hash ^= (int) dataCase_;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (SensorId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SensorId);
+      }
+      if (Timestamp != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(Timestamp);
+      }
+      if (dataCase_ == DataOneofCase.Gesture) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(Gesture);
+      }
+      if (dataCase_ == DataOneofCase.HandMovement) {
+        output.WriteRawTag(138, 1);
+        output.WriteMessage(HandMovement);
+      }
+      if (dataCase_ == DataOneofCase.BestUserChanged) {
+        output.WriteRawTag(146, 1);
+        output.WriteMessage(BestUserChanged);
+      }
+      if (dataCase_ == DataOneofCase.KeyboardUpdate) {
+        output.WriteRawTag(154, 1);
+        output.WriteMessage(KeyboardUpdate);
+      }
+      if (dataCase_ == DataOneofCase.MouseMove) {
+        output.WriteRawTag(162, 1);
+        output.WriteMessage(MouseMove);
+      }
+      if (dataCase_ == DataOneofCase.MouseButton) {
+        output.WriteRawTag(170, 1);
+        output.WriteMessage(MouseButton);
+      }
+      if (dataCase_ == DataOneofCase.MouseScroll) {
+        output.WriteRawTag(178, 1);
+        output.WriteMessage(MouseScroll);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (SensorId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SensorId);
+      }
+      if (Timestamp != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(Timestamp);
+      }
+      if (dataCase_ == DataOneofCase.Gesture) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(Gesture);
+      }
+      if (dataCase_ == DataOneofCase.HandMovement) {
+        output.WriteRawTag(138, 1);
+        output.WriteMessage(HandMovement);
+      }
+      if (dataCase_ == DataOneofCase.BestUserChanged) {
+        output.WriteRawTag(146, 1);
+        output.WriteMessage(BestUserChanged);
+      }
+      if (dataCase_ == DataOneofCase.KeyboardUpdate) {
+        output.WriteRawTag(154, 1);
+        output.WriteMessage(KeyboardUpdate);
+      }
+      if (dataCase_ == DataOneofCase.MouseMove) {
+        output.WriteRawTag(162, 1);
+        output.WriteMessage(MouseMove);
+      }
+      if (dataCase_ == DataOneofCase.MouseButton) {
+        output.WriteRawTag(170, 1);
+        output.WriteMessage(MouseButton);
+      }
+      if (dataCase_ == DataOneofCase.MouseScroll) {
+        output.WriteRawTag(178, 1);
+        output.WriteMessage(MouseScroll);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (SensorId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SensorId);
+      }
+      if (Timestamp != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+      }
+      if (dataCase_ == DataOneofCase.Gesture) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(Gesture);
+      }
+      if (dataCase_ == DataOneofCase.HandMovement) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(HandMovement);
+      }
+      if (dataCase_ == DataOneofCase.BestUserChanged) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(BestUserChanged);
+      }
+      if (dataCase_ == DataOneofCase.KeyboardUpdate) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(KeyboardUpdate);
+      }
+      if (dataCase_ == DataOneofCase.MouseMove) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(MouseMove);
+      }
+      if (dataCase_ == DataOneofCase.MouseButton) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(MouseButton);
+      }
+      if (dataCase_ == DataOneofCase.MouseScroll) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(MouseScroll);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SensorMessage other) {
+      if (other == null) {
+        return;
+      }
+      if (other.SensorId.Length != 0) {
+        SensorId = other.SensorId;
+      }
+      if (other.Timestamp != 0UL) {
+        Timestamp = other.Timestamp;
+      }
+      switch (other.DataCase) {
+        case DataOneofCase.Gesture:
+          if (Gesture == null) {
+            Gesture = new global::Naki3D.Common.Protocol.GestureData();
+          }
+          Gesture.MergeFrom(other.Gesture);
+          break;
+        case DataOneofCase.HandMovement:
+          if (HandMovement == null) {
+            HandMovement = new global::Naki3D.Common.Protocol.HandMovementData();
+          }
+          HandMovement.MergeFrom(other.HandMovement);
+          break;
+        case DataOneofCase.BestUserChanged:
+          if (BestUserChanged == null) {
+            BestUserChanged = new global::Naki3D.Common.Protocol.BestUserChangedData();
+          }
+          BestUserChanged.MergeFrom(other.BestUserChanged);
+          break;
+        case DataOneofCase.KeyboardUpdate:
+          if (KeyboardUpdate == null) {
+            KeyboardUpdate = new global::Naki3D.Common.Protocol.KeyboardUpdateData();
+          }
+          KeyboardUpdate.MergeFrom(other.KeyboardUpdate);
+          break;
+        case DataOneofCase.MouseMove:
+          if (MouseMove == null) {
+            MouseMove = new global::Naki3D.Common.Protocol.MouseMoveData();
+          }
+          MouseMove.MergeFrom(other.MouseMove);
+          break;
+        case DataOneofCase.MouseButton:
+          if (MouseButton == null) {
+            MouseButton = new global::Naki3D.Common.Protocol.MouseButtonData();
+          }
+          MouseButton.MergeFrom(other.MouseButton);
+          break;
+        case DataOneofCase.MouseScroll:
+          if (MouseScroll == null) {
+            MouseScroll = new global::Naki3D.Common.Protocol.MouseScrollData();
+          }
+          MouseScroll.MergeFrom(other.MouseScroll);
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            SensorId = input.ReadString();
+            break;
+          }
+          case 16: {
+            Timestamp = input.ReadUInt64();
+            break;
+          }
+          case 130: {
+            global::Naki3D.Common.Protocol.GestureData subBuilder = new global::Naki3D.Common.Protocol.GestureData();
+            if (dataCase_ == DataOneofCase.Gesture) {
+              subBuilder.MergeFrom(Gesture);
+            }
+            input.ReadMessage(subBuilder);
+            Gesture = subBuilder;
+            break;
+          }
+          case 138: {
+            global::Naki3D.Common.Protocol.HandMovementData subBuilder = new global::Naki3D.Common.Protocol.HandMovementData();
+            if (dataCase_ == DataOneofCase.HandMovement) {
+              subBuilder.MergeFrom(HandMovement);
+            }
+            input.ReadMessage(subBuilder);
+            HandMovement = subBuilder;
+            break;
+          }
+          case 146: {
+            global::Naki3D.Common.Protocol.BestUserChangedData subBuilder = new global::Naki3D.Common.Protocol.BestUserChangedData();
+            if (dataCase_ == DataOneofCase.BestUserChanged) {
+              subBuilder.MergeFrom(BestUserChanged);
+            }
+            input.ReadMessage(subBuilder);
+            BestUserChanged = subBuilder;
+            break;
+          }
+          case 154: {
+            global::Naki3D.Common.Protocol.KeyboardUpdateData subBuilder = new global::Naki3D.Common.Protocol.KeyboardUpdateData();
+            if (dataCase_ == DataOneofCase.KeyboardUpdate) {
+              subBuilder.MergeFrom(KeyboardUpdate);
+            }
+            input.ReadMessage(subBuilder);
+            KeyboardUpdate = subBuilder;
+            break;
+          }
+          case 162: {
+            global::Naki3D.Common.Protocol.MouseMoveData subBuilder = new global::Naki3D.Common.Protocol.MouseMoveData();
+            if (dataCase_ == DataOneofCase.MouseMove) {
+              subBuilder.MergeFrom(MouseMove);
+            }
+            input.ReadMessage(subBuilder);
+            MouseMove = subBuilder;
+            break;
+          }
+          case 170: {
+            global::Naki3D.Common.Protocol.MouseButtonData subBuilder = new global::Naki3D.Common.Protocol.MouseButtonData();
+            if (dataCase_ == DataOneofCase.MouseButton) {
+              subBuilder.MergeFrom(MouseButton);
+            }
+            input.ReadMessage(subBuilder);
+            MouseButton = subBuilder;
+            break;
+          }
+          case 178: {
+            global::Naki3D.Common.Protocol.MouseScrollData subBuilder = new global::Naki3D.Common.Protocol.MouseScrollData();
+            if (dataCase_ == DataOneofCase.MouseScroll) {
+              subBuilder.MergeFrom(MouseScroll);
+            }
+            input.ReadMessage(subBuilder);
+            MouseScroll = subBuilder;
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            SensorId = input.ReadString();
+            break;
+          }
+          case 16: {
+            Timestamp = input.ReadUInt64();
+            break;
+          }
+          case 130: {
+            global::Naki3D.Common.Protocol.GestureData subBuilder = new global::Naki3D.Common.Protocol.GestureData();
+            if (dataCase_ == DataOneofCase.Gesture) {
+              subBuilder.MergeFrom(Gesture);
+            }
+            input.ReadMessage(subBuilder);
+            Gesture = subBuilder;
+            break;
+          }
+          case 138: {
+            global::Naki3D.Common.Protocol.HandMovementData subBuilder = new global::Naki3D.Common.Protocol.HandMovementData();
+            if (dataCase_ == DataOneofCase.HandMovement) {
+              subBuilder.MergeFrom(HandMovement);
+            }
+            input.ReadMessage(subBuilder);
+            HandMovement = subBuilder;
+            break;
+          }
+          case 146: {
+            global::Naki3D.Common.Protocol.BestUserChangedData subBuilder = new global::Naki3D.Common.Protocol.BestUserChangedData();
+            if (dataCase_ == DataOneofCase.BestUserChanged) {
+              subBuilder.MergeFrom(BestUserChanged);
+            }
+            input.ReadMessage(subBuilder);
+            BestUserChanged = subBuilder;
+            break;
+          }
+          case 154: {
+            global::Naki3D.Common.Protocol.KeyboardUpdateData subBuilder = new global::Naki3D.Common.Protocol.KeyboardUpdateData();
+            if (dataCase_ == DataOneofCase.KeyboardUpdate) {
+              subBuilder.MergeFrom(KeyboardUpdate);
+            }
+            input.ReadMessage(subBuilder);
+            KeyboardUpdate = subBuilder;
+            break;
+          }
+          case 162: {
+            global::Naki3D.Common.Protocol.MouseMoveData subBuilder = new global::Naki3D.Common.Protocol.MouseMoveData();
+            if (dataCase_ == DataOneofCase.MouseMove) {
+              subBuilder.MergeFrom(MouseMove);
+            }
+            input.ReadMessage(subBuilder);
+            MouseMove = subBuilder;
+            break;
+          }
+          case 170: {
+            global::Naki3D.Common.Protocol.MouseButtonData subBuilder = new global::Naki3D.Common.Protocol.MouseButtonData();
+            if (dataCase_ == DataOneofCase.MouseButton) {
+              subBuilder.MergeFrom(MouseButton);
+            }
+            input.ReadMessage(subBuilder);
+            MouseButton = subBuilder;
+            break;
+          }
+          case 178: {
+            global::Naki3D.Common.Protocol.MouseScrollData subBuilder = new global::Naki3D.Common.Protocol.MouseScrollData();
+            if (dataCase_ == DataOneofCase.MouseScroll) {
+              subBuilder.MergeFrom(MouseScroll);
+            }
+            input.ReadMessage(subBuilder);
+            MouseScroll = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  /// <summary>
+  /// Device -> RasPi
+  /// Message wrapper, same as above.
+  /// </summary>
+  public sealed partial class SensorControlMessage : pb::IMessage<SensorControlMessage>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SensorControlMessage> _parser = new pb::MessageParser<SensorControlMessage>(() => new SensorControlMessage());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SensorControlMessage> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Naki3D.Common.Protocol.WrappersReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SensorControlMessage() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SensorControlMessage(SensorControlMessage other) : this() {
+      hostname_ = other.hostname_;
+      switch (other.MessageCase) {
+        case MessageOneofCase.SensorList:
+          SensorList = other.SensorList.Clone();
+          break;
+        case MessageOneofCase.CecMessage:
+          CecMessage = other.CecMessage.Clone();
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SensorControlMessage Clone() {
+      return new SensorControlMessage(this);
+    }
+
+    /// <summary>Field number for the "hostname" field.</summary>
+    public const int HostnameFieldNumber = 1;
+    private string hostname_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Hostname {
+      get { return hostname_; }
+      set {
+        hostname_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "sensor_list" field.</summary>
+    public const int SensorListFieldNumber = 16;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.SensorListRequest SensorList {
+      get { return messageCase_ == MessageOneofCase.SensorList ? (global::Naki3D.Common.Protocol.SensorListRequest) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.SensorList;
+      }
+    }
+
+    /// <summary>Field number for the "cec_message" field.</summary>
+    public const int CecMessageFieldNumber = 17;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.CECMessage CecMessage {
+      get { return messageCase_ == MessageOneofCase.CecMessage ? (global::Naki3D.Common.Protocol.CECMessage) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.CecMessage;
+      }
+    }
+
+    private object message_;
+    /// <summary>Enum of possible cases for the "message" oneof.</summary>
+    public enum MessageOneofCase {
+      None = 0,
+      SensorList = 16,
+      CecMessage = 17,
+    }
+    private MessageOneofCase messageCase_ = MessageOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MessageOneofCase MessageCase {
+      get { return messageCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void ClearMessage() {
+      messageCase_ = MessageOneofCase.None;
+      message_ = null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SensorControlMessage);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SensorControlMessage other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Hostname != other.Hostname) return false;
+      if (!object.Equals(SensorList, other.SensorList)) return false;
+      if (!object.Equals(CecMessage, other.CecMessage)) return false;
+      if (MessageCase != other.MessageCase) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Hostname.Length != 0) hash ^= Hostname.GetHashCode();
+      if (messageCase_ == MessageOneofCase.SensorList) hash ^= SensorList.GetHashCode();
+      if (messageCase_ == MessageOneofCase.CecMessage) hash ^= CecMessage.GetHashCode();
+      hash ^= (int) messageCase_;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Hostname.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Hostname);
+      }
+      if (messageCase_ == MessageOneofCase.SensorList) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(SensorList);
+      }
+      if (messageCase_ == MessageOneofCase.CecMessage) {
+        output.WriteRawTag(138, 1);
+        output.WriteMessage(CecMessage);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Hostname.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Hostname);
+      }
+      if (messageCase_ == MessageOneofCase.SensorList) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(SensorList);
+      }
+      if (messageCase_ == MessageOneofCase.CecMessage) {
+        output.WriteRawTag(138, 1);
+        output.WriteMessage(CecMessage);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Hostname.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Hostname);
+      }
+      if (messageCase_ == MessageOneofCase.SensorList) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(SensorList);
+      }
+      if (messageCase_ == MessageOneofCase.CecMessage) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(CecMessage);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SensorControlMessage other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Hostname.Length != 0) {
+        Hostname = other.Hostname;
+      }
+      switch (other.MessageCase) {
+        case MessageOneofCase.SensorList:
+          if (SensorList == null) {
+            SensorList = new global::Naki3D.Common.Protocol.SensorListRequest();
+          }
+          SensorList.MergeFrom(other.SensorList);
+          break;
+        case MessageOneofCase.CecMessage:
+          if (CecMessage == null) {
+            CecMessage = new global::Naki3D.Common.Protocol.CECMessage();
+          }
+          CecMessage.MergeFrom(other.CecMessage);
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Hostname = input.ReadString();
+            break;
+          }
+          case 130: {
+            global::Naki3D.Common.Protocol.SensorListRequest subBuilder = new global::Naki3D.Common.Protocol.SensorListRequest();
+            if (messageCase_ == MessageOneofCase.SensorList) {
+              subBuilder.MergeFrom(SensorList);
+            }
+            input.ReadMessage(subBuilder);
+            SensorList = subBuilder;
+            break;
+          }
+          case 138: {
+            global::Naki3D.Common.Protocol.CECMessage subBuilder = new global::Naki3D.Common.Protocol.CECMessage();
+            if (messageCase_ == MessageOneofCase.CecMessage) {
+              subBuilder.MergeFrom(CecMessage);
+            }
+            input.ReadMessage(subBuilder);
+            CecMessage = subBuilder;
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Hostname = input.ReadString();
+            break;
+          }
+          case 130: {
+            global::Naki3D.Common.Protocol.SensorListRequest subBuilder = new global::Naki3D.Common.Protocol.SensorListRequest();
+            if (messageCase_ == MessageOneofCase.SensorList) {
+              subBuilder.MergeFrom(SensorList);
+            }
+            input.ReadMessage(subBuilder);
+            SensorList = subBuilder;
+            break;
+          }
+          case 138: {
+            global::Naki3D.Common.Protocol.CECMessage subBuilder = new global::Naki3D.Common.Protocol.CECMessage();
+            if (messageCase_ == MessageOneofCase.CecMessage) {
+              subBuilder.MergeFrom(CecMessage);
+            }
+            input.ReadMessage(subBuilder);
+            CecMessage = subBuilder;
             break;
           }
         }

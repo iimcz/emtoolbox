@@ -24,56 +24,50 @@ namespace Naki3D.Common.Protocol {
     static SensorReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxzZW5zb3IucHJvdG8SFm5ha2kzZC5jb21tb24ucHJvdG9jb2wi3gQKEElu",
-            "dGVyYWNhdGlvbkluZm8SEwoLc2Vuc29yX25hbWUYASABKAkSMgoHZ2VzdHVy",
-            "ZRgCIAEoCzIfLm5ha2kzZC5jb21tb24ucHJvdG9jb2wuR2VzdHVyZUgAEjcK",
-            "Cm1vYmlsZV9hcHAYAyABKAsyIS5uYWtpM2QuY29tbW9uLnByb3RvY29sLk1v",
-            "YmlsZUFwcEgAEjcKCnJvb21fZW50ZXIYBCABKAsyIS5uYWtpM2QuY29tbW9u",
-            "LnByb3RvY29sLlJvb21FbnRlckgAEjgKCm1pY3JvcGhvbmUYBSABKAsyIi5u",
-            "YWtpM2QuY29tbW9uLnByb3RvY29sLk1pY3JvcGhvbmVIABI7CgxsaWdodF9z",
-            "ZW5zb3IYBiABKAsyIy5uYWtpM2QuY29tbW9uLnByb3RvY29sLkxpZ2h0U2Vu",
-            "c29ySAASQwoQcHJveGltaXR5X3NlbnNvchgHIAEoCzInLm5ha2kzZC5jb21t",
-            "b24ucHJvdG9jb2wuUHJveGltaXR5U2Vuc29ySAASKAoCaXIYCCABKAsyGi5u",
-            "YWtpM2QuY29tbW9uLnByb3RvY29sLklSSAASOgoLdGVtcGVyYXR1cmUYCSAB",
-            "KAsyIy5uYWtpM2QuY29tbW9uLnByb3RvY29sLlRlbXBlcmF0dXJlSAASNAoI",
-            "aHVtaWRpdHkYCiABKAsyIC5uYWtpM2QuY29tbW9uLnByb3RvY29sLkh1bWlk",
-            "aXR5SAASLAoEdGltZRgLIAEoCzIcLm5ha2kzZC5jb21tb24ucHJvdG9jb2wu",
-            "VGltZUgAQgkKB3BheWxvYWQiCQoHR2VzdHVyZSILCglNb2JpbGVBcHAiCwoJ",
-            "Um9vbUVudGVyIgwKCk1pY3JvcGhvbmUiDQoLTGlnaHRTZW5zb3IiEQoPUHJv",
-            "eGltaXR5U2Vuc29yIgQKAklSIg0KC1RlbXBlcmF0dXJlIgoKCEh1bWlkaXR5",
-            "IgYKBFRpbWViBnByb3RvMw=="));
+            "CgxzZW5zb3IucHJvdG8SFm5ha2kzZC5jb21tb24ucHJvdG9jb2waEGNvbm5l",
+            "Y3Rpb24ucHJvdG8iUwoKU2Vuc29ySW5mbxITCgtzZW5zb3JfbmFtZRgBIAEo",
+            "CRIwCgR0eXBlGAIgASgOMiIubmFraTNkLmNvbW1vbi5wcm90b2NvbC5TZW5z",
+            "b3JUeXBlIkEKClNlbnNvckxpc3QSMwoHc2Vuc29ycxgBIAMoCzIiLm5ha2kz",
+            "ZC5jb21tb24ucHJvdG9jb2wuU2Vuc29ySW5mbyITChFTZW5zb3JMaXN0UmVx",
+            "dWVzdCI/CgpDRUNNZXNzYWdlEjEKBmFjdGlvbhgBIAEoDjIhLm5ha2kzZC5j",
+            "b21tb24ucHJvdG9jb2wuQ0VDQWN0aW9uKigKCUNFQ0FjdGlvbhIMCghQT1dF",
+            "Ul9PThAAEg0KCVBPV0VSX09GRhABYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.InteracationInfo), global::Naki3D.Common.Protocol.InteracationInfo.Parser, new[]{ "SensorName", "Gesture", "MobileApp", "RoomEnter", "Microphone", "LightSensor", "ProximitySensor", "Ir", "Temperature", "Humidity", "Time" }, new[]{ "Payload" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Gesture), global::Naki3D.Common.Protocol.Gesture.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.MobileApp), global::Naki3D.Common.Protocol.MobileApp.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.RoomEnter), global::Naki3D.Common.Protocol.RoomEnter.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Microphone), global::Naki3D.Common.Protocol.Microphone.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.LightSensor), global::Naki3D.Common.Protocol.LightSensor.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.ProximitySensor), global::Naki3D.Common.Protocol.ProximitySensor.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.IR), global::Naki3D.Common.Protocol.IR.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Temperature), global::Naki3D.Common.Protocol.Temperature.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Humidity), global::Naki3D.Common.Protocol.Humidity.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.Time), global::Naki3D.Common.Protocol.Time.Parser, null, null, null, null, null)
+          new pbr::FileDescriptor[] { global::Naki3D.Common.Protocol.ConnectionReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Naki3D.Common.Protocol.CECAction), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.SensorInfo), global::Naki3D.Common.Protocol.SensorInfo.Parser, new[]{ "SensorName", "Type" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.SensorList), global::Naki3D.Common.Protocol.SensorList.Parser, new[]{ "Sensors" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.SensorListRequest), global::Naki3D.Common.Protocol.SensorListRequest.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.CECMessage), global::Naki3D.Common.Protocol.CECMessage.Parser, new[]{ "Action" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
-  #region Messages
+  #region Enums
   /// <summary>
-  /// Can be used both for device &lt;-> device as well as RasPi -> Device
+  /// Reverse conrtol
   /// </summary>
-  public sealed partial class InteracationInfo : pb::IMessage<InteracationInfo>
+  public enum CECAction {
+    [pbr::OriginalName("POWER_ON")] PowerOn = 0,
+    /// <summary>
+    /// TODO: Brightness, saturation, etc...
+    /// </summary>
+    [pbr::OriginalName("POWER_OFF")] PowerOff = 1,
+  }
+
+  #endregion
+
+  #region Messages
+  public sealed partial class SensorInfo : pb::IMessage<SensorInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<InteracationInfo> _parser = new pb::MessageParser<InteracationInfo>(() => new InteracationInfo());
+    private static readonly pb::MessageParser<SensorInfo> _parser = new pb::MessageParser<SensorInfo>(() => new SensorInfo());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<InteracationInfo> Parser { get { return _parser; } }
+    public static pb::MessageParser<SensorInfo> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -86,54 +80,22 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public InteracationInfo() {
+    public SensorInfo() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public InteracationInfo(InteracationInfo other) : this() {
+    public SensorInfo(SensorInfo other) : this() {
       sensorName_ = other.sensorName_;
-      switch (other.PayloadCase) {
-        case PayloadOneofCase.Gesture:
-          Gesture = other.Gesture.Clone();
-          break;
-        case PayloadOneofCase.MobileApp:
-          MobileApp = other.MobileApp.Clone();
-          break;
-        case PayloadOneofCase.RoomEnter:
-          RoomEnter = other.RoomEnter.Clone();
-          break;
-        case PayloadOneofCase.Microphone:
-          Microphone = other.Microphone.Clone();
-          break;
-        case PayloadOneofCase.LightSensor:
-          LightSensor = other.LightSensor.Clone();
-          break;
-        case PayloadOneofCase.ProximitySensor:
-          ProximitySensor = other.ProximitySensor.Clone();
-          break;
-        case PayloadOneofCase.Ir:
-          Ir = other.Ir.Clone();
-          break;
-        case PayloadOneofCase.Temperature:
-          Temperature = other.Temperature.Clone();
-          break;
-        case PayloadOneofCase.Humidity:
-          Humidity = other.Humidity.Clone();
-          break;
-        case PayloadOneofCase.Time:
-          Time = other.Time.Clone();
-          break;
-      }
-
+      type_ = other.type_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public InteracationInfo Clone() {
-      return new InteracationInfo(this);
+    public SensorInfo Clone() {
+      return new SensorInfo(this);
     }
 
     /// <summary>Field number for the "sensor_name" field.</summary>
@@ -147,150 +109,24 @@ namespace Naki3D.Common.Protocol {
       }
     }
 
-    /// <summary>Field number for the "gesture" field.</summary>
-    public const int GestureFieldNumber = 2;
+    /// <summary>Field number for the "type" field.</summary>
+    public const int TypeFieldNumber = 2;
+    private global::Naki3D.Common.Protocol.SensorType type_ = global::Naki3D.Common.Protocol.SensorType.Gesture;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.Gesture Gesture {
-      get { return payloadCase_ == PayloadOneofCase.Gesture ? (global::Naki3D.Common.Protocol.Gesture) payload_ : null; }
+    public global::Naki3D.Common.Protocol.SensorType Type {
+      get { return type_; }
       set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Gesture;
+        type_ = value;
       }
-    }
-
-    /// <summary>Field number for the "mobile_app" field.</summary>
-    public const int MobileAppFieldNumber = 3;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.MobileApp MobileApp {
-      get { return payloadCase_ == PayloadOneofCase.MobileApp ? (global::Naki3D.Common.Protocol.MobileApp) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.MobileApp;
-      }
-    }
-
-    /// <summary>Field number for the "room_enter" field.</summary>
-    public const int RoomEnterFieldNumber = 4;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.RoomEnter RoomEnter {
-      get { return payloadCase_ == PayloadOneofCase.RoomEnter ? (global::Naki3D.Common.Protocol.RoomEnter) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.RoomEnter;
-      }
-    }
-
-    /// <summary>Field number for the "microphone" field.</summary>
-    public const int MicrophoneFieldNumber = 5;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.Microphone Microphone {
-      get { return payloadCase_ == PayloadOneofCase.Microphone ? (global::Naki3D.Common.Protocol.Microphone) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Microphone;
-      }
-    }
-
-    /// <summary>Field number for the "light_sensor" field.</summary>
-    public const int LightSensorFieldNumber = 6;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.LightSensor LightSensor {
-      get { return payloadCase_ == PayloadOneofCase.LightSensor ? (global::Naki3D.Common.Protocol.LightSensor) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.LightSensor;
-      }
-    }
-
-    /// <summary>Field number for the "proximity_sensor" field.</summary>
-    public const int ProximitySensorFieldNumber = 7;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.ProximitySensor ProximitySensor {
-      get { return payloadCase_ == PayloadOneofCase.ProximitySensor ? (global::Naki3D.Common.Protocol.ProximitySensor) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.ProximitySensor;
-      }
-    }
-
-    /// <summary>Field number for the "ir" field.</summary>
-    public const int IrFieldNumber = 8;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.IR Ir {
-      get { return payloadCase_ == PayloadOneofCase.Ir ? (global::Naki3D.Common.Protocol.IR) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Ir;
-      }
-    }
-
-    /// <summary>Field number for the "temperature" field.</summary>
-    public const int TemperatureFieldNumber = 9;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.Temperature Temperature {
-      get { return payloadCase_ == PayloadOneofCase.Temperature ? (global::Naki3D.Common.Protocol.Temperature) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Temperature;
-      }
-    }
-
-    /// <summary>Field number for the "humidity" field.</summary>
-    public const int HumidityFieldNumber = 10;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.Humidity Humidity {
-      get { return payloadCase_ == PayloadOneofCase.Humidity ? (global::Naki3D.Common.Protocol.Humidity) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Humidity;
-      }
-    }
-
-    /// <summary>Field number for the "time" field.</summary>
-    public const int TimeFieldNumber = 11;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.Time Time {
-      get { return payloadCase_ == PayloadOneofCase.Time ? (global::Naki3D.Common.Protocol.Time) payload_ : null; }
-      set {
-        payload_ = value;
-        payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.Time;
-      }
-    }
-
-    private object payload_;
-    /// <summary>Enum of possible cases for the "payload" oneof.</summary>
-    public enum PayloadOneofCase {
-      None = 0,
-      Gesture = 2,
-      MobileApp = 3,
-      RoomEnter = 4,
-      Microphone = 5,
-      LightSensor = 6,
-      ProximitySensor = 7,
-      Ir = 8,
-      Temperature = 9,
-      Humidity = 10,
-      Time = 11,
-    }
-    private PayloadOneofCase payloadCase_ = PayloadOneofCase.None;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PayloadOneofCase PayloadCase {
-      get { return payloadCase_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void ClearPayload() {
-      payloadCase_ = PayloadOneofCase.None;
-      payload_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as InteracationInfo);
+      return Equals(other as SensorInfo);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(InteracationInfo other) {
+    public bool Equals(SensorInfo other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -298,17 +134,7 @@ namespace Naki3D.Common.Protocol {
         return true;
       }
       if (SensorName != other.SensorName) return false;
-      if (!object.Equals(Gesture, other.Gesture)) return false;
-      if (!object.Equals(MobileApp, other.MobileApp)) return false;
-      if (!object.Equals(RoomEnter, other.RoomEnter)) return false;
-      if (!object.Equals(Microphone, other.Microphone)) return false;
-      if (!object.Equals(LightSensor, other.LightSensor)) return false;
-      if (!object.Equals(ProximitySensor, other.ProximitySensor)) return false;
-      if (!object.Equals(Ir, other.Ir)) return false;
-      if (!object.Equals(Temperature, other.Temperature)) return false;
-      if (!object.Equals(Humidity, other.Humidity)) return false;
-      if (!object.Equals(Time, other.Time)) return false;
-      if (PayloadCase != other.PayloadCase) return false;
+      if (Type != other.Type) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -316,17 +142,7 @@ namespace Naki3D.Common.Protocol {
     public override int GetHashCode() {
       int hash = 1;
       if (SensorName.Length != 0) hash ^= SensorName.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.Gesture) hash ^= Gesture.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.MobileApp) hash ^= MobileApp.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.RoomEnter) hash ^= RoomEnter.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.Microphone) hash ^= Microphone.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.LightSensor) hash ^= LightSensor.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.ProximitySensor) hash ^= ProximitySensor.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.Ir) hash ^= Ir.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.Temperature) hash ^= Temperature.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.Humidity) hash ^= Humidity.GetHashCode();
-      if (payloadCase_ == PayloadOneofCase.Time) hash ^= Time.GetHashCode();
-      hash ^= (int) payloadCase_;
+      if (Type != global::Naki3D.Common.Protocol.SensorType.Gesture) hash ^= Type.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -347,45 +163,9 @@ namespace Naki3D.Common.Protocol {
         output.WriteRawTag(10);
         output.WriteString(SensorName);
       }
-      if (payloadCase_ == PayloadOneofCase.Gesture) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Gesture);
-      }
-      if (payloadCase_ == PayloadOneofCase.MobileApp) {
-        output.WriteRawTag(26);
-        output.WriteMessage(MobileApp);
-      }
-      if (payloadCase_ == PayloadOneofCase.RoomEnter) {
-        output.WriteRawTag(34);
-        output.WriteMessage(RoomEnter);
-      }
-      if (payloadCase_ == PayloadOneofCase.Microphone) {
-        output.WriteRawTag(42);
-        output.WriteMessage(Microphone);
-      }
-      if (payloadCase_ == PayloadOneofCase.LightSensor) {
-        output.WriteRawTag(50);
-        output.WriteMessage(LightSensor);
-      }
-      if (payloadCase_ == PayloadOneofCase.ProximitySensor) {
-        output.WriteRawTag(58);
-        output.WriteMessage(ProximitySensor);
-      }
-      if (payloadCase_ == PayloadOneofCase.Ir) {
-        output.WriteRawTag(66);
-        output.WriteMessage(Ir);
-      }
-      if (payloadCase_ == PayloadOneofCase.Temperature) {
-        output.WriteRawTag(74);
-        output.WriteMessage(Temperature);
-      }
-      if (payloadCase_ == PayloadOneofCase.Humidity) {
-        output.WriteRawTag(82);
-        output.WriteMessage(Humidity);
-      }
-      if (payloadCase_ == PayloadOneofCase.Time) {
-        output.WriteRawTag(90);
-        output.WriteMessage(Time);
+      if (Type != global::Naki3D.Common.Protocol.SensorType.Gesture) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) Type);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -400,45 +180,9 @@ namespace Naki3D.Common.Protocol {
         output.WriteRawTag(10);
         output.WriteString(SensorName);
       }
-      if (payloadCase_ == PayloadOneofCase.Gesture) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Gesture);
-      }
-      if (payloadCase_ == PayloadOneofCase.MobileApp) {
-        output.WriteRawTag(26);
-        output.WriteMessage(MobileApp);
-      }
-      if (payloadCase_ == PayloadOneofCase.RoomEnter) {
-        output.WriteRawTag(34);
-        output.WriteMessage(RoomEnter);
-      }
-      if (payloadCase_ == PayloadOneofCase.Microphone) {
-        output.WriteRawTag(42);
-        output.WriteMessage(Microphone);
-      }
-      if (payloadCase_ == PayloadOneofCase.LightSensor) {
-        output.WriteRawTag(50);
-        output.WriteMessage(LightSensor);
-      }
-      if (payloadCase_ == PayloadOneofCase.ProximitySensor) {
-        output.WriteRawTag(58);
-        output.WriteMessage(ProximitySensor);
-      }
-      if (payloadCase_ == PayloadOneofCase.Ir) {
-        output.WriteRawTag(66);
-        output.WriteMessage(Ir);
-      }
-      if (payloadCase_ == PayloadOneofCase.Temperature) {
-        output.WriteRawTag(74);
-        output.WriteMessage(Temperature);
-      }
-      if (payloadCase_ == PayloadOneofCase.Humidity) {
-        output.WriteRawTag(82);
-        output.WriteMessage(Humidity);
-      }
-      if (payloadCase_ == PayloadOneofCase.Time) {
-        output.WriteRawTag(90);
-        output.WriteMessage(Time);
+      if (Type != global::Naki3D.Common.Protocol.SensorType.Gesture) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) Type);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -452,35 +196,8 @@ namespace Naki3D.Common.Protocol {
       if (SensorName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SensorName);
       }
-      if (payloadCase_ == PayloadOneofCase.Gesture) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Gesture);
-      }
-      if (payloadCase_ == PayloadOneofCase.MobileApp) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(MobileApp);
-      }
-      if (payloadCase_ == PayloadOneofCase.RoomEnter) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomEnter);
-      }
-      if (payloadCase_ == PayloadOneofCase.Microphone) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Microphone);
-      }
-      if (payloadCase_ == PayloadOneofCase.LightSensor) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(LightSensor);
-      }
-      if (payloadCase_ == PayloadOneofCase.ProximitySensor) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ProximitySensor);
-      }
-      if (payloadCase_ == PayloadOneofCase.Ir) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Ir);
-      }
-      if (payloadCase_ == PayloadOneofCase.Temperature) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Temperature);
-      }
-      if (payloadCase_ == PayloadOneofCase.Humidity) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Humidity);
-      }
-      if (payloadCase_ == PayloadOneofCase.Time) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Time);
+      if (Type != global::Naki3D.Common.Protocol.SensorType.Gesture) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -489,76 +206,16 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(InteracationInfo other) {
+    public void MergeFrom(SensorInfo other) {
       if (other == null) {
         return;
       }
       if (other.SensorName.Length != 0) {
         SensorName = other.SensorName;
       }
-      switch (other.PayloadCase) {
-        case PayloadOneofCase.Gesture:
-          if (Gesture == null) {
-            Gesture = new global::Naki3D.Common.Protocol.Gesture();
-          }
-          Gesture.MergeFrom(other.Gesture);
-          break;
-        case PayloadOneofCase.MobileApp:
-          if (MobileApp == null) {
-            MobileApp = new global::Naki3D.Common.Protocol.MobileApp();
-          }
-          MobileApp.MergeFrom(other.MobileApp);
-          break;
-        case PayloadOneofCase.RoomEnter:
-          if (RoomEnter == null) {
-            RoomEnter = new global::Naki3D.Common.Protocol.RoomEnter();
-          }
-          RoomEnter.MergeFrom(other.RoomEnter);
-          break;
-        case PayloadOneofCase.Microphone:
-          if (Microphone == null) {
-            Microphone = new global::Naki3D.Common.Protocol.Microphone();
-          }
-          Microphone.MergeFrom(other.Microphone);
-          break;
-        case PayloadOneofCase.LightSensor:
-          if (LightSensor == null) {
-            LightSensor = new global::Naki3D.Common.Protocol.LightSensor();
-          }
-          LightSensor.MergeFrom(other.LightSensor);
-          break;
-        case PayloadOneofCase.ProximitySensor:
-          if (ProximitySensor == null) {
-            ProximitySensor = new global::Naki3D.Common.Protocol.ProximitySensor();
-          }
-          ProximitySensor.MergeFrom(other.ProximitySensor);
-          break;
-        case PayloadOneofCase.Ir:
-          if (Ir == null) {
-            Ir = new global::Naki3D.Common.Protocol.IR();
-          }
-          Ir.MergeFrom(other.Ir);
-          break;
-        case PayloadOneofCase.Temperature:
-          if (Temperature == null) {
-            Temperature = new global::Naki3D.Common.Protocol.Temperature();
-          }
-          Temperature.MergeFrom(other.Temperature);
-          break;
-        case PayloadOneofCase.Humidity:
-          if (Humidity == null) {
-            Humidity = new global::Naki3D.Common.Protocol.Humidity();
-          }
-          Humidity.MergeFrom(other.Humidity);
-          break;
-        case PayloadOneofCase.Time:
-          if (Time == null) {
-            Time = new global::Naki3D.Common.Protocol.Time();
-          }
-          Time.MergeFrom(other.Time);
-          break;
+      if (other.Type != global::Naki3D.Common.Protocol.SensorType.Gesture) {
+        Type = other.Type;
       }
-
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -577,94 +234,8 @@ namespace Naki3D.Common.Protocol {
             SensorName = input.ReadString();
             break;
           }
-          case 18: {
-            global::Naki3D.Common.Protocol.Gesture subBuilder = new global::Naki3D.Common.Protocol.Gesture();
-            if (payloadCase_ == PayloadOneofCase.Gesture) {
-              subBuilder.MergeFrom(Gesture);
-            }
-            input.ReadMessage(subBuilder);
-            Gesture = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Naki3D.Common.Protocol.MobileApp subBuilder = new global::Naki3D.Common.Protocol.MobileApp();
-            if (payloadCase_ == PayloadOneofCase.MobileApp) {
-              subBuilder.MergeFrom(MobileApp);
-            }
-            input.ReadMessage(subBuilder);
-            MobileApp = subBuilder;
-            break;
-          }
-          case 34: {
-            global::Naki3D.Common.Protocol.RoomEnter subBuilder = new global::Naki3D.Common.Protocol.RoomEnter();
-            if (payloadCase_ == PayloadOneofCase.RoomEnter) {
-              subBuilder.MergeFrom(RoomEnter);
-            }
-            input.ReadMessage(subBuilder);
-            RoomEnter = subBuilder;
-            break;
-          }
-          case 42: {
-            global::Naki3D.Common.Protocol.Microphone subBuilder = new global::Naki3D.Common.Protocol.Microphone();
-            if (payloadCase_ == PayloadOneofCase.Microphone) {
-              subBuilder.MergeFrom(Microphone);
-            }
-            input.ReadMessage(subBuilder);
-            Microphone = subBuilder;
-            break;
-          }
-          case 50: {
-            global::Naki3D.Common.Protocol.LightSensor subBuilder = new global::Naki3D.Common.Protocol.LightSensor();
-            if (payloadCase_ == PayloadOneofCase.LightSensor) {
-              subBuilder.MergeFrom(LightSensor);
-            }
-            input.ReadMessage(subBuilder);
-            LightSensor = subBuilder;
-            break;
-          }
-          case 58: {
-            global::Naki3D.Common.Protocol.ProximitySensor subBuilder = new global::Naki3D.Common.Protocol.ProximitySensor();
-            if (payloadCase_ == PayloadOneofCase.ProximitySensor) {
-              subBuilder.MergeFrom(ProximitySensor);
-            }
-            input.ReadMessage(subBuilder);
-            ProximitySensor = subBuilder;
-            break;
-          }
-          case 66: {
-            global::Naki3D.Common.Protocol.IR subBuilder = new global::Naki3D.Common.Protocol.IR();
-            if (payloadCase_ == PayloadOneofCase.Ir) {
-              subBuilder.MergeFrom(Ir);
-            }
-            input.ReadMessage(subBuilder);
-            Ir = subBuilder;
-            break;
-          }
-          case 74: {
-            global::Naki3D.Common.Protocol.Temperature subBuilder = new global::Naki3D.Common.Protocol.Temperature();
-            if (payloadCase_ == PayloadOneofCase.Temperature) {
-              subBuilder.MergeFrom(Temperature);
-            }
-            input.ReadMessage(subBuilder);
-            Temperature = subBuilder;
-            break;
-          }
-          case 82: {
-            global::Naki3D.Common.Protocol.Humidity subBuilder = new global::Naki3D.Common.Protocol.Humidity();
-            if (payloadCase_ == PayloadOneofCase.Humidity) {
-              subBuilder.MergeFrom(Humidity);
-            }
-            input.ReadMessage(subBuilder);
-            Humidity = subBuilder;
-            break;
-          }
-          case 90: {
-            global::Naki3D.Common.Protocol.Time subBuilder = new global::Naki3D.Common.Protocol.Time();
-            if (payloadCase_ == PayloadOneofCase.Time) {
-              subBuilder.MergeFrom(Time);
-            }
-            input.ReadMessage(subBuilder);
-            Time = subBuilder;
+          case 16: {
+            Type = (global::Naki3D.Common.Protocol.SensorType) input.ReadEnum();
             break;
           }
         }
@@ -685,94 +256,8 @@ namespace Naki3D.Common.Protocol {
             SensorName = input.ReadString();
             break;
           }
-          case 18: {
-            global::Naki3D.Common.Protocol.Gesture subBuilder = new global::Naki3D.Common.Protocol.Gesture();
-            if (payloadCase_ == PayloadOneofCase.Gesture) {
-              subBuilder.MergeFrom(Gesture);
-            }
-            input.ReadMessage(subBuilder);
-            Gesture = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Naki3D.Common.Protocol.MobileApp subBuilder = new global::Naki3D.Common.Protocol.MobileApp();
-            if (payloadCase_ == PayloadOneofCase.MobileApp) {
-              subBuilder.MergeFrom(MobileApp);
-            }
-            input.ReadMessage(subBuilder);
-            MobileApp = subBuilder;
-            break;
-          }
-          case 34: {
-            global::Naki3D.Common.Protocol.RoomEnter subBuilder = new global::Naki3D.Common.Protocol.RoomEnter();
-            if (payloadCase_ == PayloadOneofCase.RoomEnter) {
-              subBuilder.MergeFrom(RoomEnter);
-            }
-            input.ReadMessage(subBuilder);
-            RoomEnter = subBuilder;
-            break;
-          }
-          case 42: {
-            global::Naki3D.Common.Protocol.Microphone subBuilder = new global::Naki3D.Common.Protocol.Microphone();
-            if (payloadCase_ == PayloadOneofCase.Microphone) {
-              subBuilder.MergeFrom(Microphone);
-            }
-            input.ReadMessage(subBuilder);
-            Microphone = subBuilder;
-            break;
-          }
-          case 50: {
-            global::Naki3D.Common.Protocol.LightSensor subBuilder = new global::Naki3D.Common.Protocol.LightSensor();
-            if (payloadCase_ == PayloadOneofCase.LightSensor) {
-              subBuilder.MergeFrom(LightSensor);
-            }
-            input.ReadMessage(subBuilder);
-            LightSensor = subBuilder;
-            break;
-          }
-          case 58: {
-            global::Naki3D.Common.Protocol.ProximitySensor subBuilder = new global::Naki3D.Common.Protocol.ProximitySensor();
-            if (payloadCase_ == PayloadOneofCase.ProximitySensor) {
-              subBuilder.MergeFrom(ProximitySensor);
-            }
-            input.ReadMessage(subBuilder);
-            ProximitySensor = subBuilder;
-            break;
-          }
-          case 66: {
-            global::Naki3D.Common.Protocol.IR subBuilder = new global::Naki3D.Common.Protocol.IR();
-            if (payloadCase_ == PayloadOneofCase.Ir) {
-              subBuilder.MergeFrom(Ir);
-            }
-            input.ReadMessage(subBuilder);
-            Ir = subBuilder;
-            break;
-          }
-          case 74: {
-            global::Naki3D.Common.Protocol.Temperature subBuilder = new global::Naki3D.Common.Protocol.Temperature();
-            if (payloadCase_ == PayloadOneofCase.Temperature) {
-              subBuilder.MergeFrom(Temperature);
-            }
-            input.ReadMessage(subBuilder);
-            Temperature = subBuilder;
-            break;
-          }
-          case 82: {
-            global::Naki3D.Common.Protocol.Humidity subBuilder = new global::Naki3D.Common.Protocol.Humidity();
-            if (payloadCase_ == PayloadOneofCase.Humidity) {
-              subBuilder.MergeFrom(Humidity);
-            }
-            input.ReadMessage(subBuilder);
-            Humidity = subBuilder;
-            break;
-          }
-          case 90: {
-            global::Naki3D.Common.Protocol.Time subBuilder = new global::Naki3D.Common.Protocol.Time();
-            if (payloadCase_ == PayloadOneofCase.Time) {
-              subBuilder.MergeFrom(Time);
-            }
-            input.ReadMessage(subBuilder);
-            Time = subBuilder;
+          case 16: {
+            Type = (global::Naki3D.Common.Protocol.SensorType) input.ReadEnum();
             break;
           }
         }
@@ -782,15 +267,15 @@ namespace Naki3D.Common.Protocol {
 
   }
 
-  public sealed partial class Gesture : pb::IMessage<Gesture>
+  public sealed partial class SensorList : pb::IMessage<SensorList>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Gesture> _parser = new pb::MessageParser<Gesture>(() => new Gesture());
+    private static readonly pb::MessageParser<SensorList> _parser = new pb::MessageParser<SensorList>(() => new SensorList());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Gesture> Parser { get { return _parser; } }
+    public static pb::MessageParser<SensorList> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -803,41 +288,54 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Gesture() {
+    public SensorList() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Gesture(Gesture other) : this() {
+    public SensorList(SensorList other) : this() {
+      sensors_ = other.sensors_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Gesture Clone() {
-      return new Gesture(this);
+    public SensorList Clone() {
+      return new SensorList(this);
+    }
+
+    /// <summary>Field number for the "sensors" field.</summary>
+    public const int SensorsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Naki3D.Common.Protocol.SensorInfo> _repeated_sensors_codec
+        = pb::FieldCodec.ForMessage(10, global::Naki3D.Common.Protocol.SensorInfo.Parser);
+    private readonly pbc::RepeatedField<global::Naki3D.Common.Protocol.SensorInfo> sensors_ = new pbc::RepeatedField<global::Naki3D.Common.Protocol.SensorInfo>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Naki3D.Common.Protocol.SensorInfo> Sensors {
+      get { return sensors_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as Gesture);
+      return Equals(other as SensorList);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Gesture other) {
+    public bool Equals(SensorList other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if(!sensors_.Equals(other.sensors_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      hash ^= sensors_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -854,6 +352,7 @@ namespace Naki3D.Common.Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      sensors_.WriteTo(output, _repeated_sensors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -863,6 +362,7 @@ namespace Naki3D.Common.Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      sensors_.WriteTo(ref output, _repeated_sensors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -872,6 +372,7 @@ namespace Naki3D.Common.Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      size += sensors_.CalculateSize(_repeated_sensors_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -879,10 +380,11 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Gesture other) {
+    public void MergeFrom(SensorList other) {
       if (other == null) {
         return;
       }
+      sensors_.Add(other.sensors_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -897,6 +399,10 @@ namespace Naki3D.Common.Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            sensors_.AddEntriesFrom(input, _repeated_sensors_codec);
+            break;
+          }
         }
       }
     #endif
@@ -911,6 +417,10 @@ namespace Naki3D.Common.Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
+          case 10: {
+            sensors_.AddEntriesFrom(ref input, _repeated_sensors_codec);
+            break;
+          }
         }
       }
     }
@@ -918,15 +428,15 @@ namespace Naki3D.Common.Protocol {
 
   }
 
-  public sealed partial class MobileApp : pb::IMessage<MobileApp>
+  public sealed partial class SensorListRequest : pb::IMessage<SensorListRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<MobileApp> _parser = new pb::MessageParser<MobileApp>(() => new MobileApp());
+    private static readonly pb::MessageParser<SensorListRequest> _parser = new pb::MessageParser<SensorListRequest>(() => new SensorListRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MobileApp> Parser { get { return _parser; } }
+    public static pb::MessageParser<SensorListRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -939,29 +449,29 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MobileApp() {
+    public SensorListRequest() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MobileApp(MobileApp other) : this() {
+    public SensorListRequest(SensorListRequest other) : this() {
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MobileApp Clone() {
-      return new MobileApp(this);
+    public SensorListRequest Clone() {
+      return new SensorListRequest(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as MobileApp);
+      return Equals(other as SensorListRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MobileApp other) {
+    public bool Equals(SensorListRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1015,7 +525,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MobileApp other) {
+    public void MergeFrom(SensorListRequest other) {
       if (other == null) {
         return;
       }
@@ -1054,15 +564,15 @@ namespace Naki3D.Common.Protocol {
 
   }
 
-  public sealed partial class RoomEnter : pb::IMessage<RoomEnter>
+  public sealed partial class CECMessage : pb::IMessage<CECMessage>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<RoomEnter> _parser = new pb::MessageParser<RoomEnter>(() => new RoomEnter());
+    private static readonly pb::MessageParser<CECMessage> _parser = new pb::MessageParser<CECMessage>(() => new CECMessage());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<RoomEnter> Parser { get { return _parser; } }
+    public static pb::MessageParser<CECMessage> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1075,41 +585,55 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomEnter() {
+    public CECMessage() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomEnter(RoomEnter other) : this() {
+    public CECMessage(CECMessage other) : this() {
+      action_ = other.action_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomEnter Clone() {
-      return new RoomEnter(this);
+    public CECMessage Clone() {
+      return new CECMessage(this);
+    }
+
+    /// <summary>Field number for the "action" field.</summary>
+    public const int ActionFieldNumber = 1;
+    private global::Naki3D.Common.Protocol.CECAction action_ = global::Naki3D.Common.Protocol.CECAction.PowerOn;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Naki3D.Common.Protocol.CECAction Action {
+      get { return action_; }
+      set {
+        action_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as RoomEnter);
+      return Equals(other as CECMessage);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(RoomEnter other) {
+    public bool Equals(CECMessage other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (Action != other.Action) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (Action != global::Naki3D.Common.Protocol.CECAction.PowerOn) hash ^= Action.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1126,6 +650,10 @@ namespace Naki3D.Common.Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      if (Action != global::Naki3D.Common.Protocol.CECAction.PowerOn) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Action);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1135,6 +663,10 @@ namespace Naki3D.Common.Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Action != global::Naki3D.Common.Protocol.CECAction.PowerOn) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Action);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1144,6 +676,9 @@ namespace Naki3D.Common.Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (Action != global::Naki3D.Common.Protocol.CECAction.PowerOn) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Action);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -1151,9 +686,12 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(RoomEnter other) {
+    public void MergeFrom(CECMessage other) {
       if (other == null) {
         return;
+      }
+      if (other.Action != global::Naki3D.Common.Protocol.CECAction.PowerOn) {
+        Action = other.Action;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1169,6 +707,10 @@ namespace Naki3D.Common.Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 8: {
+            Action = (global::Naki3D.Common.Protocol.CECAction) input.ReadEnum();
+            break;
+          }
         }
       }
     #endif
@@ -1183,958 +725,10 @@ namespace Naki3D.Common.Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class Microphone : pb::IMessage<Microphone>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<Microphone> _parser = new pb::MessageParser<Microphone>(() => new Microphone());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Microphone> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.SensorReflection.Descriptor.MessageTypes[4]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Microphone() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Microphone(Microphone other) : this() {
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Microphone Clone() {
-      return new Microphone(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Microphone);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Microphone other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Microphone other) {
-      if (other == null) {
-        return;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          case 8: {
+            Action = (global::Naki3D.Common.Protocol.CECAction) input.ReadEnum();
             break;
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class LightSensor : pb::IMessage<LightSensor>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<LightSensor> _parser = new pb::MessageParser<LightSensor>(() => new LightSensor());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<LightSensor> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.SensorReflection.Descriptor.MessageTypes[5]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public LightSensor() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public LightSensor(LightSensor other) : this() {
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public LightSensor Clone() {
-      return new LightSensor(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as LightSensor);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(LightSensor other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(LightSensor other) {
-      if (other == null) {
-        return;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class ProximitySensor : pb::IMessage<ProximitySensor>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<ProximitySensor> _parser = new pb::MessageParser<ProximitySensor>(() => new ProximitySensor());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ProximitySensor> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.SensorReflection.Descriptor.MessageTypes[6]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ProximitySensor() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ProximitySensor(ProximitySensor other) : this() {
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ProximitySensor Clone() {
-      return new ProximitySensor(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ProximitySensor);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ProximitySensor other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ProximitySensor other) {
-      if (other == null) {
-        return;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class IR : pb::IMessage<IR>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<IR> _parser = new pb::MessageParser<IR>(() => new IR());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<IR> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.SensorReflection.Descriptor.MessageTypes[7]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public IR() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public IR(IR other) : this() {
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public IR Clone() {
-      return new IR(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as IR);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(IR other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(IR other) {
-      if (other == null) {
-        return;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class Temperature : pb::IMessage<Temperature>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<Temperature> _parser = new pb::MessageParser<Temperature>(() => new Temperature());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Temperature> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.SensorReflection.Descriptor.MessageTypes[8]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Temperature() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Temperature(Temperature other) : this() {
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Temperature Clone() {
-      return new Temperature(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Temperature);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Temperature other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Temperature other) {
-      if (other == null) {
-        return;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class Humidity : pb::IMessage<Humidity>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<Humidity> _parser = new pb::MessageParser<Humidity>(() => new Humidity());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Humidity> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.SensorReflection.Descriptor.MessageTypes[9]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Humidity() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Humidity(Humidity other) : this() {
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Humidity Clone() {
-      return new Humidity(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Humidity);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Humidity other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Humidity other) {
-      if (other == null) {
-        return;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class Time : pb::IMessage<Time>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<Time> _parser = new pb::MessageParser<Time>(() => new Time());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Time> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Naki3D.Common.Protocol.SensorReflection.Descriptor.MessageTypes[10]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Time() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Time(Time other) : this() {
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Time Clone() {
-      return new Time(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Time);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Time other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Time other) {
-      if (other == null) {
-        return;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
+          }
         }
       }
     }
