@@ -9,12 +9,16 @@ using Microsoft.Extensions.Logging;
 
 using backend.Utils;
 using System.Collections.Concurrent;
+using Naki3D.Common.Protocol;
+using Naki3D.Common.Json;
+using backend.Packages;
+using backend.Middleware;
 
 namespace backend.Communication
 {
     public class ExhibitConnectionManager : IHostedService
     {
-        public event Action OnIncomingConnectionEvent;
+        public event System.Action OnIncomingConnectionEvent;
 
         // TODO: Configurable port
         private const int ServerListenPort = 3917;
@@ -57,6 +61,56 @@ namespace backend.Communication
                 conn.AcceptConnection();
                 establishedConnections.TryAdd(connId, conn);
                 pendingConnections.TryRemove(connId, out _dummy);
+            }
+        }
+
+        public void ClearPackage(string connId)
+        {
+            ExhibitConnection conn;
+            if (establishedConnections.TryGetValue(connId, out conn))
+            {
+                // TODO: for now always purge.
+                conn.ClearPackage(true);
+            }
+        }
+
+        public void LoadPackage(string connId, string packageName)
+        {
+            ExhibitConnection conn;
+            if (establishedConnections.TryGetValue(connId, out conn))
+            {
+                var pkg = new PackageDesc();
+                pkg.Version = "0.0.1";
+
+                pkg.Package.Checksum = LocalPackageStorage.GetPackageChecksum(packageName);
+                pkg.Package.Type = PackageType.Data;
+                pkg.Package.Url = new Uri(MyHttpContext.AppBaseUrl + "/download/" + packageName);
+
+                // TODO: replace dummy data
+                pkg.Metadata.Author = "nobody";
+                pkg.Metadata.Exposition = "none";
+
+                var inputs = new List<Naki3D.Common.Json.Action>();
+                
+                var mainAction = new Naki3D.Common.Json.Action();
+                mainAction.Name = "Forward";
+                mainAction.Type = InputType.Gesture;
+                mainAction.Mapping.GestureName = "SwipeLeft";
+                inputs.Add(mainAction);
+
+                pkg.Inputs = inputs.ToArray();
+
+                pkg.Sync.CanvasDimensions.Height = 2048;
+                pkg.Sync.CanvasDimensions.Width = 1024;
+                pkg.Sync.Elements = new Element[] {
+                    new Element()
+                };
+                pkg.Sync.Elements[0].Hostname = "self";
+                pkg.Sync.Elements[0].Role = "primary";
+                pkg.Sync.Elements[0].ViewportTransform = "1024x2048+0+0";
+                pkg.Sync.SelfIndex = 0;
+
+                // TODO: send the above...
             }
         }
 

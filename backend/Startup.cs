@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using NSwag.AspNetCore.Middlewares;
 
 using backend.Communication;
+using backend.Middleware;
 
 namespace backend
 {
@@ -53,6 +54,8 @@ namespace backend
             app.UsePathBase("/api");
             app.UseRouting();
             app.UseWebSockets();
+
+            app.UseHttpContext();
 
             app.UseCors(builder => builder
                 .AllowAnyOrigin());
