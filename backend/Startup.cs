@@ -34,6 +34,8 @@ namespace backend
             services.AddSingleton<ExhibitConnectionManager>();
             services.AddHostedService<ExhibitConnectionManager>(provider => provider.GetService<ExhibitConnectionManager>());
 
+            services.AddMyHttpContextAccessor();
+
             services.AddOpenApiDocument();
         }
 

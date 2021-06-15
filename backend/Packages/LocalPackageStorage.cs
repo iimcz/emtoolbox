@@ -20,6 +20,8 @@ namespace backend.Packages
         {
             // TODO: This only checks the file is a zip file, doesn't check package type, since
             // there is no info about that yet.
+            if (storagePath == null)
+                return new string[0];
             return Directory.GetFiles(storagePath).Where((f) => f.EndsWith(".zip"));
         }
 

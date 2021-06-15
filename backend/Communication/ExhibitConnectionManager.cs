@@ -84,7 +84,7 @@ namespace backend.Communication
 
                 pkg.Package.Checksum = LocalPackageStorage.GetPackageChecksum(packageName);
                 pkg.Package.Type = PackageType.Data;
-                pkg.Package.Url = new Uri(MyHttpContext.AppBaseUrl + "/download/" + packageName);
+                pkg.Package.Url = new Uri(MyHttpContext.AppBaseUrl + "/download?packageName=" + packageName);
 
                 // TODO: replace dummy data
                 pkg.Metadata.Author = "nobody";

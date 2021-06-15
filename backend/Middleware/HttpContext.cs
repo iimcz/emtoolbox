@@ -20,7 +20,7 @@ namespace backend.Middleware
 
     public static class MyHttpContextExtensions
     {
-        public static void AddHttpContextAccessor(this IServiceCollection services)
+        public static void AddMyHttpContextAccessor(this IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
