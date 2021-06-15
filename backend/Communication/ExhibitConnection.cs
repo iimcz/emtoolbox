@@ -191,12 +191,12 @@ namespace backend.Communication
         }
 
         // TODO: proper signature
-        public void LoadPackage(bool isPreview, Resource data)
+        public void LoadPackage(bool isPreview, string descriptor)
         {
             ServerMessage message = new ServerMessage();
             message.LoadPackage = new LoadPackage();
             message.LoadPackage.IsPreview = isPreview;
-            message.LoadPackage.Data = data;
+            message.LoadPackage.DescriptorJson = descriptor;
 
             message.WriteJsonTo(connectionStream);
         }

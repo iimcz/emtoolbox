@@ -24,15 +24,14 @@ namespace Naki3D.Common.Protocol {
     static CommandsReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5jb21tYW5kcy5wcm90bxIWbmFraTNkLmNvbW1vbi5wcm90b2NvbBoOcmVz",
-            "b3VyY2UucHJvdG8iUQoLTG9hZFBhY2thZ2USLgoEZGF0YRgBIAEoCzIgLm5h",
-            "a2kzZC5jb21tb24ucHJvdG9jb2wuUmVzb3VyY2USEgoKaXNfcHJldmlldxgC",
-            "IAEoCCIiCgxDbGVhclBhY2thZ2USEgoKcHVyZ2VfZGF0YRgBIAEoCGIGcHJv",
-            "dG8z"));
+            "Cg5jb21tYW5kcy5wcm90bxIWbmFraTNkLmNvbW1vbi5wcm90b2NvbCI6CgtM",
+            "b2FkUGFja2FnZRIXCg9kZXNjcmlwdG9yX2pzb24YASABKAkSEgoKaXNfcHJl",
+            "dmlldxgCIAEoCCIiCgxDbGVhclBhY2thZ2USEgoKcHVyZ2VfZGF0YRgBIAEo",
+            "CGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Naki3D.Common.Protocol.ResourceReflection.Descriptor, },
+          new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.LoadPackage), global::Naki3D.Common.Protocol.LoadPackage.Parser, new[]{ "Data", "IsPreview" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.LoadPackage), global::Naki3D.Common.Protocol.LoadPackage.Parser, new[]{ "DescriptorJson", "IsPreview" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Naki3D.Common.Protocol.ClearPackage), global::Naki3D.Common.Protocol.ClearPackage.Parser, new[]{ "PurgeData" }, null, null, null, null)
           }));
     }
@@ -73,7 +72,7 @@ namespace Naki3D.Common.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public LoadPackage(LoadPackage other) : this() {
-      data_ = other.data_ != null ? other.data_.Clone() : null;
+      descriptorJson_ = other.descriptorJson_;
       isPreview_ = other.isPreview_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -83,14 +82,14 @@ namespace Naki3D.Common.Protocol {
       return new LoadPackage(this);
     }
 
-    /// <summary>Field number for the "data" field.</summary>
-    public const int DataFieldNumber = 1;
-    private global::Naki3D.Common.Protocol.Resource data_;
+    /// <summary>Field number for the "descriptor_json" field.</summary>
+    public const int DescriptorJsonFieldNumber = 1;
+    private string descriptorJson_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Naki3D.Common.Protocol.Resource Data {
-      get { return data_; }
+    public string DescriptorJson {
+      get { return descriptorJson_; }
       set {
-        data_ = value;
+        descriptorJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -121,7 +120,7 @@ namespace Naki3D.Common.Protocol {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!object.Equals(Data, other.Data)) return false;
+      if (DescriptorJson != other.DescriptorJson) return false;
       if (IsPreview != other.IsPreview) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -129,7 +128,7 @@ namespace Naki3D.Common.Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (data_ != null) hash ^= Data.GetHashCode();
+      if (DescriptorJson.Length != 0) hash ^= DescriptorJson.GetHashCode();
       if (IsPreview != false) hash ^= IsPreview.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -147,9 +146,9 @@ namespace Naki3D.Common.Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (data_ != null) {
+      if (DescriptorJson.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteMessage(Data);
+        output.WriteString(DescriptorJson);
       }
       if (IsPreview != false) {
         output.WriteRawTag(16);
@@ -164,9 +163,9 @@ namespace Naki3D.Common.Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (data_ != null) {
+      if (DescriptorJson.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteMessage(Data);
+        output.WriteString(DescriptorJson);
       }
       if (IsPreview != false) {
         output.WriteRawTag(16);
@@ -181,8 +180,8 @@ namespace Naki3D.Common.Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (data_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Data);
+      if (DescriptorJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DescriptorJson);
       }
       if (IsPreview != false) {
         size += 1 + 1;
@@ -198,11 +197,8 @@ namespace Naki3D.Common.Protocol {
       if (other == null) {
         return;
       }
-      if (other.data_ != null) {
-        if (data_ == null) {
-          Data = new global::Naki3D.Common.Protocol.Resource();
-        }
-        Data.MergeFrom(other.Data);
+      if (other.DescriptorJson.Length != 0) {
+        DescriptorJson = other.DescriptorJson;
       }
       if (other.IsPreview != false) {
         IsPreview = other.IsPreview;
@@ -222,10 +218,7 @@ namespace Naki3D.Common.Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            if (data_ == null) {
-              Data = new global::Naki3D.Common.Protocol.Resource();
-            }
-            input.ReadMessage(Data);
+            DescriptorJson = input.ReadString();
             break;
           }
           case 16: {
@@ -247,10 +240,7 @@ namespace Naki3D.Common.Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            if (data_ == null) {
-              Data = new global::Naki3D.Common.Protocol.Resource();
-            }
-            input.ReadMessage(Data);
+            DescriptorJson = input.ReadString();
             break;
           }
           case 16: {

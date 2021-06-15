@@ -110,7 +110,8 @@ namespace backend.Communication
                 pkg.Sync.Elements[0].ViewportTransform = "1024x2048+0+0";
                 pkg.Sync.SelfIndex = 0;
 
-                // TODO: send the above...
+                // TODO: for now always send live (non-preview) load command
+                conn.LoadPackage(false, pkg.ToJson());
             }
         }
 
