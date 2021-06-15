@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="space-around">
+    <mat-card fxFlex="80%">
+        <mat-card-header>
+            <mat-card-title>ID Pripojeni: {{id}}</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="padded-content">
+                Typ zarizeni: IPW<br>
+                Dostupne sensory:
+                <ul>
+                    <li>Gesta</li>
+                    <li>IR</li>
+                    <li>Mikrofon</li>
+                </ul>
+            </div>
+
+        </mat-card-content>
+
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="1%">
+            <mat-card fxFlex="20%">
+                <mat-card-header>
+                    <mat-card-title>Akce</mat-card-title>
+                </mat-card-header>
+                <button mat-raised-button>Zapomenout</button>
+            </mat-card>
+            <mat-card fxFlex>
+                <mat-card-header>
+                    <mat-card-title>Sprava dat</mat-card-title>
+                </mat-card-header>
+                <button mat-raised-button (click)="clearPackage()">Smazat nahrany balicek</button>
+                <h4>Dostupne balicky:</h4>
+                <mat-selection-list #package [multiple]="false">
+                    <mat-list-option *ngFor="let pkg of availablePackages" [value]="pkg">
+                        {{pkg}}
+                    </mat-list-option>
+                </mat-selection-list>
+                <button mat-raised-button (click)="loadPackage(this.package.selectedOptions.selected[0]?.value)">Nahrat balik: {{this.package.selectedOptions.selected[0]?.value}}</button>
+            </mat-card>
+        </div>
+    </mat-card>
+</div>
