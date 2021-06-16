@@ -35,7 +35,7 @@
                         {{pkg}}
                     </mat-list-option>
                 </mat-selection-list>
-                <button mat-raised-button (click)="loadPackage(this.package.selectedOptions.selected[0]?.value)">Nahrat balik: {{this.package.selectedOptions.selected[0]?.value}}</button>
+                <button mat-raised-button [disabled]="!this.package.selectedOptions.selected[0]" (click)="loadPackage(this.package.selectedOptions.selected[0]?.value)">Nahrat balik: {{this.package.selectedOptions.selected[0]?.value}}</button>
             </mat-card>
         </div>
     </mat-card>

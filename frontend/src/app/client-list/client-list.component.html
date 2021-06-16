@@ -15,7 +15,7 @@
                     <button mat-raised-button (click)="acceptPending(pending)">Accept</button>
                 </mat-list-item>
                 <mat-divider></mat-divider>
-                <mat-list-item *ngFor="let connected of connectedClients">
+                <mat-list-item *ngFor="let connected of connectedClients" [routerLink]="['/client', {id: connected}]" class="highlight">
                     <mat-icon>link</mat-icon>&nbsp;{{connected}}
                 </mat-list-item>
             </mat-list>

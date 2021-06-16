@@ -18,7 +18,7 @@ export class ClientDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.id = params['id'];
 
       this.refresh();
