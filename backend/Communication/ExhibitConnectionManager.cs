@@ -82,11 +82,13 @@ namespace backend.Communication
                 var pkg = new PackageDesc();
                 pkg.Version = "0.0.1";
 
+                pkg.Package = new Package();
                 pkg.Package.Checksum = LocalPackageStorage.GetPackageChecksum(packageName);
                 pkg.Package.Type = PackageType.Data;
-                pkg.Package.Url = new Uri(MyHttpContext.AppBaseUrl + "/download?packageName=" + packageName);
+                pkg.Package.Url = new Uri(MyHttpContext.AppBaseUrl + "/Package/download?packageName=" + packageName);
 
                 // TODO: replace dummy data
+                pkg.Metadata = new Metadata();
                 pkg.Metadata.Author = "nobody";
                 pkg.Metadata.Exposition = "none";
 
@@ -95,13 +97,14 @@ namespace backend.Communication
                 var mainAction = new Naki3D.Common.Json.Action();
                 mainAction.Name = "Forward";
                 mainAction.Type = InputType.Gesture;
+                mainAction.Mapping = new Mapping();
                 mainAction.Mapping.GestureName = "SwipeLeft";
                 inputs.Add(mainAction);
 
                 pkg.Inputs = inputs.ToArray();
 
-                pkg.Sync.CanvasDimensions.Height = 2048;
-                pkg.Sync.CanvasDimensions.Width = 1024;
+                pkg.Sync = new Sync();
+                pkg.Sync.CanvasDimensions = new CanvasDimensions() { Height = 2048, Width = 1024 };
                 pkg.Sync.Elements = new Element[] {
                     new Element()
                 };

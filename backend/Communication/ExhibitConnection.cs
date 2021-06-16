@@ -42,6 +42,7 @@ namespace backend.Communication
             connectionStream = client.GetStream();
             jsonReader = new JsonObjectStringReader(connectionStream);
             timeoutTimer = new Timer(TIMEOUT_INTERVAL);
+            timeoutTimer.AutoReset = false;
             timeoutTimer.Elapsed += (object sender, ElapsedEventArgs e) => {
                 ExhibitTimedOut?.Invoke(this, new EventArgs());
                 Dispose();

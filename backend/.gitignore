@@ -1,3 +1,6 @@
 .vscode/
 bin/
 obj/
+
+# ignore .zip files in local storage
+localdata/*.zip

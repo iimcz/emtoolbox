@@ -69,6 +69,12 @@ namespace backend
             {
                 endpoints.MapControllers();
             });
+
+            var localDataPath = Configuration["EMToolbox:LocalPackageStoratePath"];
+            if (localDataPath != null)
+            {
+                System.Environment.SetEnvironmentVariable("EMTOOLBOX_STORAGE", localDataPath);
+            }
         }
     }
 }

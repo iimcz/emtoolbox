@@ -22,7 +22,7 @@ namespace backend.Packages
             // there is no info about that yet.
             if (storagePath == null)
                 return new string[0];
-            return Directory.GetFiles(storagePath).Where((f) => f.EndsWith(".zip"));
+            return Directory.GetFiles(storagePath).Where((f) => f.EndsWith(".zip")).Select((f) => Path.GetFileName(f));
         }
 
         public static string GetPackagePath(string packageName)
@@ -32,10 +32,17 @@ namespace backend.Packages
 
         public static string GetPackageChecksum(string packageName)
         {
-            var hasher = HashAlgorithm.Create("SHA256");
+            using (var hasher = HashAlgorithm.Create("SHA256"))
             using (FileStream stream = new FileStream(Path.Combine(storagePath, packageName), FileMode.Open))
             {
-                return Encoding.ASCII.GetString(hasher.ComputeHash(stream));
+                StringBuilder sb = new StringBuilder();
+                var bytes = hasher.ComputeHash(stream);
+                foreach (byte b in bytes)
+                {
+                    sb.Append(b.ToString("x2"));
+                }
+
+                return sb.ToString();
             }
         }
     }

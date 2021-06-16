@@ -75,6 +75,7 @@ namespace backend.Communication
                                             0;
                                     // Save remaining data by copying it to the front of the buffer.
                                     Array.Copy(buffer, received - remainingData, buffer, 0, remainingData);
+                                    Console.WriteLine(builder.ToString());
                                     return builder.ToString();
                                 }
                             }
