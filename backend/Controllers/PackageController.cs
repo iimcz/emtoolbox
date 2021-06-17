@@ -30,7 +30,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("download")]
-        public async Task<IActionResult> Download(string packageName)
+        public IActionResult Download(string packageName)
         {
             Stream stream = new FileStream(LocalPackageStorage.GetPackagePath(packageName), FileMode.Open);
 

@@ -103,6 +103,14 @@ namespace backend.Communication
 
                 pkg.Inputs = inputs.ToArray();
 
+
+                pkg.Parameters = new Parameters();
+
+                // TODO: for testing purposes, always send the packages as
+                // DisplayType.Scene now, with no settings.
+                pkg.Parameters.DisplayType = DisplayType.Scene;
+                pkg.Parameters.Settings = new object[0];
+
                 pkg.Sync = new Sync();
                 pkg.Sync.CanvasDimensions = new CanvasDimensions() { Height = 2048, Width = 1024 };
                 pkg.Sync.Elements = new Element[] {
