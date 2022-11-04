@@ -24,16 +24,16 @@ namespace Naki3D.Common.Protocol {
     static ManagementReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChBtYW5hZ2VtZW50LnByb3RvEhZuYWtpM2QuY29tbW9uLnByb3RvY29sIuAB",
+            "ChBtYW5hZ2VtZW50LnByb3RvEhZuYWtpM2QuY29tbW9uLnByb3RvY29sIvsB",
             "ChFNYW5hZ2VtZW50UmVxdWVzdBIVCg1jb25uZWN0aW9uX2lkGAEgASgJElEK",
             "D21hbmFnZW1lbnRfdHlwZRgCIAEoDjI4Lm5ha2kzZC5jb21tb24ucHJvdG9j",
-            "b2wuTWFuYWdlbWVudFJlcXVlc3QuTWFuYWdlbWVudFR5cGUiYQoOTWFuYWdl",
+            "b2wuTWFuYWdlbWVudFJlcXVlc3QuTWFuYWdlbWVudFR5cGUifAoOTWFuYWdl",
             "bWVudFR5cGUSDAoIU0hVVERPV04QABISCg5TSFVURE9XTl9DTEVBUhABEgoK",
-            "BlJFQk9PVBACEhAKDFJFQk9PVF9DTEVBUhADEg8KC0FMSVZFX0NIRUNLEAQi",
-            "hwEKEk1hbmFnZW1lbnRSZXNwb25zZRJOCg1kZXZpY2Vfc3RhdHVzGAEgASgO",
-            "MjcubmFraTNkLmNvbW1vbi5wcm90b2NvbC5NYW5hZ2VtZW50UmVzcG9uc2Uu",
-            "RGV2aWNlU3RhdHVzIiEKDERldmljZVN0YXR1cxIGCgJPSxAAEgkKBUVSUk9S",
-            "EAFiBnByb3RvMw=="));
+            "BlJFQk9PVBACEhAKDFJFQk9PVF9DTEVBUhADEg8KC0FMSVZFX0NIRUNLEAQS",
+            "CQoFU1RBUlQQBRIOCgpTVEFSVF9NVVRFEAYihwEKEk1hbmFnZW1lbnRSZXNw",
+            "b25zZRJOCg1kZXZpY2Vfc3RhdHVzGAEgASgOMjcubmFraTNkLmNvbW1vbi5w",
+            "cm90b2NvbC5NYW5hZ2VtZW50UmVzcG9uc2UuRGV2aWNlU3RhdHVzIiEKDERl",
+            "dmljZVN0YXR1cxIGCgJPSxAAEgkKBUVSUk9SEAFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -56,19 +56,23 @@ namespace Naki3D.Common.Protocol {
     private static readonly pb::MessageParser<ManagementRequest> _parser = new pb::MessageParser<ManagementRequest>(() => new ManagementRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<ManagementRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::Naki3D.Common.Protocol.ManagementReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ManagementRequest() {
       OnConstruction();
     }
@@ -76,6 +80,7 @@ namespace Naki3D.Common.Protocol {
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ManagementRequest(ManagementRequest other) : this() {
       connectionId_ = other.connectionId_;
       managementType_ = other.managementType_;
@@ -83,6 +88,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ManagementRequest Clone() {
       return new ManagementRequest(this);
     }
@@ -94,6 +100,7 @@ namespace Naki3D.Common.Protocol {
     /// ID of target PC
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string ConnectionId {
       get { return connectionId_; }
       set {
@@ -105,6 +112,7 @@ namespace Naki3D.Common.Protocol {
     public const int ManagementTypeFieldNumber = 2;
     private global::Naki3D.Common.Protocol.ManagementRequest.Types.ManagementType managementType_ = global::Naki3D.Common.Protocol.ManagementRequest.Types.ManagementType.Shutdown;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Naki3D.Common.Protocol.ManagementRequest.Types.ManagementType ManagementType {
       get { return managementType_; }
       set {
@@ -113,11 +121,13 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
       return Equals(other as ManagementRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Equals(ManagementRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -131,6 +141,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
       if (ConnectionId.Length != 0) hash ^= ConnectionId.GetHashCode();
@@ -142,11 +153,13 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void WriteTo(pb::CodedOutputStream output) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
@@ -167,6 +180,7 @@ namespace Naki3D.Common.Protocol {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (ConnectionId.Length != 0) {
         output.WriteRawTag(10);
@@ -183,6 +197,7 @@ namespace Naki3D.Common.Protocol {
     #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
       if (ConnectionId.Length != 0) {
@@ -198,6 +213,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(ManagementRequest other) {
       if (other == null) {
         return;
@@ -212,6 +228,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(pb::CodedInputStream input) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       input.ReadRawMessage(this);
@@ -237,6 +254,7 @@ namespace Naki3D.Common.Protocol {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -260,6 +278,7 @@ namespace Naki3D.Common.Protocol {
     #region Nested types
     /// <summary>Container for nested types declared in the ManagementRequest message type.</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static partial class Types {
       public enum ManagementType {
         [pbr::OriginalName("SHUTDOWN")] Shutdown = 0,
@@ -276,6 +295,14 @@ namespace Naki3D.Common.Protocol {
         /// Ping
         /// </summary>
         [pbr::OriginalName("ALIVE_CHECK")] AliveCheck = 4,
+        /// <summary>
+        /// Starts ipw-firmware if not running
+        /// </summary>
+        [pbr::OriginalName("START")] Start = 5,
+        /// <summary>
+        /// Starts ipw-firmware with sound disabled
+        /// </summary>
+        [pbr::OriginalName("START_MUTE")] StartMute = 6,
       }
 
     }
@@ -291,19 +318,23 @@ namespace Naki3D.Common.Protocol {
     private static readonly pb::MessageParser<ManagementResponse> _parser = new pb::MessageParser<ManagementResponse>(() => new ManagementResponse());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<ManagementResponse> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::Naki3D.Common.Protocol.ManagementReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ManagementResponse() {
       OnConstruction();
     }
@@ -311,12 +342,14 @@ namespace Naki3D.Common.Protocol {
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ManagementResponse(ManagementResponse other) : this() {
       deviceStatus_ = other.deviceStatus_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ManagementResponse Clone() {
       return new ManagementResponse(this);
     }
@@ -325,6 +358,7 @@ namespace Naki3D.Common.Protocol {
     public const int DeviceStatusFieldNumber = 1;
     private global::Naki3D.Common.Protocol.ManagementResponse.Types.DeviceStatus deviceStatus_ = global::Naki3D.Common.Protocol.ManagementResponse.Types.DeviceStatus.Ok;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Naki3D.Common.Protocol.ManagementResponse.Types.DeviceStatus DeviceStatus {
       get { return deviceStatus_; }
       set {
@@ -333,11 +367,13 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
       return Equals(other as ManagementResponse);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Equals(ManagementResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -350,6 +386,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
       if (DeviceStatus != global::Naki3D.Common.Protocol.ManagementResponse.Types.DeviceStatus.Ok) hash ^= DeviceStatus.GetHashCode();
@@ -360,11 +397,13 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void WriteTo(pb::CodedOutputStream output) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
@@ -381,6 +420,7 @@ namespace Naki3D.Common.Protocol {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (DeviceStatus != global::Naki3D.Common.Protocol.ManagementResponse.Types.DeviceStatus.Ok) {
         output.WriteRawTag(8);
@@ -393,6 +433,7 @@ namespace Naki3D.Common.Protocol {
     #endif
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
       if (DeviceStatus != global::Naki3D.Common.Protocol.ManagementResponse.Types.DeviceStatus.Ok) {
@@ -405,6 +446,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(ManagementResponse other) {
       if (other == null) {
         return;
@@ -416,6 +458,7 @@ namespace Naki3D.Common.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void MergeFrom(pb::CodedInputStream input) {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       input.ReadRawMessage(this);
@@ -437,6 +480,7 @@ namespace Naki3D.Common.Protocol {
 
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -456,6 +500,7 @@ namespace Naki3D.Common.Protocol {
     #region Nested types
     /// <summary>Container for nested types declared in the ManagementResponse message type.</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static partial class Types {
       public enum DeviceStatus {
         [pbr::OriginalName("OK")] Ok = 0,
