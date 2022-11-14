@@ -1,10 +1,18 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Model
 {
     public class Exhibit
     {
-        // TODO: Id, key, etc.
-        public List<Sensor> AvailableSensors { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string Hostname { get; set; }
+        public Exposition CurrentExposition { get; set; }
+        public Exposition PlannedExposition { get; set; }
+        public List<Sensor> Sensors { get; set; }
+        public int LastLoadedPackage { get; set; }
+        public ICollection<ExhibitTag> Tags { get; set; }
     }
 }

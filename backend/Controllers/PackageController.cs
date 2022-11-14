@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using backend.Packages;
 using System.Threading.Tasks;
+using backend.Generated.CMToolbox;
+using System.Net.Http;
+using System.Linq;
 
 namespace backend.Controllers
 {
@@ -13,34 +16,56 @@ namespace backend.Controllers
     [Route("[controller]")]
     public class PackageController : ControllerBase
     {
-        ILogger<ConnectionController> logger;
-        ExhibitConnectionManager connectionManager;
+        ILogger<PackageController> _logger;
+        ExhibitConnectionManager _connectionManager;
+        PackagesClient _packagesClient;
 
-        public PackageController(ILogger<ConnectionController> logger, ExhibitConnectionManager connectionManager)
+        public PackageController(ILogger<PackageController> logger, ExhibitConnectionManager connectionManager)
         {
-            this.logger = logger;
-            this.connectionManager = connectionManager;
+            this._logger = logger;
+            this._connectionManager = connectionManager;
+
+            string apiUrl = System.Environment.GetEnvironmentVariable("CMTOOLBOX_API_URL");
+            if (!string.IsNullOrEmpty(apiUrl))
+            {
+                HttpClient httpClient = new HttpClient();
+                this._packagesClient = new PackagesClient(apiUrl, httpClient);
+            }
         }
 
 
         [HttpGet("available")]
-        public IEnumerable<string> GetAvailable()
+        public async Task<IEnumerable<string>> GetAvailable()
         {
-            return LocalPackageStorage.ListPackages();
+            if (this._packagesClient != null)
+            {
+                return (await this._packagesClient.GetPackagesAsync()).Select(p => p.Name);
+            }
+            else
+            {
+                return LocalPackageStorage.ListPackages();   
+            }
         }
 
         [HttpGet("download")]
-        public IActionResult Download(string packageName)
+        public async Task<IActionResult> Download(string packageName)
         {
-            Stream stream = new FileStream(LocalPackageStorage.GetPackagePath(packageName), FileMode.Open);
+            if (this._packagesClient != null)
+            {
+                return Redirect(this._packagesClient.BaseUrl + "/download/" + (await this._packagesClient.GetPackagesAsync()).First(p => p.Name == packageName).Id);
+            }
+            else
+            {
+                Stream stream = new FileStream(LocalPackageStorage.GetPackagePath(packageName), FileMode.Open);
 
-            return File(stream, "application/octet-stream");
+                return File(stream, "application/octet-stream");
+            }
         }
 
         [HttpPost("load")]
         public IActionResult LoadPackage(string connectionId, string packageName)
         {
-            connectionManager.LoadPackage(connectionId, packageName);
+            _connectionManager.LoadPackage(connectionId, packageName);
 
             return Ok();
         }
@@ -48,7 +73,7 @@ namespace backend.Controllers
         [HttpPost("clear")]
         public IActionResult ClearPackage(string connectionId)
         {
-            connectionManager.ClearPackage(connectionId);
+            _connectionManager.ClearPackage(connectionId);
 
             return Ok();
         }

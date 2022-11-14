@@ -15,35 +15,35 @@ namespace backend.Communication
 {
     public class ExhibitConnection : IDisposable
     {
-        private readonly double TIMEOUT_INTERVAL = 30_000;
+        private readonly double TIMEOUT_INTERVAL = 10_000;
 
-        TcpClient connectionClient;
-        Stream connectionStream;
-        JsonObjectStringReader jsonReader;
-        Timer timeoutTimer;
-        Task receiveLoopTask;
-        bool accepted = false;
+        TcpClient _connectionClient;
+        Stream _connectionStream;
+        JsonObjectStringReader _jsonReader;
+        Timer _timeoutTimer;
+        Task _receiveLoopTask;
+        bool _accepted = false;
 
-        DeviceDescriptor descriptor = null;
+        public DeviceDescriptor Descriptor { get; private set; }
 
         public string ConnectionId { get; private set; }
         public string PublicKey { get; private set; }
 
 
-        public bool IsConnected { get { return connectionClient.Connected; } }
+        public bool IsConnected { get { return _connectionClient.Connected; } }
 
         // Events
         public event EventHandler ExhibitTimedOut;
-        public event EventHandler DescriptorChanged;
+        public event EventHandler<DeviceDescriptor> DescriptorChanged;
 
         public ExhibitConnection(TcpClient client)
         {
-            connectionClient = client;
-            connectionStream = client.GetStream();
-            jsonReader = new JsonObjectStringReader(connectionStream);
-            timeoutTimer = new Timer(TIMEOUT_INTERVAL);
-            timeoutTimer.AutoReset = false;
-            timeoutTimer.Elapsed += (object sender, ElapsedEventArgs e) => {
+            _connectionClient = client;
+            _connectionStream = client.GetStream();
+            _jsonReader = new JsonObjectStringReader(_connectionStream);
+            _timeoutTimer = new Timer(TIMEOUT_INTERVAL);
+            _timeoutTimer.AutoReset = false;
+            _timeoutTimer.Elapsed += (object sender, ElapsedEventArgs e) => {
                 ExhibitTimedOut?.Invoke(this, new EventArgs());
                 Dispose();
             };
@@ -51,7 +51,7 @@ namespace backend.Communication
 
         private void ResetTimeout()
         {
-            timeoutTimer.Interval = TIMEOUT_INTERVAL;
+            _timeoutTimer.Interval = TIMEOUT_INTERVAL;
         }
 
         private void MessageReceiveLoop()
@@ -61,19 +61,19 @@ namespace backend.Communication
                 DeviceMessage message = null;
                 try 
                 {
-                    message = DeviceMessage.Parser.ParseJson(jsonReader.NextJsonObject());
+                    message = DeviceMessage.Parser.ParseJson(_jsonReader.NextJsonObject());
                 }
-                catch (InvalidProtocolBufferException)
+                catch (InvalidProtocolBufferException e)
                 {
-                    Console.WriteLine("InvalidProtobuf");
+                    Console.WriteLine("InvalidProtobuf: " + e.Message);
                     // TODO: proper loging
                     // Failed either due to message having invalid format
                     // If the stream is still open, it will eventually time out.
                     return;
                 }
-                catch (InvalidDataException)
+                catch (InvalidDataException e)
                 {
-                    Console.WriteLine("InvalidData");
+                    Console.WriteLine("InvalidData: " + e.Message);
                     // TODO: proper loging
                     // Failed either due to the stream closing or because of another error.
                     // If the stream is still open, it will eventually time out.
@@ -84,10 +84,10 @@ namespace backend.Communication
                 {
                     case DeviceMessage.MessageOneofCase.DeviceDescriptor:
                         ResetTimeout();
-                        if (!accepted)
+                        if (!_accepted)
                             continue; // Ignore if coming from an unaccepted client
-                        descriptor = message.DeviceDescriptor;
-                        DescriptorChanged?.Invoke(this, new EventArgs());
+                        Descriptor = message.DeviceDescriptor;
+                        DescriptorChanged?.Invoke(this, Descriptor);
                         break;
                     case DeviceMessage.MessageOneofCase.Ping:
                         ResetTimeout();
@@ -107,7 +107,7 @@ namespace backend.Communication
 
             try
             {
-                var request = ConnectionRequest.Parser.ParseJson(jsonReader.NextJsonObject());
+                var request = ConnectionRequest.Parser.ParseJson(_jsonReader.NextJsonObject());
                 ConnectionId = request.ConnectionId;
                 PublicKey = request.PublicKey.ToStringUtf8();
             }
@@ -126,11 +126,11 @@ namespace backend.Communication
 
             var ack = new ConnectionAcknowledgement();
             ack.Verified = false;
-            ack.WriteJsonTo(connectionStream);
+            ack.WriteJsonTo(_connectionStream);
 
-            timeoutTimer.Start();
+            _timeoutTimer.Start();
 
-            receiveLoopTask = Task.Run(MessageReceiveLoop);
+            _receiveLoopTask = Task.Run(MessageReceiveLoop);
         }
 
         private bool IsVersionCompatible(object verInfo)
@@ -142,7 +142,7 @@ namespace backend.Communication
 
         private object PerformVersionExchange()
         {
-            var clientInfo = VersionInfo.Parser.ParseJson(jsonReader.NextJsonObject());
+            var clientInfo = VersionInfo.Parser.ParseJson(_jsonReader.NextJsonObject());
 
             // TODO: make these build-time constants
             var serverInfo = new VersionInfo();
@@ -151,16 +151,16 @@ namespace backend.Communication
             serverInfo.Patch = 0;
             serverInfo.Build = "";
 
-            serverInfo.WriteJsonTo(connectionStream);
+            serverInfo.WriteJsonTo(_connectionStream);
 
             return clientInfo;
         }
 
         public void Dispose()
         {
-            connectionClient.Dispose();
-            if (receiveLoopTask != null && !receiveLoopTask.IsCompleted)
-                receiveLoopTask.RunSynchronously();
+            _connectionClient.Dispose();
+            if (_receiveLoopTask != null && !_receiveLoopTask.IsCompleted)
+                _receiveLoopTask.RunSynchronously();
         }
 
         public void AcceptConnection()
@@ -171,7 +171,7 @@ namespace backend.Communication
 
             try
             {
-                ack.WriteJsonTo(connectionStream);
+                ack.WriteJsonTo(_connectionStream);
             }
             catch (Exception)
             {
@@ -179,7 +179,7 @@ namespace backend.Communication
                 throw;
             }
 
-            accepted = true;
+            _accepted = true;
         }
 
         public void SendEncryptionInfo()
@@ -199,7 +199,7 @@ namespace backend.Communication
             message.LoadPackage.IsPreview = isPreview;
             message.LoadPackage.DescriptorJson = descriptor;
 
-            message.WriteJsonTo(connectionStream);
+            message.WriteJsonTo(_connectionStream);
         }
 
         public void ClearPackage(bool purge)
@@ -208,7 +208,24 @@ namespace backend.Communication
             message.ClearPackage = new ClearPackage();
             message.ClearPackage.PurgeData = purge;
 
-            message.WriteJsonTo(connectionStream);
+            message.WriteJsonTo(_connectionStream);
+        }
+
+        public string GetSocketAddress()
+        {
+            var endpoint = _connectionClient.Client.LocalEndPoint as IPEndPoint;
+            if (endpoint != null)
+            {
+                if (endpoint.Address.IsIPv4MappedToIPv6)
+                {
+                    return endpoint.Address.MapToIPv4().ToString();
+                }
+                else
+                {
+                    return $"[{endpoint.Address.MapToIPv6().ToString()}]";
+                }
+            }
+            return null;
         }
     }
 }

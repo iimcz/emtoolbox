@@ -5,6 +5,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.11"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.11"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.11"/>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.11"/>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.11"/>
@@ -21,9 +22,15 @@
   </ItemGroup>
   <Target Name="Codegen">
     <MakeDir Directories="$(ProjectDir)Generated"/>
-    <Exec Command="protoc --csharp_out=Generated --proto_path=$(ProjectDir)../common/protobuf %(ProtobufDef.Identity)"/>
+    <Exec Command="protoc --csharp_out=Generated/Protobuf --proto_path=$(ProjectDir)../common/protobuf %(ProtobufDef.Identity)"/>
   </Target>
   <Target Name="NSwag">
-    <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Core31) aspnetcore2openapi /AspNetCoreEnvironment:Development /project:. /output:Api/openapi.json"/>
+    <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) aspnetcore2openapi /AspNetCoreEnvironment:Development /project:. /output:Api/openapi.json"/>
+  </Target>
+  <Target Name="CMTNSwag">
+    <Exec Command="$(NSwagExe_Net60) run"/>
+  </Target>
+  <Target Name="Quicktype">
+    <Exec Command="quicktype --lang cs --src-lang schema --out Generated/Json/PackageDescriptor.cs --array-type list --namespace Naki3D.Common.Json  ../common/json/package-schema.json"/>
   </Target>
 </Project>

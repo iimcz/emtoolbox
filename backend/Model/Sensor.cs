@@ -1,14 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace backend.Model
 {
-    public enum SensorType
-    {
-        Skeleton,
-        Motion,
-        MicVolume,
-    }
-
     public class Sensor
     {
-        public SensorType SensorType { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public ValueType ValueType { get; set; }
+        public string FriendlyName { get; set; }
+        [Required]
+        public string Path { get; set; }
     }
 }
