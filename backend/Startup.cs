@@ -71,7 +71,9 @@ namespace backend
             app.UseHttpContext();
 
             app.UseCors(builder => builder
-                .AllowAnyOrigin());
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -91,6 +93,12 @@ namespace backend
             if (cmtoolboxApiUrl != null)
             {
                 System.Environment.SetEnvironmentVariable("CMTOOLBOX_API_URL", cmtoolboxApiUrl);
+            }
+
+            var cmtoolboxDownloadBaseUrl = Configuration["EMToolbox:CMToolboxFileTemplate"];
+            if (cmtoolboxDownloadBaseUrl != null)
+            {
+                System.Environment.SetEnvironmentVariable("CMTOOLBOX_API_DOWNLOAD_BASEURL", cmtoolboxDownloadBaseUrl);
             }
         }
     }

@@ -7,5 +7,6 @@ namespace backend.ViewModels
         public string Path { get; set; }
         public string FriendlyName { get; set; }
         public ValueType ValueType { get; set; }
+        public string AvailableEvents { get; set; }
     }
 }

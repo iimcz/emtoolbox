@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using backend.Generated.CMToolbox;
 using System.Net.Http;
 using System.Linq;
+using System;
 
 namespace backend.Controllers
 {
@@ -35,17 +36,33 @@ namespace backend.Controllers
 
 
         [HttpGet("available")]
-        public async Task<IEnumerable<string>> GetAvailable()
+        public async Task<IEnumerable<backend.ViewModels.PackageProperties>> GetAvailable()
         {
             if (this._packagesClient != null)
             {
-                return (await this._packagesClient.GetPackagesAsync()).Select(p => p.Name);
+                return (await this._packagesClient.GetPackagesAsync()).Select(p => new backend.ViewModels.PackageProperties {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Type = ConvertType(p.Type)
+                });
             }
             else
             {
-                return LocalPackageStorage.ListPackages();   
+                // TODO: local storage
+                return new backend.ViewModels.PackageProperties[] { };   
             }
         }
+
+        private ViewModels.PackageType ConvertType(Generated.CMToolbox.PackageType type) => type switch
+        {
+            PackageType.Gallery => backend.ViewModels.PackageType.Gallery,
+            PackageType.Model => backend.ViewModels.PackageType.Model,
+            PackageType.Video => backend.ViewModels.PackageType.Video,
+            PackageType.Scene => backend.ViewModels.PackageType.Scene,
+            PackageType.Panorama => backend.ViewModels.PackageType.Panorama,
+            _ => backend.ViewModels.PackageType.Scene
+        };
 
         [HttpGet("download")]
         public async Task<IActionResult> Download(string packageName)

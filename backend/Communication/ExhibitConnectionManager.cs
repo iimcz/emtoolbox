@@ -152,44 +152,44 @@ namespace backend.Communication
                 ExhibitConnection sender = (ExhibitConnection)obj;
                 sender.SendEncryptionInfo();
 
-                using (var scope = this._scopeFactory.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<EmtContext>();
-                    Exhibit exhibit = dbContext.Exhibits.Include(exhibit => exhibit.Sensors).FirstOrDefault(exhibit => exhibit.Hostname == sender.ConnectionId);
-                    if (exhibit != null)
-                    {
-                        // TODO: update protocol to include more info about sensors
-                        Func<SensorType, int, Sensor> mapping = (SensorType type, int i) =>
-                        {
-                            return new Sensor
-                            {
-                                Path = Enum.GetName(type) + i.ToString(),
-                                FriendlyName = Enum.GetName(type) + " " + obj.ToString(),
-                                ValueType = type switch
-                                {
-                                    SensorType.Gesture => Model.ValueType.Complex,
-                                    SensorType.Handtracking => Model.ValueType.Complex,
-                                    SensorType.Image => Model.ValueType.Complex,
-                                    SensorType.Depth => Model.ValueType.Number,
-                                    SensorType.Ir => Model.ValueType.Bool,
-                                    SensorType.Light => Model.ValueType.Number,
-                                    SensorType.Microphone => Model.ValueType.Number,
-                                    _ => Model.ValueType.Void
-                                }
-                            };
-                        };
+                // using (var scope = this._scopeFactory.CreateScope())
+                // {
+                //     var dbContext = scope.ServiceProvider.GetRequiredService<EmtContext>();
+                //     Exhibit exhibit = dbContext.Exhibits.Include(exhibit => exhibit.Sensors).FirstOrDefault(exhibit => exhibit.Hostname == sender.ConnectionId);
+                //     if (exhibit != null)
+                //     {
+                //         // TODO: update protocol to include more info about sensors
+                //         Func<SensorType, int, Sensor> mapping = (SensorType type, int i) =>
+                //         {
+                //             return new Sensor
+                //             {
+                //                 Path = Enum.GetName(type) + i.ToString(),
+                //                 FriendlyName = Enum.GetName(type) + " " + obj.ToString(),
+                //                 ValueType = type switch
+                //                 {
+                //                     SensorType.Gesture => Model.ValueType.Complex,
+                //                     SensorType.Handtracking => Model.ValueType.Complex,
+                //                     SensorType.Image => Model.ValueType.Complex,
+                //                     SensorType.Depth => Model.ValueType.Number,
+                //                     SensorType.Ir => Model.ValueType.Bool,
+                //                     SensorType.Light => Model.ValueType.Number,
+                //                     SensorType.Microphone => Model.ValueType.Number,
+                //                     _ => Model.ValueType.Void
+                //                 }
+                //             };
+                //         };
 
-                        for (int i = 0; i < e.LocalSensors.Count; i++)
-                        {
-                            Sensor s = mapping(e.LocalSensors[i], i);
-                            if (exhibit.Sensors[i].Path != s.Path)
-                            {
-                                exhibit.Sensors[i] = s;
-                            }
-                        }
-                        dbContext.SaveChanges();
-                    }
-                }
+                //         for (int i = 0; i < e.LocalSensors.Count; i++)
+                //         {
+                //             Sensor s = mapping(e.LocalSensors[i], i);
+                //             if (exhibit.Sensors[i].Path != s.Path)
+                //             {
+                //                 exhibit.Sensors[i] = s;
+                //             }
+                //         }
+                //         dbContext.SaveChanges();
+                //     }
+                // }
             };
 
             excon.ExhibitTimedOut += (object obj, EventArgs e) =>

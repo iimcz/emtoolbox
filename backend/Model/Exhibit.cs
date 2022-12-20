@@ -12,7 +12,7 @@ namespace backend.Model
         public Exposition CurrentExposition { get; set; }
         public Exposition PlannedExposition { get; set; }
         public List<Sensor> Sensors { get; set; }
-        public int LastLoadedPackage { get; set; }
+        public int? LastLoadedPackage { get; set; }
         public ICollection<ExhibitTag> Tags { get; set; }
     }
 }

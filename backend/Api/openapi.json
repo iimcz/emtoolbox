@@ -154,12 +154,12 @@
         }
       }
     },
-    "/exhibit/send/{exhibit_id}/{package_id}": {
-      "post": {
+    "/exhibit/details/{exhibit_id}": {
+      "get": {
         "tags": [
           "Exhibit"
         ],
-        "operationId": "Exhibit_SendPackage",
+        "operationId": "Exhibit_GetExhibit",
         "parameters": [
           {
             "name": "exhibit_id",
@@ -170,16 +170,38 @@
               "nullable": true
             },
             "x-position": 1
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExhibitProperties"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exhibit/send/{exposition_id}": {
+      "post": {
+        "tags": [
+          "Exhibit"
+        ],
+        "operationId": "Exhibit_SendPackages",
+        "parameters": [
           {
-            "name": "package_id",
+            "name": "exposition_id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 2
+            "x-position": 1
           }
         ],
         "responses": {
@@ -219,10 +241,32 @@
           "200": {
             "description": "",
             "content": {
-              "application/octet-stream": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/ExpositionProperties"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exposition/all": {
+      "get": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_GetAll",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExpositionProperties"
+                  }
                 }
               }
             }
@@ -252,10 +296,9 @@
           "200": {
             "description": "",
             "content": {
-              "application/octet-stream": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/ExpositionProperties"
                 }
               }
             }
@@ -328,10 +371,9 @@
           "200": {
             "description": "",
             "content": {
-              "application/octet-stream": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "type": "string"
                 }
               }
             }
@@ -382,6 +424,177 @@
         }
       }
     },
+    "/exposition/overlay/{id}/{exhibit_id}": {
+      "post": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_SetPackageOverlay",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "exhibit_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "pkg_overlay",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PackageOverlayProperties"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 3
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_GetPackageOverlay",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "exhibit_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackageOverlayProperties"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exposition/overlay/{id}/{package_id}": {
+      "delete": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_DeletePackageOverlay",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "package_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exposition/overlay/{id}/all": {
+      "delete": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_DeletePackageOverlays",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/package/available": {
       "get": {
         "tags": [
@@ -396,7 +609,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/PackageProperties"
                   }
                 }
               }
@@ -551,6 +764,10 @@
           },
           "valueType": {
             "$ref": "#/components/schemas/ValueType"
+          },
+          "availableEvents": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -561,13 +778,15 @@
           "Void",
           "Bool",
           "Number",
+          "Event",
           "Complex"
         ],
         "enum": [
           0,
           1,
           2,
-          3
+          3,
+          4
         ]
       },
       "ExpositionProperties": {
@@ -589,13 +808,108 @@
           },
           "startDate": {
             "type": "string",
-            "format": "date"
+            "format": "date-time",
+            "nullable": true
           },
           "endDate": {
             "type": "string",
-            "format": "date"
+            "format": "date-time",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ExpositionMeta"
+            }
           }
         }
+      },
+      "ExpositionMeta": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PackageOverlayProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "packageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "overwriteSettings": {
+            "type": "boolean"
+          },
+          "settings": {
+            "type": "string",
+            "nullable": true
+          },
+          "overwriteInputs": {
+            "type": "boolean"
+          },
+          "inputs": {
+            "type": "string",
+            "nullable": true
+          },
+          "sync": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PackageProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/PackageType"
+          }
+        }
+      },
+      "PackageType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Panorama",
+          "Scene",
+          "Video",
+          "Model",
+          "Gallery"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
       }
     }
   }

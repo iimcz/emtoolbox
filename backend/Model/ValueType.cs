@@ -5,6 +5,7 @@ namespace backend.Model
         Void,
         Bool,
         Number,
+        Event,
         Complex
     }
 }
