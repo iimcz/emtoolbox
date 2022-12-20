@@ -4,3 +4,8 @@ obj/
 
 # ignore .zip files in local storage
 localdata/*.zip
+
+# ignore local db
+*.db
+*.db-shm
+*.db-wal
