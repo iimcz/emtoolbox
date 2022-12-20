@@ -1,0 +1,13 @@
+.exposition-title {
+    width: 100%;
+    text-align: start;
+}
+
+.exposition-title span {
+    height: 100%;
+    vertical-align: middle;
+    font-weight: bolder;
+    font-size: x-large;
+    padding-left: 5%;
+    padding-right: 5%;
+}

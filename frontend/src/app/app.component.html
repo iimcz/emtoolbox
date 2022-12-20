@@ -1,14 +1,17 @@
 <div class="main-container">
   <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>Exposition Management Toolbox</span>
+    <span style="padding-right: 32px;">Exposition Management Toolbox</span>
+    <button mat-button color="white" routerLink="/expositions"><mat-icon>browse_gallery</mat-icon> Expozice</button>
+    <button mat-button color="white" routerLink="/exhibits"><mat-icon>devices</mat-icon> Zařízení</button>
+    <button mat-button color="white" [mat-menu-trigger-for]="settingsMenu"><mat-icon>settings</mat-icon> Správa</button>
+    <mat-menu #settingsMenu>
+      <button mat-menu-item>Nastavení</button>
+      <button mat-menu-item>Ostatní</button>
+    </mat-menu>
     <span class="fill-line"></span>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>help</mat-icon>
     </button>
   </mat-toolbar>
-
   <router-outlet></router-outlet>
 </div>

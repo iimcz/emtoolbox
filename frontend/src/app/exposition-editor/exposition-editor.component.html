@@ -1,0 +1,52 @@
+<div class="flex-row">
+    <div class="flex-20p">
+        <div class="exposition-title">
+            <button mat-icon-button onclick="history.back()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span>Expozice "{{ expositionName }}"</span>
+        </div>
+        <app-exposition-detail #detailComponent [expositionId]="this.expositionId"></app-exposition-detail>
+        <button mat-raised-button (click)="save()" color="primary" style="margin: 10px; width: 95%;">Uložit
+            Expozici</button>
+        <button mat-raised-button (click)="upload()" style="margin: 10px; width: 95%;">Nahrát Expozici</button>
+    </div>
+    <div class="flex-1">
+        <app-package-graph #graphComponent [expositionId]="this.expositionId"
+            (onDeviceSelected)="selectExhibit($event)"></app-package-graph>
+    </div>
+    <div class="flex-25p">
+        <div class="flex-column">
+            <div class="flex-30p">
+                <mat-tab-group>
+                    <mat-tab label="Dostupná zařízení">
+                        <app-device-list [showActions]="false" [showPending]="false"
+                            (onDeviceSelected)="addSingleDevice($event)"></app-device-list>
+                    </mat-tab>
+                    <mat-tab label="Synchronizovaná skupina">
+                        <app-device-list [showActions]="false" [checkBoxes]="true"
+                            (onDeviceChecked)="deviceCheckChanged($event)"></app-device-list>
+                        <p class="horizontal-margin-small">
+                            <button mat-raised-button [disabled]="checkedDevicesForMultidevice.length < 2" (click)="addMultiDevice()">Přidat synchronizovanou
+                                skupinu</button>
+                        </p>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <div class="flex-1">
+                <h4>Detaily</h4>
+                <div class="flex-row full-width">
+                    <div class="flex-1">Balíček: {{selectedPackage?.name}}</div>
+                    <div class="flex-30p">
+                        <button mat-raised-button (click)="selectPackage()" [disabled]="!selectedExhibit">Zvolit
+                            balíček</button>
+                    </div>
+                </div>
+                <app-overlay-detail (onAddCustomInput)="addCustomInput($event)"
+                    (onAddCustomOutput)="addCustomOutput($event)" (onOverlayChanged)="overlayChanged($event)"
+                    (onSettingsChanged)="settingsChanged($event)"
+                    [style]="{visibility: selectedExhibit ? 'visible' : 'hidden'}"></app-overlay-detail>
+            </div>
+        </div>
+    </div>
+</div>

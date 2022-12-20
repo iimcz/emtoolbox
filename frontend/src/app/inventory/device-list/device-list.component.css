@@ -1,0 +1,7 @@
+tr.hover-row:hover {
+    background: whitesmoke;
+}
+
+tr.hover-row:active {
+    background: #efefef;
+}

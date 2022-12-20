@@ -1,0 +1,4 @@
+.large-table {
+    overflow-y: auto;
+    height: 512px;
+}

@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Vytvořit expozici</h2>
+<mat-dialog-content>
+    <div [formGroup]="dialogFG">
+        <p>
+            <mat-form-field>
+                <mat-label>Název expozice</mat-label>
+                <input matInput formControlName="name" type="text">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Popis expozice</mat-label>
+                <input matInput formControlName="description" type="text">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Začátek expozice</mat-label>
+                <input matInput formControlName="startDate" type="date">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Konec expozice</mat-label>
+                <input matInput formControlName="endDate" type="date">
+            </mat-form-field>
+        </p>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="createExposition()">Vytvořit</button>
+    <button mat-button mat-dialog-close>Zrušit</button>
+</mat-dialog-actions>

@@ -1,0 +1,9 @@
+<h2 class="horizontal-margin-small">Expozice</h2>
+<div class="container-pad">
+    <mat-form-field>
+        <mat-label>Hledat...</mat-label>
+        <input matInput #searchTerm type="text">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="openCreationDialog()">Nová expozice</button>
+</div>
+<app-exposition-list [searchTerm]="searchTerm"></app-exposition-list>

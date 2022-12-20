@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ɵɵqueryRefresh } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConnectionClient, PackageClient } from '../services/api.generated.service';
+import { ExhibitClient, PackageClient } from '../services/api.generated.service';
 
 @Component({
   selector: 'app-client-detail',
@@ -13,7 +13,7 @@ export class ClientDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private connectionClient: ConnectionClient,
+    private exhibitClient: ExhibitClient,
     private packageClient: PackageClient,
   ) { }
 
@@ -26,9 +26,6 @@ export class ClientDetailComponent implements OnInit {
   }
 
   refresh(): void {
-    this.packageClient.getAvailable().subscribe(packages => {
-      this.availablePackages = packages;
-    });
   }
 
   clearPackage(): void {
