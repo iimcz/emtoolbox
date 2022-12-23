@@ -89,13 +89,13 @@ namespace backend
                 System.Environment.SetEnvironmentVariable("EMTOOLBOX_STORAGE", localDataPath);
             }
 
-            var cmtoolboxApiUrl = Configuration["EMToolbox:CMToolboxApiUrl"];
+            var cmtoolboxApiUrl = Configuration["CMToolbox:BaseUrl"];
             if (cmtoolboxApiUrl != null)
             {
                 System.Environment.SetEnvironmentVariable("CMTOOLBOX_API_URL", cmtoolboxApiUrl);
             }
 
-            var cmtoolboxDownloadBaseUrl = Configuration["EMToolbox:CMToolboxFileTemplate"];
+            var cmtoolboxDownloadBaseUrl = Configuration["CMToolbox:DownloadUrlFormat"];
             if (cmtoolboxDownloadBaseUrl != null)
             {
                 System.Environment.SetEnvironmentVariable("CMTOOLBOX_API_DOWNLOAD_BASEURL", cmtoolboxDownloadBaseUrl);
