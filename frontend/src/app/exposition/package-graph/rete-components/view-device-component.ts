@@ -4,6 +4,7 @@ import { NodeData, WorkerInputs, WorkerOutputs } from 'rete/types/core/data';
 import { CustomInput, CustomOutput } from 'src/app/overlays/overlay-detail/overlay-detail.component';
 import { ExhibitProperties, ValueType } from 'src/app/services/api.generated.service';
 import { DeviceDetailControl } from '../controls/device-detail.control';
+import { PackageDetailControl } from '../controls/package-detail.control';
 import { MyNodeComponent } from '../node/node.component';
 import { boolSocket, complexSocket, eventSocket, numberSocket, voidSocket } from '../rete-sockets';
 
@@ -22,7 +23,8 @@ export class ViewDeviceComponent extends Component implements AngularComponent {
         if (!exhibit)
             return;
 
-        node.addControl(new DeviceDetailControl('info', exhibit, node.data.package));
+        node.addControl(new DeviceDetailControl('info', exhibit));
+        node.addControl(new PackageDetailControl('pkg', node.data.package));
 
         await this.addConnectibility(node, exhibit);
         await this.addAdditionalConnectivity(node);

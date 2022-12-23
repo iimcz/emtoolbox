@@ -10,7 +10,6 @@ import { ExhibitProperties, PackageProperties } from 'src/app/services/api.gener
 })
 export class DeviceDetailComponent implements OnInit {
     @Input() exhibit!: ExhibitProperties;
-    @Input() package: PackageProperties;
   
     ngOnInit() {
     }
@@ -20,21 +19,16 @@ export class DeviceDetailControl extends Control implements AngularControl {
     component: Type<DeviceDetailComponent>
     props: { [key: string]: unknown }
 
-    constructor(public key, exhibit, pkg) {
+    constructor(public key, exhibit) {
         super(key);
 
         this.component = DeviceDetailComponent;
         this.props = {
-            exhibit: exhibit,
-            package: pkg
+            exhibit: exhibit
         };
     }
 
     setExhibit(val: ExhibitProperties) {
         this.props.exhibit = val;
-    }
-
-    setPackage(val: PackageProperties) {
-        this.props.package = val;
     }
 }

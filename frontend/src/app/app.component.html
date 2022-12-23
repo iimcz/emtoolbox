@@ -1,10 +1,10 @@
 <div class="main-container">
   <mat-toolbar color="primary">
-    <span style="padding-right: 32px;">Exposition Management Toolbox</span>
-    <button mat-button color="white" routerLink="/expositions"><mat-icon>browse_gallery</mat-icon> Expozice</button>
-    <button mat-button color="white" routerLink="/exhibits"><mat-icon>devices</mat-icon> Zařízení</button>
-    <button mat-button color="white" [mat-menu-trigger-for]="settingsMenu"><mat-icon>settings</mat-icon> Správa</button>
-    <mat-menu #settingsMenu>
+    <span style="padding-right: 32px;"><mat-icon>event</mat-icon> Exposition Management Toolbox</span>
+    <button class="horizontal-margin-small" mat-button color="white" routerLink="/expositions"><mat-icon>browse_gallery</mat-icon> Expozice</button>
+    <button class="horizontal-margin-small" mat-button color="white" routerLink="/exhibits"><mat-icon>devices</mat-icon> Zařízení</button>
+    <button class="horizontal-margin-small" mat-button color="white" [mat-menu-trigger-for]="settingsMenu"><mat-icon>settings</mat-icon> Administrace</button>
+    <mat-menu class="horizontal-margin-small" #settingsMenu>
       <button mat-menu-item>Nastavení</button>
       <button mat-menu-item>Ostatní</button>
     </mat-menu>

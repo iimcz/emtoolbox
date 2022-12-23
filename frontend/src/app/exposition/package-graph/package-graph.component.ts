@@ -4,14 +4,16 @@ import { AngularRenderPlugin } from 'rete-angular-render-plugin';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ViewDeviceComponent } from './rete-components/view-device-component';
 
-import { ExhibitClient, ExhibitProperties, ExpositionClient, PackageOverlayProperties, PackageProperties, ValueType } from 'src/app/services/api.generated.service';
+import { ExhibitClient, ExhibitProperties, ExpositionClient, ExpositionProperties, PackageOverlayProperties, PackageProperties, ValueType } from 'src/app/services/api.generated.service';
 import { DeviceDetailControl } from './controls/device-detail.control';
 import { CustomInput, CustomOutput } from 'src/app/overlays/overlay-detail/overlay-detail.component';
 import { boolSocket, complexSocket, eventSocket, numberSocket, voidSocket } from './rete-sockets';
-import { Action, Convert, Mapping, Type } from 'src/app/model/package';
+import { Action, CanvasDimensions, Convert, Mapping, Type } from 'src/app/model/package';
 import { MultiViewDeviceComponent } from './rete-components/multiview-device-component';
 import { Observable, of, scheduled } from 'rxjs';
 import { map, mergeMap, zipAll } from 'rxjs/operators';
+import { PackageDetailControl } from './controls/package-detail.control';
+import { Sync, Element } from 'src/app/model/package';
 
 @Component({
   selector: 'app-package-graph',
@@ -51,7 +53,8 @@ export class PackageGraphComponent implements AfterViewInit {
 
     this.editor.on(['nodeselected'], (node) => {
       let dev = node.data.exhibit as ExhibitProperties;
-      this.onDeviceSelected.emit(dev.hostname);
+      let devs = node.data.exhibits as ExhibitProperties[];
+      this.onDeviceSelected.emit(dev?.hostname ?? devs[0].hostname);
     });
   }
 
@@ -62,7 +65,9 @@ export class PackageGraphComponent implements AfterViewInit {
         return dev.hostname === id;
       }
       if (value.data.exhibits) {
-
+        let dev = (value.data.exhibits as ExhibitProperties[]).find(ex => ex.hostname === id);
+        if (dev)
+          return true;
       }
     });
     return node;
@@ -80,18 +85,27 @@ export class PackageGraphComponent implements AfterViewInit {
   }
 
   addMultiDevice(ids: string[]) {
-    of(...ids).pipe(
-      map(id => this.deviceClient.getExhibit(id)),
-      zipAll()
-    ).subscribe(data => {
-      this.multiDeviceComponent.createNode({ exhibits: data }).then(n => this.editor.addNode(n));
-    });
+    let node = this.findNodeByExhibit(ids[0]);
+    if (node) {
+      this.editor.selectNode(node);
+    } else {
+      of(...ids).pipe(
+        map(id => this.deviceClient.getExhibit(id)),
+        zipAll()
+      ).subscribe(data => {
+        this.multiDeviceComponent.createNode({ exhibits: data }).then(n => this.editor.addNode(n));
+      });
+    }
   } 
 
   getExhibit(exhibit: string) {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
-      return node.data.exhibit;
+      // TODO: handle better to avoid redundant find
+      if (node.data.exhibit)
+        return node.data.exhibit;
+      else
+        return (node.data.exhibits as ExhibitProperties[]).find(ex => ex.hostname === exhibit);
     }
   }
 
@@ -99,9 +113,9 @@ export class PackageGraphComponent implements AfterViewInit {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
       node.data.package = pkg;
-      let detailControl = node.controls.get('info') as DeviceDetailControl;
-      if (detailControl) {
-        detailControl.setPackage(pkg);
+      let packageControl = node.controls.get('pkg') as PackageDetailControl;
+      if (packageControl) {
+        packageControl.setPackage(pkg);
       }
     }
   }
@@ -116,6 +130,9 @@ export class PackageGraphComponent implements AfterViewInit {
   setOverlay(exhibit: string, overlay: PackageOverlayProperties) {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
+      if (node.data.exhibits && !overlay.sync) {
+        overlay.sync = this.initMultideviceSync(node.data.exhibits as ExhibitProperties[]);
+      }
       node.data.overlay = overlay;
     }
     return null;
@@ -138,6 +155,8 @@ export class PackageGraphComponent implements AfterViewInit {
           let output = conn.output;
           let otherNode = output.node;
           let srcExhibit = otherNode.data.exhibit as ExhibitProperties;
+          if (!srcExhibit)
+            continue;
 
           let action = {
             effect: input[0]
@@ -156,7 +175,7 @@ export class PackageGraphComponent implements AfterViewInit {
               break;
           }
 
-          action.mapping = this.createActionMapping(output, srcExhibit);
+          action.mapping = this.createActionMapping(output, srcExhibit, srcExhibit.hostname === exhibit);
           inputs.push(action);
         }
       }
@@ -176,9 +195,13 @@ export class PackageGraphComponent implements AfterViewInit {
     return '';
   }
 
-  createActionMapping(output: ReteOutput, exhibit: ExhibitProperties): Mapping {
+  createActionMapping(output: ReteOutput, exhibit: ExhibitProperties, isRelative: boolean): Mapping {
     let result = {} as Mapping;
-    result.source = '/' + exhibit.hostname + '/';
+    if (isRelative) {
+      result.source = '';
+    } else {
+      result.source = '/' + exhibit.hostname + '/';
+    }
     // TODO: better mapping, allow conditions and range mapping
     switch (output.socket) {
       case eventSocket:
@@ -198,8 +221,13 @@ export class PackageGraphComponent implements AfterViewInit {
   getIncludedExhibits(): string[] {
     let exhibits = [];
     for (let node of this.editor.nodes) {
-      let dev = node.data.exhibit as ExhibitProperties;
-      exhibits.push(dev.hostname);
+      if (node.data.exhibit) {
+        let dev = node.data.exhibit as ExhibitProperties;
+        exhibits.push(dev.hostname);
+      } else {
+        let devs = node.data.exhibits as ExhibitProperties[];
+        exhibits.push(...(devs.map(ex => ex.hostname)));
+      }
     }
     return exhibits;
   }
@@ -274,5 +302,33 @@ export class PackageGraphComponent implements AfterViewInit {
       }
       node.update();
     }
+  }
+
+  initMultideviceSync(exhibits: ExhibitProperties[]) {
+    let sync = {} as Sync;
+
+    // TODO: better setup
+    sync.canvasDimensions = {
+      width: exhibits.reduce((val, ex, _) => val + (ex.hostname.startsWith('ipw') ? 4096 : 2048), 0),
+      height: exhibits.reduce((val, ex, _) => 2048, 0)
+    } as CanvasDimensions;
+
+    sync.selfIndex = 0;
+
+    sync.elements = [];
+    sync.elements.push(...(exhibits.map((ex, i) => {
+      return {
+        hostname: ex.hostname,
+        role: '',
+        viewportTransform: (ex.hostname.startsWith('ipw') ? '4096x2048+' : '2048x2048+')
+      } as Element
+    })));
+    let xoffset = 0;
+    for (let el of sync.elements) {
+      el.viewportTransform += (xoffset + '+0');
+      xoffset += parseInt(el.viewportTransform.substring(0, el.viewportTransform.indexOf('x')));
+    }
+
+    return Convert.syncToJson(sync);
   }
 }
