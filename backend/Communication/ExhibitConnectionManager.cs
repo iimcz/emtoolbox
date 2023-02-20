@@ -22,117 +22,178 @@ namespace backend.Communication
         // TODO: Configurable port
         private const int ServerListenPort = 3917;
         private ILogger<ExhibitConnectionManager> _logger;
+        private ILogger<ExhibitConnection> _connectionLogger;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        private TcpListener _incomingListener;
-        private IAsyncResult _incomingAsyncAccept;
+        private UdpClient _beaconListener;
 
-        private ConcurrentDictionary<string, ExhibitConnection> _pendingConnections;
-        private ConcurrentDictionary<string, ExhibitConnection> _establishedConnections;
+        private ConcurrentDictionary<string, ExhibitConnection> _connections;
 
-        public ExhibitConnectionManager(ILogger<ExhibitConnectionManager> logger, IServiceScopeFactory scopeFactory)
+        public ExhibitConnectionManager(ILogger<ExhibitConnectionManager> logger, ILogger<ExhibitConnection> connectionLogger, IServiceScopeFactory scopeFactory)
         {
             this._logger = logger;
+            this._connectionLogger = connectionLogger;
             this._scopeFactory = scopeFactory;
 
-            _pendingConnections = new ConcurrentDictionary<string, ExhibitConnection>();
-            _establishedConnections = new ConcurrentDictionary<string, ExhibitConnection>();
+            _connections = new ConcurrentDictionary<string, ExhibitConnection>();
         }
 
-        public List<string> GetPendingConnections()
-        {
-            cleanupConnections();
-            return new List<string>(_pendingConnections.Keys);
-        }
+        public List<string> GetPendingConnections() => _connections.Where(con => !con.Value.IsConnected).Select(con => con.Key).ToList();
 
-        public List<string> GetEstablishedConnections()
-        {
-            cleanupConnections();
-            return new List<string>(_establishedConnections.Keys);
-        }
+        public List<string> GetEstablishedConnections() => _connections.Where(con => con.Value.IsConnected).Select(con => con.Key).ToList();
 
-        public void AcceptPendingConnection(string connId)
+        public async Task AcceptPendingConnection(string connId)
         {
-            ExhibitConnection conn;
-            if (_pendingConnections.TryGetValue(connId, out conn))
+            if (_connections.TryGetValue(connId, out var conn))
             {
-                // TODO: thread safety
-                conn.AcceptConnection();
-                _establishedConnections.TryAdd(connId, conn);
-                _pendingConnections.TryRemove(connId, out _);
-            }
-        }
-
-        public void CloseConnection(string connId)
-        {
-            ExhibitConnection conn;
-            if (_pendingConnections.TryRemove(connId, out conn))
-            {
-                conn.Dispose();
-            }
-        }
-
-        public void ClearPackage(string connId)
-        {
-            ExhibitConnection conn;
-            if (_establishedConnections.TryGetValue(connId, out conn))
-            {
-                // TODO: for now always purge.
-                conn.ClearPackage(true);
-            }
-        }
-
-        public void LoadPackage(string connId, string packageDescriptor)
-        {
-            ExhibitConnection conn;
-            if (_establishedConnections.TryGetValue(connId, out conn))
-            {
-                conn.LoadPackage(false, packageDescriptor);
-            }
-        }
-
-        public void IncomingConnectionCallback(IAsyncResult ar)
-        {
-            cleanupConnections();
-            // FIXME: possible race condition between IsBound and EndAcceptTcpClient
-            if (_incomingListener.Server.IsBound)
-            {
-                var client = _incomingListener.EndAcceptTcpClient(ar);
-
-                _logger.LogInformation("Processing new incoming connection from {}", client.Client.RemoteEndPoint);
-                var excon = new ExhibitConnection(client);
-                subscribeToEvents(excon);
-                excon.ReceiveConnectionRequest();
-
-                if (excon.IsConnected)
+                if (conn.IsConnected)
                 {
-                    if (_pendingConnections.ContainsKey(excon.ConnectionId))
-                    {
-                        _logger.LogWarning("Received pending connection with duplicate ID ({}). Removing the old one.", excon.ConnectionId);
-                        _pendingConnections.TryRemove(excon.ConnectionId, out _);
-                    }
-                    if (_establishedConnections.ContainsKey(excon.ConnectionId))
-                    {
-                        _logger.LogWarning("Received pending connection which is already connected ID: {}", excon.ConnectionId);
-                    }
-                    _pendingConnections.TryAdd(excon.ConnectionId, excon);
-
-                    OnIncomingConnectionEvent?.Invoke();
-
-                    _logger.LogInformation("Received connection ID: {}", excon.ConnectionId);
-                }
-                else
-                {
-                    _logger.LogWarning("Received connection was invalid.");
+                    _logger.LogWarning("Tried to accept already connected device: {0}", conn.ConnectionId);
+                    return;
                 }
 
-                if (isKnownExhibit(excon.ConnectionId))
-                {
-                    _logger.LogInformation("Auto-accepting known exhibit: {}", excon.ConnectionId);
-                    AcceptPendingConnection(excon.ConnectionId);
-                }
+                await conn.Connect();
+            }
+        }
 
-                _incomingListener.BeginAcceptTcpClient(IncomingConnectionCallback, null);
+        public async Task CloseConnection(string connId)
+        {
+            if (_connections.TryRemove(connId, out var conn))
+            {
+                await conn.Disconnect();
+            }
+        }
+
+        public async Task<bool> LoadPackage(string connId, string packageDescriptor)
+        {
+            if (_connections.TryGetValue(connId, out var conn))
+            {
+                return await conn.LoadPackage(false, packageDescriptor);
+            }
+            return false;
+        }
+
+        public async Task<bool> StartPackage(string connId, string packageId)
+        {
+            if (_connections.TryGetValue(connId, out var conn))
+            {
+                return await conn.StartPackage(packageId);
+            }
+            return false;
+        }
+
+        public async Task<bool> SetStartupPackage(string connId, string packageId)
+        {
+            if (_connections.TryGetValue(connId, out var conn))
+            {
+                return await conn.SetStartupPackage(packageId);
+            }
+            return false;
+        }
+
+        public async Task<string> GetStartupPackage(string connId)
+        {
+            if (_connections.TryGetValue(connId, out var conn))
+            {
+                return await conn.GetStartupPackage();
+            }
+            return null;
+        }
+
+        public async Task<bool> ClearStartupPackage(string connId, bool purge)
+        {
+            if (_connections.TryGetValue(connId, out var conn))
+            {
+                return await conn.ClearStartupPackage(purge);
+            }
+            return false;
+        }
+
+        public async Task<List<CachedPackage>> GetCachedPackages(string connId)
+        {
+            if (_connections.TryGetValue(connId, out var conn))
+            {
+                return await conn.GetCachedPackages();
+            }
+            return null;
+        }
+
+        public async Task PurgeCachedPackages(string connId)
+        {
+            if (_connections.TryGetValue(connId, out var conn))
+            {
+                await conn.PurgeCachedPackages();
+            }
+        }
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            await Task.Run(() =>
+            {
+                _beaconListener = new UdpClient(ServerListenPort, AddressFamily.InterNetworkV6);
+                _beaconListener.EnableBroadcast = true;
+                _beaconListener.BeginReceive(BeaconListenerCallback, null);
+
+                _logger.LogInformation("Now listening for EMT beacon packets from devices on port {0}", ServerListenPort);
+            });
+        }
+
+        public async Task StopAsync(CancellationToken cancellationToken)
+        {
+            await Task.WhenAll(_connections.Select(conn => conn.Value.Disconnect()));
+            _beaconListener.Dispose();
+        }
+
+        public async void BeaconListenerCallback(IAsyncResult ar)
+        {
+            IPEndPoint remote = null;
+            byte[] packet = null;
+
+            try
+            {
+                packet = _beaconListener.EndReceive(ar, ref remote);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error when receiving data.");
+                return;
+            }
+
+            var device = ExhibitConnection.FromBeacon(packet, remote);
+            subscribeToEvents(device);
+
+            if (_connections.ContainsKey(device.ConnectionId))
+            {
+                _logger.LogWarning("Received beacon identified as already connected device. Ignoring...");
+            }
+            else
+            {
+                _logger.LogInformation("New device beacon reveiced: {0}", device.ConnectionId);
+                _connections.TryAdd(device.ConnectionId, device);
+            }
+            
+            if (isKnownExhibit(device.ConnectionId))
+            {
+                _logger.LogInformation("Device {0} is known. Accepting connection.", device.ConnectionId);
+                await AcceptPendingConnection(device.ConnectionId);
+            }
+
+            OnIncomingConnectionEvent?.Invoke();
+
+            _beaconListener.BeginReceive(BeaconListenerCallback, null);
+        }
+
+        public string GetInterfaceAddressFor(string connId)
+        {
+            _connections.TryGetValue(connId, out var connection);
+
+            if (connection != null)
+            {
+                return connection.GetSocketAddress().ToString();
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -147,114 +208,39 @@ namespace backend.Communication
 
         private void subscribeToEvents(ExhibitConnection excon)
         {
-            excon.DescriptorChanged += (object obj, DeviceDescriptor e) =>
+            excon.DescriptorChanged += (object obj, DeviceDescriptorResponse e) =>
             {
                 ExhibitConnection sender = (ExhibitConnection)obj;
-                sender.SendEncryptionInfo();
 
-                // using (var scope = this._scopeFactory.CreateScope())
-                // {
-                //     var dbContext = scope.ServiceProvider.GetRequiredService<EmtContext>();
-                //     Exhibit exhibit = dbContext.Exhibits.Include(exhibit => exhibit.Sensors).FirstOrDefault(exhibit => exhibit.Hostname == sender.ConnectionId);
-                //     if (exhibit != null)
-                //     {
-                //         // TODO: update protocol to include more info about sensors
-                //         Func<SensorType, int, Sensor> mapping = (SensorType type, int i) =>
-                //         {
-                //             return new Sensor
-                //             {
-                //                 Path = Enum.GetName(type) + i.ToString(),
-                //                 FriendlyName = Enum.GetName(type) + " " + obj.ToString(),
-                //                 ValueType = type switch
-                //                 {
-                //                     SensorType.Gesture => Model.ValueType.Complex,
-                //                     SensorType.Handtracking => Model.ValueType.Complex,
-                //                     SensorType.Image => Model.ValueType.Complex,
-                //                     SensorType.Depth => Model.ValueType.Number,
-                //                     SensorType.Ir => Model.ValueType.Bool,
-                //                     SensorType.Light => Model.ValueType.Number,
-                //                     SensorType.Microphone => Model.ValueType.Number,
-                //                     _ => Model.ValueType.Void
-                //                 }
-                //             };
-                //         };
-
-                //         for (int i = 0; i < e.LocalSensors.Count; i++)
-                //         {
-                //             Sensor s = mapping(e.LocalSensors[i], i);
-                //             if (exhibit.Sensors[i].Path != s.Path)
-                //             {
-                //                 exhibit.Sensors[i] = s;
-                //             }
-                //         }
-                //         dbContext.SaveChanges();
-                //     }
-                // }
-            };
-
-            excon.ExhibitTimedOut += (object obj, EventArgs e) =>
-            {
-                ExhibitConnection sender = (ExhibitConnection)obj;
-                ExhibitConnection _dummy;
-                _establishedConnections.TryRemove(sender.ConnectionId, out _dummy);
-                _pendingConnections.TryRemove(sender.ConnectionId, out _dummy);
-
-                _logger.LogWarning("Exhibit (ID: {0}) timed out.", sender.ConnectionId);
-            };
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            return Task.Run(() =>
-            {
-                _incomingListener = new TcpListener(IPAddress.IPv6Any, ServerListenPort);
-                _incomingListener.Server.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false);
-                _incomingListener.Start();
-
-                _logger.LogInformation("Starting to listen for incoming TCP connections on port {}", ServerListenPort);
-                _incomingAsyncAccept = _incomingListener.BeginAcceptTcpClient(IncomingConnectionCallback, null);
-            });
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.Run(() =>
-            {
-                foreach (var conn in _pendingConnections)
+                using (var scope = this._scopeFactory.CreateScope())
                 {
-                    conn.Value.Dispose();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<EmtContext>();
+                    Exhibit exhibit = dbContext.Exhibits.Include(exhibit => exhibit.Sensors).FirstOrDefault(exhibit => exhibit.Hostname == sender.ConnectionId);
+
+                    if (exhibit != null)
+                    {
+                        var sensors = excon.Descriptor.AvailableSensors.Select((sensDescriptor, _) =>
+                        {
+                            return new Sensor()
+                            {
+                                Path = sensDescriptor.Path,
+                                ValueType = sensDescriptor.MapDataType(),
+                                FriendlyName = sensDescriptor.CreateFriendlyName()
+                            };
+                        }).OrderBy(s => s.Path);
+                        var oldSensors = exhibit.Sensors.OrderBy(s => s.Path);
+
+                        // If sensors differ, throw away all existing sensors and add current ones.
+                        if (oldSensors.Intersect(sensors, new WeakSensorComparer()).Count() != exhibit.Sensors.Count)
+                        {
+                            exhibit.Sensors.Clear();
+                            exhibit.Sensors.AddRange(sensors);
+                        }
+
+                        dbContext.SaveChanges();
+                    }
                 }
-
-                foreach (var conn in _establishedConnections)
-                {
-                    conn.Value.Dispose();
-                }
-
-
-                _incomingListener.Stop();
-            });
-        }
-
-        public string GetInterfaceAddressFor(string connId)
-        {
-            _establishedConnections.TryGetValue(connId, out var connection);
-
-            if (connection != null)
-            {
-                return connection.GetSocketAddress();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private void cleanupConnections()
-        {
-            // TODO: implement this properly - this code doesn't work correctly (breaks the dictionary)
-            // Func<ExhibitConnection, bool> selector = (conn) => conn.IsConnected;
-            // establishedConnections.RemoveByValue(selector);
-            // pendingConnections.RemoveByValue(selector);
+            };
         }
     }
 }

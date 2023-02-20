@@ -1,11 +1,15 @@
 namespace backend.Model
 {
-    public enum ValueType
+    public enum DataType
     {
         Void,
         Bool,
-        Number,
-        Event,
-        Complex
+        Integer,
+        Float,
+        String,
+
+
+        Vector2,
+        Vector3
     }
 }

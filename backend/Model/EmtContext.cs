@@ -39,27 +39,25 @@ namespace backend.Model
                     Id = 1,
                     ExhibitId = exhibits[0].Id,
                     Path = "raspi-1-ir-1",
-                    ValueType = ValueType.Bool
+                    ValueType = DataType.Bool
                 },
                 new Sensor() {
                     Id = 2,
                     ExhibitId = exhibits[0].Id,
                     Path = "rpi-camera",
-                    ValueType = ValueType.Event,
-                    AvailableEvents = "GestureSwipeUp,GestureSwipeDown,GestureSwipeLeft,GestureSwipeRight"
+                    ValueType = DataType.Void
                 },
                 new Sensor() {
                     Id = 3,
                     ExhibitId = exhibits[1].Id,
                     Path = "raspi-1-ir-1",
-                    ValueType = ValueType.Bool
+                    ValueType = DataType.Bool
                 },
                 new Sensor() {
                     Id = 4,
                     ExhibitId = exhibits[1].Id,
                     Path = "1",
-                    ValueType = ValueType.Event,
-                    AvailableEvents = "GestureSwipeUp,GestureSwipeDown,GestureSwipeLeft,GestureSwipeRight"
+                    ValueType = DataType.Void
                 }
             };
 

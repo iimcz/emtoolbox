@@ -44,7 +44,7 @@ namespace backend.Controllers
                     Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
-                    Type = ConvertType(p.Type)
+                    Type = convertType(p.Type)
                 });
             }
             else
@@ -54,7 +54,7 @@ namespace backend.Controllers
             }
         }
 
-        private ViewModels.PackageType ConvertType(Generated.CMToolbox.PackageType type) => type switch
+        private ViewModels.PackageType convertType(Generated.CMToolbox.PackageType type) => type switch
         {
             PackageType.Gallery => backend.ViewModels.PackageType.Gallery,
             PackageType.Model => backend.ViewModels.PackageType.Model,
@@ -80,17 +80,17 @@ namespace backend.Controllers
         }
 
         [HttpPost("load")]
-        public IActionResult LoadPackage(string connectionId, string packageName)
+        public async Task<IActionResult> LoadPackage(string connectionId, string packageName)
         {
-            _connectionManager.LoadPackage(connectionId, packageName);
+            await _connectionManager.LoadPackage(connectionId, packageName);
 
             return Ok();
         }
 
         [HttpPost("clear")]
-        public IActionResult ClearPackage(string connectionId)
+        public async Task<IActionResult> ClearStartupPackage(string connectionId)
         {
-            _connectionManager.ClearPackage(connectionId);
+            await _connectionManager.ClearStartupPackage(connectionId, true);
 
             return Ok();
         }

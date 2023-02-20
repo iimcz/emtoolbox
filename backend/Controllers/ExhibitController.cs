@@ -60,7 +60,7 @@ namespace backend.Controllers
         [HttpPost("accept/{id}")]
         public async Task<ActionResult> AcceptConnection(string id)
         {
-            _connectionManager.AcceptPendingConnection(id);
+            await _connectionManager.AcceptPendingConnection(id);
             await _dbContext.Exhibits.AddAsync(new Exhibit
             {
                 Hostname = id
@@ -72,7 +72,7 @@ namespace backend.Controllers
         [HttpPost("forget/{id}")]
         public async Task<ActionResult> ForgetConnection(string id)
         {
-            _connectionManager.CloseConnection(id);
+            await _connectionManager.CloseConnection(id);
             Exhibit exhibit = await _dbContext.Exhibits.FirstOrDefaultAsync(ex => ex.Hostname == id);
             if (exhibit != null)
             {
@@ -83,20 +83,19 @@ namespace backend.Controllers
         }
 
         [HttpGet("all")]
-        public List<ExhibitProperties> GetAllExhibits()
+        public async Task<List<ExhibitProperties>> GetAllExhibits()
         {
-            List<ExhibitProperties> exhibits = _dbContext.Exhibits.Include(ex => ex.Sensors).Include(ex => ex.Tags).Select(ex => new ExhibitProperties
+            List<ExhibitProperties> exhibits = await _dbContext.Exhibits.Include(ex => ex.Sensors).Include(ex => ex.Tags).Select(ex => new ExhibitProperties
             {
                 Hostname = ex.Hostname,
                 Sensors = ex.Sensors.Select(s => new SensorProperties
                 {
                     Path = s.Path,
                     FriendlyName = s.FriendlyName,
-                    ValueType = s.ValueType,
-                    AvailableEvents = s.AvailableEvents
+                    ValueType = s.ValueType
                 }).ToList(),
                 Tags = ex.Tags.Select(t => t.Tag).ToList()
-            }).ToList();
+            }).ToListAsync();
 
             return exhibits;
         }
@@ -115,8 +114,7 @@ namespace backend.Controllers
                 {
                     Path = s.Path,
                     FriendlyName = s.FriendlyName,
-                    ValueType = s.ValueType,
-                    AvailableEvents = s.AvailableEvents
+                    ValueType = s.ValueType
                 }).ToList(),
                 Tags = exhibit.Tags.Select(t => t.Tag).ToList()
             });
@@ -131,20 +129,22 @@ namespace backend.Controllers
                 .FirstOrDefaultAsync(ex => ex.Id == exposition_id);
             if (exposition == null)
                 return NotFound();
-            
+
+            _logger.LogInformation("Sending packages for exposition: {0} ({1})", exposition.Name, exposition.Id);
             foreach (var overlay in exposition.PackageOverlays)
             {
+
                 _logger.LogWarning("Pkg ID: {0}", overlay.PackageId);
                 PresentationPackage package = await _packagesClient.GetPackageAsync(overlay.PackageId);
 
-                _connectionManager.ClearPackage(overlay.AssignedExhibit.Hostname);
+                await _connectionManager.ClearStartupPackage(overlay.AssignedExhibit.Hostname, true);
 
                 using (var writer = new StringWriter())
                 {
                     await WritePackageJsonAsync(package, overlay, writer);
-                    // TODO: remove debug
-                    await System.IO.File.WriteAllTextAsync("/home/maxik/test.json", writer.ToString());
-                    _connectionManager.LoadPackage(overlay.AssignedExhibit.Hostname, writer.ToString());
+                    await _connectionManager.LoadPackage(overlay.AssignedExhibit.Hostname, writer.ToString());
+                    await _connectionManager.SetStartupPackage(overlay.AssignedExhibit.Hostname, package.Id.ToString());
+                    await _connectionManager.StartPackage(overlay.AssignedExhibit.Hostname, package.Id.ToString());
                 }
             }
 
@@ -162,7 +162,8 @@ namespace backend.Controllers
             packageDescriptor.Parameters = Newtonsoft.Json.JsonConvert.DeserializeObject<Naki3D.Common.Json.Parameters>(package.ParametersJson, Naki3D.Common.Json.Converter.Settings);
             packageDescriptor.Metadata = new Metadata
             {
-                PackageName = package.Name,
+                Id = package.Id.ToString(),
+                Title = package.Name,
                 Description = package.Description,
                 Author = package.Metadata.SingleOrDefault(m => m.Key == "author")?.Value,
                 Exposition = package.Metadata.SingleOrDefault(m => m.Key == "expo")?.Value,
