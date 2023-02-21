@@ -1217,7 +1217,7 @@ export class PackageClient {
         return _observableOf<FileResponse>(null as any);
     }
 
-    clearPackage(connectionId?: string | null | undefined): Observable<FileResponse> {
+    clearStartupPackage(connectionId?: string | null | undefined): Observable<FileResponse> {
         let url_ = this.baseUrl + "/package/clear?";
         if (connectionId !== undefined && connectionId !== null)
             url_ += "connectionId=" + encodeURIComponent("" + connectionId) + "&";
@@ -1232,11 +1232,11 @@ export class PackageClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processClearPackage(response_);
+            return this.processClearStartupPackage(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processClearPackage(response_ as any);
+                    return this.processClearStartupPackage(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<FileResponse>;
                 }
@@ -1245,7 +1245,7 @@ export class PackageClient {
         }));
     }
 
-    protected processClearPackage(response: HttpResponseBase): Observable<FileResponse> {
+    protected processClearStartupPackage(response: HttpResponseBase): Observable<FileResponse> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1335,8 +1335,7 @@ export interface IExhibitProperties {
 export class SensorProperties implements ISensorProperties {
     path?: string | undefined;
     friendlyName?: string | undefined;
-    valueType?: ValueType;
-    availableEvents?: string | undefined;
+    valueType?: DataType;
 
     constructor(data?: ISensorProperties) {
         if (data) {
@@ -1352,7 +1351,6 @@ export class SensorProperties implements ISensorProperties {
             this.path = _data["path"];
             this.friendlyName = _data["friendlyName"];
             this.valueType = _data["valueType"];
-            this.availableEvents = _data["availableEvents"];
         }
     }
 
@@ -1368,7 +1366,6 @@ export class SensorProperties implements ISensorProperties {
         data["path"] = this.path;
         data["friendlyName"] = this.friendlyName;
         data["valueType"] = this.valueType;
-        data["availableEvents"] = this.availableEvents;
         return data;
     }
 }
@@ -1376,16 +1373,17 @@ export class SensorProperties implements ISensorProperties {
 export interface ISensorProperties {
     path?: string | undefined;
     friendlyName?: string | undefined;
-    valueType?: ValueType;
-    availableEvents?: string | undefined;
+    valueType?: DataType;
 }
 
-export enum ValueType {
+export enum DataType {
     Void = 0,
     Bool = 1,
-    Number = 2,
-    Event = 3,
-    Complex = 4,
+    Integer = 2,
+    Float = 3,
+    String = 4,
+    Vector2 = 5,
+    Vector3 = 6,
 }
 
 export class ExpositionProperties implements IExpositionProperties {

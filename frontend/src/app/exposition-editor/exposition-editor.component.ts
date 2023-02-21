@@ -84,7 +84,6 @@ export class ExpositionEditorComponent implements OnInit {
         
         overlay.sync = Convert.syncToJson({
           canvasDimensions: canvas,
-          selfIndex: 0,
           elements: elements
         })
       }

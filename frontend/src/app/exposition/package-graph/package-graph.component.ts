@@ -1,13 +1,14 @@
 import { NodeEditor, Input as ReteInput, Output as ReteOutput } from 'rete';
 import ConnectionPlugin from 'rete-connection-plugin';
 import { AngularRenderPlugin } from 'rete-angular-render-plugin';
+import ContextMenuPlugin from 'rete-context-menu-plugin';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ViewDeviceComponent } from './rete-components/view-device-component';
 
-import { ExhibitClient, ExhibitProperties, ExpositionClient, ExpositionProperties, PackageOverlayProperties, PackageProperties, ValueType } from 'src/app/services/api.generated.service';
+import { DataType, ExhibitClient, ExhibitProperties, ExpositionClient, ExpositionProperties, PackageOverlayProperties, PackageProperties } from 'src/app/services/api.generated.service';
 import { DeviceDetailControl } from './controls/device-detail.control';
 import { CustomInput, CustomOutput } from 'src/app/overlays/overlay-detail/overlay-detail.component';
-import { boolSocket, complexSocket, eventSocket, numberSocket, voidSocket } from './rete-sockets';
+import { boolSocket, voidSocket } from './rete-sockets';
 import { Action, CanvasDimensions, Convert, Mapping, Type } from 'src/app/model/package';
 import { MultiViewDeviceComponent } from './rete-components/multiview-device-component';
 import { Observable, of, scheduled } from 'rxjs';
@@ -40,6 +41,7 @@ export class PackageGraphComponent implements AfterViewInit {
     this.editor.use(ConnectionPlugin);
     console.log('AngularRenderPlugin', AngularRenderPlugin);
     this.editor.use(AngularRenderPlugin);
+    this.editor.use(ContextMenuPlugin);
 
     this.editor.register(this.singleDeviceComponent);
     this.editor.register(this.multiDeviceComponent);
@@ -165,13 +167,6 @@ export class PackageGraphComponent implements AfterViewInit {
           // TODO: consolidate types
           switch (input[1].socket) {
             case voidSocket:
-            case eventSocket:
-              action.type = Type.Event;
-              break;
-            case boolSocket:
-            case numberSocket:
-            case complexSocket:
-              action.type = Type.Value;
               break;
           }
 
@@ -183,7 +178,7 @@ export class PackageGraphComponent implements AfterViewInit {
       let result = '[';
       let count = 0;
       for (let input of inputs) {
-        result += Convert.actionToJson(input);
+        //result += Convert.actionToJson(input);
         count++;
         if (count < inputs.length)
           result += ',';
@@ -204,13 +199,6 @@ export class PackageGraphComponent implements AfterViewInit {
     }
     // TODO: better mapping, allow conditions and range mapping
     switch (output.socket) {
-      case eventSocket:
-        result.eventName = output.key.substring(output.key.indexOf(':') + 1);
-        result.source += output.key.substring(0, output.key.indexOf(':'));
-        break;
-      case numberSocket:
-      case boolSocket:
-      case complexSocket:
       case voidSocket:
         result.source += output.key;
         break;
@@ -254,20 +242,8 @@ export class PackageGraphComponent implements AfterViewInit {
         input
       );
       switch (input.type) {
-        case ValueType.Void:
+        case DataType.Void:
           node.addInput(new ReteInput(input.effect, input.effect, voidSocket))
-          break;
-        case ValueType.Bool:
-          node.addInput(new ReteInput(input.effect, input.effect, boolSocket))
-          break;
-        case ValueType.Number:
-          node.addInput(new ReteInput(input.effect, input.effect, numberSocket))
-          break;
-        case ValueType.Event:
-          node.addInput(new ReteInput(input.effect, input.effect, eventSocket))
-          break;
-        case ValueType.Complex:
-          node.addInput(new ReteInput(input.effect, input.effect, complexSocket))
           break;
       }
       node.update();
@@ -284,20 +260,8 @@ export class PackageGraphComponent implements AfterViewInit {
         output
       );
       switch (output.type) {
-        case ValueType.Void:
+        case DataType.Void:
           node.addOutput(new ReteOutput(output.path, output.path, voidSocket))
-          break;
-        case ValueType.Bool:
-          node.addOutput(new ReteOutput(output.path, output.path, boolSocket))
-          break;
-        case ValueType.Number:
-          node.addOutput(new ReteOutput(output.path, output.path, numberSocket))
-          break;
-        case ValueType.Event:
-          node.addOutput(new ReteOutput(output.path, output.path, eventSocket))
-          break;
-        case ValueType.Complex:
-          node.addOutput(new ReteOutput(output.path, output.path, complexSocket))
           break;
       }
       node.update();
@@ -312,8 +276,6 @@ export class PackageGraphComponent implements AfterViewInit {
       width: exhibits.reduce((val, ex, _) => val + (ex.hostname.startsWith('ipw') ? 4096 : 2048), 0),
       height: exhibits.reduce((val, ex, _) => 2048, 0)
     } as CanvasDimensions;
-
-    sync.selfIndex = 0;
 
     sync.elements = [];
     sync.elements.push(...(exhibits.map((ex, i) => {

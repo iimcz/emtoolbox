@@ -29,7 +29,7 @@ export class ClientDetailComponent implements OnInit {
   }
 
   clearPackage(): void {
-    this.packageClient.clearPackage(this.id).subscribe();
+    this.packageClient.clearStartupPackage(this.id).subscribe();
   }
 
   loadPackage(pkg: string): void {

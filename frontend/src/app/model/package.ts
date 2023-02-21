@@ -24,42 +24,46 @@ export interface Action {
 }
 
 export interface Mapping {
-    eventName?:     string;
-    source:         string;
-    condition?:     Condition;
-    threshold?:     string;
-    thresholdType?: ThresholdType;
-    inMax?:         number;
-    inMin?:         number;
-    outMax?:        number;
-    outMin?:        number;
+    source:     string;
+    transform?: Transform;
 }
 
-export enum Condition {
-    Above = "above",
-    AboveOrEquals = "aboveOrEquals",
-    Below = "below",
-    BelowOrEquals = "belowOrEquals",
-    Equals = "equals",
+export interface Transform {
+    from?:            string;
+    type?:            string;
+    value?:           string;
+    comparisonType?:  string;
+    comparisonValue?: boolean | number | string;
+    inMax?:           boolean | number;
+    inMin?:           boolean | number;
+    outMax?:          number | string;
+    outMin?:          number | string;
+    rangeMaxValue?:   number;
+    roundingMethod?:  RoundingMethod;
+    passValue?:       string;
 }
 
-export enum ThresholdType {
-    Float = "float",
-    Integer = "integer",
+export enum RoundingMethod {
+    Down = "down",
+    Up = "up",
 }
 
 export enum Type {
-    Event = "event",
-    Value = "value",
-    ValueTrigger = "valueTrigger",
+    Bool = "bool",
+    Complex = "complex",
+    Float = "float",
+    Integer = "integer",
+    String = "string",
+    Void = "void",
 }
 
 export interface Metadata {
     author:       string;
     description?: string;
     exposition:   string;
+    id:           string;
     other?:       Other[];
-    packageName?: string;
+    title:        string;
 }
 
 export interface Other {
@@ -173,7 +177,6 @@ export interface VideoEvent {
 export interface Sync {
     canvasDimensions: CanvasDimensions;
     elements:         Element[];
-    selfIndex:        number;
 }
 
 export interface CanvasDimensions {
@@ -182,6 +185,7 @@ export interface CanvasDimensions {
 }
 
 export interface Element {
+    address?:          string;
     hostname:          string;
     role:              string;
     viewportTransform: string;
@@ -212,6 +216,14 @@ export class Convert {
 
     public static mappingToJson(value: Mapping): string {
         return JSON.stringify(uncast(value, r("Mapping")), null, 2);
+    }
+
+    public static toTransform(json: string): Transform {
+        return cast(JSON.parse(json), r("Transform"));
+    }
+
+    public static transformToJson(value: Transform): string {
+        return JSON.stringify(uncast(value, r("Transform")), null, 2);
     }
 
     public static toMetadata(json: string): Metadata {
@@ -491,22 +503,30 @@ const typeMap: any = {
         { json: "type", js: "type", typ: r("Type") },
     ], false),
     "Mapping": o([
-        { json: "eventName", js: "eventName", typ: u(undefined, "") },
         { json: "source", js: "source", typ: "" },
-        { json: "condition", js: "condition", typ: u(undefined, r("Condition")) },
-        { json: "threshold", js: "threshold", typ: u(undefined, "") },
-        { json: "thresholdType", js: "thresholdType", typ: u(undefined, r("ThresholdType")) },
-        { json: "inMax", js: "inMax", typ: u(undefined, 3.14) },
-        { json: "inMin", js: "inMin", typ: u(undefined, 3.14) },
-        { json: "outMax", js: "outMax", typ: u(undefined, 3.14) },
-        { json: "outMin", js: "outMin", typ: u(undefined, 3.14) },
+        { json: "transform", js: "transform", typ: u(undefined, r("Transform")) },
     ], false),
+    "Transform": o([
+        { json: "from", js: "from", typ: u(undefined, "") },
+        { json: "type", js: "type", typ: u(undefined, "") },
+        { json: "value", js: "value", typ: u(undefined, "") },
+        { json: "comparisonType", js: "comparisonType", typ: u(undefined, "") },
+        { json: "comparisonValue", js: "comparisonValue", typ: u(undefined, u(true, 3.14, "")) },
+        { json: "inMax", js: "inMax", typ: u(undefined, u(true, 3.14)) },
+        { json: "inMin", js: "inMin", typ: u(undefined, u(true, 3.14)) },
+        { json: "outMax", js: "outMax", typ: u(undefined, u(3.14, "")) },
+        { json: "outMin", js: "outMin", typ: u(undefined, u(3.14, "")) },
+        { json: "rangeMaxValue", js: "rangeMaxValue", typ: u(undefined, 3.14) },
+        { json: "roundingMethod", js: "roundingMethod", typ: u(undefined, r("RoundingMethod")) },
+        { json: "passValue", js: "passValue", typ: u(undefined, "") },
+    ], "any"),
     "Metadata": o([
         { json: "author", js: "author", typ: "" },
         { json: "description", js: "description", typ: u(undefined, "") },
         { json: "exposition", js: "exposition", typ: "" },
+        { json: "id", js: "id", typ: "" },
         { json: "other", js: "other", typ: u(undefined, a(r("Other"))) },
-        { json: "packageName", js: "packageName", typ: u(undefined, "") },
+        { json: "title", js: "title", typ: "" },
     ], false),
     "Other": o([
         { json: "key", js: "key", typ: "" },
@@ -591,32 +611,28 @@ const typeMap: any = {
     "Sync": o([
         { json: "canvasDimensions", js: "canvasDimensions", typ: r("CanvasDimensions") },
         { json: "elements", js: "elements", typ: a(r("Element")) },
-        { json: "selfIndex", js: "selfIndex", typ: 0 },
     ], false),
     "CanvasDimensions": o([
         { json: "height", js: "height", typ: u(undefined, 0) },
         { json: "width", js: "width", typ: u(undefined, 0) },
     ], false),
     "Element": o([
+        { json: "address", js: "address", typ: u(undefined, "") },
         { json: "hostname", js: "hostname", typ: "" },
         { json: "role", js: "role", typ: "" },
         { json: "viewportTransform", js: "viewportTransform", typ: "" },
     ], false),
-    "Condition": [
-        "above",
-        "aboveOrEquals",
-        "below",
-        "belowOrEquals",
-        "equals",
-    ],
-    "ThresholdType": [
-        "float",
-        "integer",
+    "RoundingMethod": [
+        "down",
+        "up",
     ],
     "Type": [
-        "event",
-        "value",
-        "valueTrigger",
+        "bool",
+        "complex",
+        "float",
+        "integer",
+        "string",
+        "void",
     ],
     "AspectRatio": [
         "fitInside",

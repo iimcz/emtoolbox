@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Settings } from 'src/app/model/package';
-import { PackageOverlayProperties, ValueType } from 'src/app/services/api.generated.service';
+import { PackageOverlayProperties, DataType } from 'src/app/services/api.generated.service';
 
 @Component({
   selector: 'app-overlay-detail',
@@ -22,11 +22,11 @@ export class OverlayDetailComponent {
 
   customInputFG: FormGroup = this.fb.group({
     customEffect: '',
-    customValueType: ValueType.Void
+    customValueType: DataType.Void
   });
   customOutputFG: FormGroup = this.fb.group({
     customPath: '',
-    customValueType: ValueType.Void
+    customValueType: DataType.Void
   })
 
   settingsFG: FormGroup = this.fb.group({
@@ -62,11 +62,11 @@ export class OverlayDetailComponent {
 export class CustomInput
 {
   effect: string;
-  type: ValueType;
+  type: DataType;
 }
 
 export class CustomOutput
 {
   path: string;
-  type: ValueType;
+  type: DataType;
 }
