@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Grpc.Net.Client" Version="2.51.0" />
@@ -34,7 +34,7 @@
     <Exec Command="protoc --csharp_out=Generated/Protobuf --proto_path=$(ProjectDir)../common/protobuf %(ProtobufDef.Identity)" />
   </Target>
   <Target Name="NSwag">
-    <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) aspnetcore2openapi /AspNetCoreEnvironment:Development /project:. /output:Api/openapi.json" />
+    <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net70) aspnetcore2openapi /AspNetCoreEnvironment:Development /project:. /output:Api/openapi.json" />
   </Target>
   <Target Name="CMTNSwag">
     <Exec Command="$(NSwagExe_Net60) run" />
