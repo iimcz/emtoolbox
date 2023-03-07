@@ -131,6 +131,39 @@
         }
       }
     },
+    "/exhibit/reload/{exhibit_id}": {
+      "post": {
+        "tags": [
+          "Exhibit"
+        ],
+        "operationId": "Exhibit_ReloadExhibit",
+        "parameters": [
+          {
+            "name": "exhibit_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/exhibit/all": {
       "get": {
         "tags": [
@@ -424,7 +457,51 @@
         }
       }
     },
-    "/exposition/overlay/{id}/{exhibit_id}": {
+    "/exposition/overlay/{id}/new": {
+      "post": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_AddPackageOverlay",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "newOverlay",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewOverlayProperties"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackageOverlayProperties"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exposition/overlay/{id}/{overlayId}": {
       "post": {
         "tags": [
           "Exposition"
@@ -442,18 +519,18 @@
             "x-position": 1
           },
           {
-            "name": "exhibit_id",
+            "name": "overlayId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "integer",
+              "format": "int32"
             },
             "x-position": 2
           }
         ],
         "requestBody": {
-          "x-name": "pkg_overlay",
+          "x-name": "pkgOverlay",
           "content": {
             "application/json": {
               "schema": {
@@ -495,12 +572,12 @@
             "x-position": 1
           },
           {
-            "name": "exhibit_id",
+            "name": "overlayId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "integer",
+              "format": "int32"
             },
             "x-position": 2
           }
@@ -517,9 +594,7 @@
             }
           }
         }
-      }
-    },
-    "/exposition/overlay/{id}/{package_id}": {
+      },
       "delete": {
         "tags": [
           "Exposition"
@@ -537,7 +612,7 @@
             "x-position": 1
           },
           {
-            "name": "package_id",
+            "name": "overlayId",
             "in": "path",
             "required": true,
             "schema": {
@@ -555,6 +630,51 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exposition/overlay/{id}/find/{exhibitId}": {
+      "get": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_FindPackageOverlays",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "exhibitId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackageOverlayProperties"
+                  }
                 }
               }
             }
@@ -850,7 +970,11 @@
           },
           "packageId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
+          },
+          "isStartupPackage": {
+            "type": "boolean"
           },
           "overwriteSettings": {
             "type": "boolean"
@@ -867,6 +991,20 @@
             "nullable": true
           },
           "sync": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "NewOverlayProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "packageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "exhibitId": {
             "type": "string",
             "nullable": true
           }
