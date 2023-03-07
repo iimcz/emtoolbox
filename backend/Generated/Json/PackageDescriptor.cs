@@ -326,11 +326,14 @@ namespace Naki3D.Common.Json
 
     public partial class Sync
     {
-        [JsonProperty("canvasDimensions")]
+        [JsonProperty("canvasDimensions", NullValueHandling = NullValueHandling.Ignore)]
         public CanvasDimensions CanvasDimensions { get; set; }
 
-        [JsonProperty("elements")]
+        [JsonProperty("elements", NullValueHandling = NullValueHandling.Ignore)]
         public List<Element> Elements { get; set; }
+
+        [JsonProperty("relayAddress")]
+        public string RelayAddress { get; set; }
     }
 
     public partial class CanvasDimensions
@@ -344,14 +347,8 @@ namespace Naki3D.Common.Json
 
     public partial class Element
     {
-        [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
-        public string Address { get; set; }
-
         [JsonProperty("hostname")]
         public string Hostname { get; set; }
-
-        [JsonProperty("role")]
-        public string Role { get; set; }
 
         [JsonProperty("viewportTransform")]
         public string ViewportTransform { get; set; }

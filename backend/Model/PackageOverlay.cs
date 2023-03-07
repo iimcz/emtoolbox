@@ -9,6 +9,7 @@ namespace backend.Model
         [Key]
         public int Id { get; set; }
         public int PackageId { get; set; }
+        public bool IsStartupPackage { get; set; }
         public bool OverwriteSettings { get; set; }
         public string SettingsJson { get; set; }
         public bool OverwriteInputs { get; set; }

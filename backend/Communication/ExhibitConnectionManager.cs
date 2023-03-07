@@ -20,7 +20,7 @@ namespace backend.Communication
         public event System.Action OnIncomingConnectionEvent;
 
         // TODO: Configurable port
-        private const int ServerListenPort = 3917;
+        private const int ServerListenPort = 37514;
         private ILogger<ExhibitConnectionManager> _logger;
         private ILogger<ExhibitConnection> _connectionLogger;
         private readonly IServiceScopeFactory _scopeFactory;
@@ -130,8 +130,8 @@ namespace backend.Communication
         {
             await Task.Run(() =>
             {
-                _beaconListener = new UdpClient(ServerListenPort, AddressFamily.InterNetworkV6);
-                _beaconListener.EnableBroadcast = true;
+                _beaconListener = new UdpClient();
+                _beaconListener.Client.Bind(new IPEndPoint(IPAddress.Any, ServerListenPort));
                 _beaconListener.BeginReceive(BeaconListenerCallback, null);
 
                 _logger.LogInformation("Now listening for EMT beacon packets from devices on port {0}", ServerListenPort);
@@ -159,7 +159,7 @@ namespace backend.Communication
                 return;
             }
 
-            var device = ExhibitConnection.FromBeacon(packet, remote);
+            var device = ExhibitConnection.FromBeacon(packet, remote, false, _connectionLogger);
             subscribeToEvents(device);
 
             if (_connections.ContainsKey(device.ConnectionId))
@@ -175,6 +175,7 @@ namespace backend.Communication
             if (isKnownExhibit(device.ConnectionId))
             {
                 _logger.LogInformation("Device {0} is known. Accepting connection.", device.ConnectionId);
+                await Task.Delay(5000); // TODO: handle this better - this is a grace period for the device to gather all its sensors
                 await AcceptPendingConnection(device.ConnectionId);
             }
 
@@ -194,6 +195,16 @@ namespace backend.Communication
             else
             {
                 return null;
+            }
+        }
+
+        public async Task ReloadDescriptor(string connId)
+        {
+            _connections.TryGetValue(connId, out var connection);
+
+            if (connection != null)
+            {
+                await connection.ReloadDescriptor();
             }
         }
 
@@ -221,6 +232,7 @@ namespace backend.Communication
                     {
                         var sensors = excon.Descriptor.AvailableSensors.Select((sensDescriptor, _) =>
                         {
+                            _logger.LogDebug($"[DESC:{excon.ConnectionId}] SENSOR: {sensDescriptor.Path} ({sensDescriptor.DataType}, Model: {sensDescriptor.Model})");
                             return new Sensor()
                             {
                                 Path = sensDescriptor.Path,
@@ -230,9 +242,10 @@ namespace backend.Communication
                         }).OrderBy(s => s.Path);
                         var oldSensors = exhibit.Sensors.OrderBy(s => s.Path);
 
-                        // If sensors differ, throw away all existing sensors and add current ones.
-                        if (oldSensors.Intersect(sensors, new WeakSensorComparer()).Count() != exhibit.Sensors.Count)
+                        // If sensors differ or if there were no previous sensors, throw away all existing sensors and add current ones.
+                        if (exhibit.Sensors.Count <= 0 || oldSensors.Intersect(sensors, new WeakSensorComparer()).Count() != exhibit.Sensors.Count)
                         {
+                            _logger.LogDebug($" [{excon.ConnectionId}] Saving sensor info.");
                             exhibit.Sensors.Clear();
                             exhibit.Sensors.AddRange(sensors);
                         }

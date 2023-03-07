@@ -56,7 +56,7 @@ namespace backend.Controllers
                 return NotFound();
             _dbContext.Entry(exposition).Collection(ex => ex.Metadata).Load();
 
-            return Ok(new ExpositionProperties
+            return new ExpositionProperties
             {
                 Id = exposition.Id,
                 Name = exposition.Name,
@@ -68,7 +68,7 @@ namespace backend.Controllers
                     Key = m.Key,
                     Value = m.Value
                 }).ToList()
-            });
+            };
         }
 
         [HttpPost("properties/{id}")]
@@ -107,7 +107,7 @@ namespace backend.Controllers
             if (exposition == null)
                 return NotFound();
 
-            return Ok(exposition.ExhibitGraph);
+            return exposition.ExhibitGraph;
         }
 
         [HttpPost("graph/{id}")]
@@ -123,81 +123,123 @@ namespace backend.Controllers
             return Ok();
         }
 
-        [HttpPost("overlay/{id}/{exhibit_id}")]
-        public async Task<ActionResult> SetPackageOverlay(int id, string exhibit_id, [FromBody] PackageOverlayProperties pkg_overlay)
+        [HttpPost("overlay/{id}/new")]
+        public async Task<ActionResult<PackageOverlayProperties>> AddPackageOverlay(int id, [FromBody] NewOverlayProperties newOverlay)
         {
             Exposition exposition = await _dbContext.Expositions
                 .Include(ex => ex.PackageOverlays)
-                .ThenInclude(ov => ov.AssignedExhibit)
+                .ThenInclude(po => po.AssignedExhibit)
                 .FirstOrDefaultAsync(ex => ex.Id == id);
             if (exposition == null)
                 return NotFound();
-            Exhibit exhibit = await _dbContext.Exhibits.FirstOrDefaultAsync(ex => ex.Hostname == exhibit_id);
+            Exhibit exhibit = await _dbContext.Exhibits.FirstOrDefaultAsync(ex => ex.Hostname == newOverlay.ExhibitId);
             if (exhibit == null)
                 return NotFound();
+            
 
-            PackageOverlay overlay = exposition.PackageOverlays.FirstOrDefault(o => o.AssignedExhibit.Hostname == exhibit_id);
-            if (overlay == null)
+            var overlay = new PackageOverlay
             {
-                overlay = new PackageOverlay()
-                {
-                    InputsJson = pkg_overlay.Inputs,
-                    OverwriteInputs = pkg_overlay.OverwriteInputs,
-                    SettingsJson = pkg_overlay.Settings,
-                    OverwriteSettings = pkg_overlay.OverwriteSettings,
-                    PackageId = pkg_overlay.PackageId,
-                    SyncJson = pkg_overlay.Sync,
-                    AssignedExhibit = exhibit
-                };
-                exposition.PackageOverlays.Add(overlay);
-            }
-            else
-            {
-                overlay.InputsJson = pkg_overlay.Inputs;
-                overlay.OverwriteInputs = pkg_overlay.OverwriteInputs;
-                overlay.SettingsJson = pkg_overlay.Settings;
-                overlay.OverwriteSettings = pkg_overlay.OverwriteSettings;
-                overlay.PackageId = pkg_overlay.PackageId;
-                overlay.SyncJson = pkg_overlay.Sync;
-            }
+                PackageId = newOverlay.PackageId,
+                AssignedExhibit = exhibit,
+                OverwriteInputs = false,
+                InputsJson = string.Empty,
+                OverwriteSettings = false,
+                SettingsJson = string.Empty,
+                SyncJson = "{}",
+                IsStartupPackage = false,
+            };
+            exposition.PackageOverlays.Add(overlay);
             await _dbContext.SaveChangesAsync();
-            return Ok();
-        }
 
-        [HttpGet("overlay/{id}/{exhibit_id}")]
-        public async Task<ActionResult<PackageOverlayProperties>> GetPackageOverlay(int id, string exhibit_id)
-        {
-            Exposition exposition = await _dbContext.Expositions
-                .Include(ex => ex.PackageOverlays)
-                .ThenInclude(ov => ov.AssignedExhibit)
-                .FirstOrDefaultAsync(ex => ex.Id == id);
-
-            if (exposition == null)
-                return NotFound();
-
-            PackageOverlay overlay = exposition.PackageOverlays.FirstOrDefault(o => o.AssignedExhibit.Hostname == exhibit_id);
-            if (overlay == null)
-                return NotFound();
-
-            return Ok(new PackageOverlayProperties {
+            return new PackageOverlayProperties {
                 Id = overlay.Id,
+                PackageId = overlay.PackageId,
+                IsStartupPackage = overlay.IsStartupPackage,
                 OverwriteInputs = overlay.OverwriteInputs,
                 Inputs = overlay.InputsJson,
                 OverwriteSettings = overlay.OverwriteSettings,
                 Settings = overlay.SettingsJson,
-                PackageId = overlay.PackageId,
                 Sync = overlay.SyncJson
-            });
+            };
         }
 
-        [HttpDelete("overlay/{id}/{package_id}")]
-        public async Task<ActionResult> DeletePackageOverlay(int id, int package_id)
+        [HttpPost("overlay/{id}/{overlayId}")]
+        public async Task<ActionResult> SetPackageOverlay(int id, int overlayId, [FromBody] PackageOverlayProperties pkgOverlay)
+        {
+            Exposition exposition = await _dbContext.Expositions
+                .Include(ex => ex.PackageOverlays)
+                .ThenInclude(ov => ov.AssignedExhibit)
+                .FirstOrDefaultAsync(ex => ex.Id == id);
+            if (exposition == null)
+                return NotFound();
+
+            PackageOverlay overlay = exposition.PackageOverlays.FirstOrDefault(o => o.Id == overlayId);
+            if (overlay == null)
+                return NotFound();
+    
+            overlay.InputsJson = pkgOverlay.Inputs;
+            overlay.OverwriteInputs = pkgOverlay.OverwriteInputs;
+            overlay.SettingsJson = pkgOverlay.Settings;
+            overlay.OverwriteSettings = pkgOverlay.OverwriteSettings;
+            overlay.SyncJson = pkgOverlay.Sync;
+
+            await _dbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpGet("overlay/{id}/{overlayId}")]
+        public async Task<ActionResult<PackageOverlayProperties>> GetPackageOverlay(int id, int overlayId)
+        {
+            Exposition exposition = await _dbContext.Expositions
+                .Include(ex => ex.PackageOverlays)
+                .FirstOrDefaultAsync(ex => ex.Id == id);
+            if (exposition == null)
+                return NotFound();
+
+            PackageOverlay overlay = exposition.PackageOverlays.FirstOrDefault(o => o.Id == overlayId);
+            if (overlay == null)
+                return NotFound();
+
+            return new PackageOverlayProperties
+            {
+
+            };
+        }
+
+        [HttpGet("overlay/{id}/find/{exhibitId}")]
+        public async Task<IEnumerable<PackageOverlayProperties>> FindPackageOverlays(int id, string exhibitId)
+        {
+            Exposition exposition = await _dbContext.Expositions
+                .Include(ex => ex.PackageOverlays)
+                .ThenInclude(ov => ov.AssignedExhibit)
+                .FirstOrDefaultAsync(ex => ex.Id == id);
+
+            if (exposition == null)
+                return null;
+
+            var overlays = exposition.PackageOverlays
+                .Where(ov => ov.AssignedExhibit.Hostname == exhibitId)
+                .Select(ov => new PackageOverlayProperties {
+                    Id = ov.Id,
+                    PackageId = ov.PackageId,
+                    IsStartupPackage = ov.IsStartupPackage,
+                    OverwriteInputs = ov.OverwriteInputs,
+                    Inputs = ov.InputsJson,
+                    OverwriteSettings = ov.OverwriteSettings,
+                    Settings = ov.SettingsJson,
+                    Sync = ov.SyncJson
+                });
+            return overlays;
+        }
+
+        [HttpDelete("overlay/{id}/{overlayId}")]
+        public async Task<ActionResult> DeletePackageOverlay(int id, int overlayId)
         {
             Exposition exposition = await _dbContext.Expositions.FindAsync(id);
             if (exposition == null)
                 return NotFound();
             await _dbContext.Entry(exposition).Collection<PackageOverlay>(ex => ex.PackageOverlays).LoadAsync();
-            PackageOverlay overlay = exposition.PackageOverlays.FirstOrDefault(o => o.PackageId == package_id);
+            PackageOverlay overlay = exposition.PackageOverlays.FirstOrDefault(o => o.Id == overlayId);
             if (overlay == null)
                 return NotFound();
             exposition.PackageOverlays.Remove(overlay);

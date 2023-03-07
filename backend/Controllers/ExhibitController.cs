@@ -82,6 +82,17 @@ namespace backend.Controllers
             return Ok();
         }
 
+        [HttpPost("reload/{exhibit_id}")]
+        public async Task<ActionResult> ReloadExhibit(string exhibit_id)
+        {
+            Exhibit exhibit = await _dbContext.Exhibits.Include(ex => ex.Sensors).Include(ex => ex.Tags).FirstOrDefaultAsync(ex => ex.Hostname == exhibit_id);
+            if (exhibit == null)
+                return NotFound();
+
+            await _connectionManager.ReloadDescriptor(exhibit_id);
+            return Ok();
+        }
+
         [HttpGet("all")]
         public async Task<List<ExhibitProperties>> GetAllExhibits()
         {
@@ -131,21 +142,29 @@ namespace backend.Controllers
                 return NotFound();
 
             _logger.LogInformation("Sending packages for exposition: {0} ({1})", exposition.Name, exposition.Id);
+            var startupOverlays = new List<PackageOverlay>();
             foreach (var overlay in exposition.PackageOverlays)
             {
+                _logger.LogWarning(" - Sending package {0} to {1} (Is startup: {3})", overlay.PackageId, overlay.AssignedExhibit.Hostname, overlay.IsStartupPackage);
 
-                _logger.LogWarning("Pkg ID: {0}", overlay.PackageId);
                 PresentationPackage package = await _packagesClient.GetPackageAsync(overlay.PackageId);
-
-                await _connectionManager.ClearStartupPackage(overlay.AssignedExhibit.Hostname, true);
 
                 using (var writer = new StringWriter())
                 {
                     await WritePackageJsonAsync(package, overlay, writer);
                     await _connectionManager.LoadPackage(overlay.AssignedExhibit.Hostname, writer.ToString());
-                    await _connectionManager.SetStartupPackage(overlay.AssignedExhibit.Hostname, package.Id.ToString());
-                    await _connectionManager.StartPackage(overlay.AssignedExhibit.Hostname, package.Id.ToString());
                 }
+
+                if (overlay.IsStartupPackage)
+                {
+                    startupOverlays.Add(overlay);
+                }
+            }
+
+            foreach (var overlay in startupOverlays)
+            {
+                await _connectionManager.SetStartupPackage(overlay.AssignedExhibit.Hostname, overlay.PackageId.ToString());
+                await _connectionManager.StartPackage(overlay.AssignedExhibit.Hostname, overlay.PackageId.ToString());
             }
 
             return Ok();

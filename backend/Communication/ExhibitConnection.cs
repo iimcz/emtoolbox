@@ -54,7 +54,7 @@ namespace backend.Communication
         {
             _logger = logger;
             _beaconSource = beaconSource;
-            var channelAddress = beaconSource.ToUri(useSSL ? "https" : "http", 1379);
+            var channelAddress = beaconSource.ToUri(useSSL ? "https" : "http", 3917);
             _exhibitChannel = GrpcChannel.ForAddress(channelAddress, new GrpcChannelOptions
             {
                 // TODO: proper settings
@@ -105,7 +105,7 @@ namespace backend.Communication
                 return null;
             }
 
-            var connection = new ExhibitConnection(message, beaconSource, useSSL);
+            var connection = new ExhibitConnection(message, beaconSource, useSSL, logger);
 
             return connection;
         }
@@ -146,6 +146,11 @@ namespace backend.Communication
             return version == CURRENT_PROTOCOL_VERSION;
         }
 
+        public async Task ReloadDescriptor()
+        {
+            Descriptor = await _deviceServiceClient.GetDeviceDescriptorAsync(new Google.Protobuf.WellKnownTypes.Empty());
+            DescriptorChanged?.Invoke(this, Descriptor);
+        }
 
         public async Task<bool> LoadPackage(bool isPreview, string descriptor)
         {
