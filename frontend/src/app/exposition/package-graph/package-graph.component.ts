@@ -15,6 +15,7 @@ import { Observable, of, scheduled } from 'rxjs';
 import { map, mergeMap, zipAll } from 'rxjs/operators';
 import { PackageDetailControl } from './controls/package-detail.control';
 import { Sync, Element } from 'src/app/model/package';
+import { VoidBoolConstantComponent, VoidFloatConstantComponent, VoidIntegerConstantComponent, VoidStringConstantComponent } from './rete-components/transformations/void';
 
 @Component({
   selector: 'app-package-graph',
@@ -23,13 +24,21 @@ import { Sync, Element } from 'src/app/model/package';
 })
 export class PackageGraphComponent implements AfterViewInit {
   @Input() expositionId: number;
-  @Output() onDeviceSelected = new EventEmitter<{}>();
+  @Output() onDeviceSelected = new EventEmitter<ExhibitProperties[]>();
+  @Output() onDeviceDeleted = new EventEmitter<DeviceRemovedArgs>();
 
   @ViewChild('nodeEditor') el: ElementRef;
   editor: NodeEditor = null;
 
   singleDeviceComponent = new ViewDeviceComponent();
   multiDeviceComponent = new MultiViewDeviceComponent();
+
+  transformComponents = [
+    new VoidStringConstantComponent(),
+    new VoidBoolConstantComponent(),
+    new VoidIntegerConstantComponent(),
+    new VoidFloatConstantComponent()
+  ];
 
   constructor(
     private expositionClient: ExpositionClient,
@@ -41,10 +50,24 @@ export class PackageGraphComponent implements AfterViewInit {
     this.editor.use(ConnectionPlugin);
     console.log('AngularRenderPlugin', AngularRenderPlugin);
     this.editor.use(AngularRenderPlugin);
-    this.editor.use(ContextMenuPlugin);
+    this.editor.use(ContextMenuPlugin, {
+      allocate(component) {
+        // TODO: better check?
+        if (typeof(component) != typeof(ViewDeviceComponent) && typeof(component) != typeof(MultiViewDeviceComponent))
+          return component.category;
+      },
+      rename(component) {
+        return component.name;
+      },
+      nodeItems: {
+        'Delete': true,
+        'Clone': false
+      }
+    });
 
     this.editor.register(this.singleDeviceComponent);
     this.editor.register(this.multiDeviceComponent);
+    this.transformComponents.map(c => this.editor.register(c));
     this.editor.view.resize();
 
     this.loadGraph();
@@ -56,8 +79,23 @@ export class PackageGraphComponent implements AfterViewInit {
     this.editor.on(['nodeselected'], (node) => {
       let dev = node.data.exhibit as ExhibitProperties;
       let devs = node.data.exhibits as ExhibitProperties[];
-      this.onDeviceSelected.emit(dev?.hostname ?? devs[0].hostname);
+
+      if (dev != null)
+        this.onDeviceSelected.emit([dev]);
+      else if (devs != null)
+        this.onDeviceSelected.emit(devs);
+      else
+        this.onDeviceSelected.emit(null);
     });
+
+    this.editor.on(['noderemoved'], (node) => {
+      let devices = node.data.exhibits as ExhibitProperties[] ?? [ node.data.exhibit ] as ExhibitProperties[];
+      if (!devices) {
+        return;
+      }
+      let overlays = node.data.overlays as PackageOverlayProperties[];
+      this.onDeviceDeleted.emit({ devices, overlays });
+    })
   }
 
   findNodeByExhibit(id: string) {
@@ -81,7 +119,10 @@ export class PackageGraphComponent implements AfterViewInit {
       this.editor.selectNode(node);
     } else {
       this.deviceClient.getExhibit(id).subscribe(exhibit => {
-        this.singleDeviceComponent.createNode({ exhibit: exhibit }).then(n => this.editor.addNode(n));
+        this.singleDeviceComponent.createNode({ exhibit: exhibit }).then(n => {
+          this.editor.addNode(n);
+          this.editor.selectNode(n);
+        });
       });
     }
   }
@@ -95,57 +136,59 @@ export class PackageGraphComponent implements AfterViewInit {
         map(id => this.deviceClient.getExhibit(id)),
         zipAll()
       ).subscribe(data => {
-        this.multiDeviceComponent.createNode({ exhibits: data }).then(n => this.editor.addNode(n));
+        this.multiDeviceComponent.createNode({ exhibits: data }).then(n => {
+          this.editor.addNode(n);
+          this.editor.selectNode(n);
+        });
       });
     }
-  } 
+  }
 
   getExhibit(exhibit: string) {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
       // TODO: handle better to avoid redundant find
       if (node.data.exhibit)
-        return node.data.exhibit;
+        return node.data.exhibit as ExhibitProperties;
       else
         return (node.data.exhibits as ExhibitProperties[]).find(ex => ex.hostname === exhibit);
     }
   }
 
-  setPackage(exhibit: string, pkg: PackageProperties) {
+  addPackageOverlay(exhibit: string, pkg: PackageProperties, ov: PackageOverlayProperties) {
     let node = this.findNodeByExhibit(exhibit);
+
     if (node) {
-      node.data.package = pkg;
-      let packageControl = node.controls.get('pkg') as PackageDetailControl;
-      if (packageControl) {
-        packageControl.setPackage(pkg);
-      }
+      this.singleDeviceComponent.addPackage(node, exhibit, pkg, ov);
     }
   }
 
-  getPackage(exhibit: string): PackageProperties {
+  getPackages(exhibit: string): PackageProperties[] {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
-      return node.data.package as PackageProperties;
+      return this.singleDeviceComponent.packages(node);
     }
   }
 
-  setOverlay(exhibit: string, overlay: PackageOverlayProperties) {
+  getOverlays(exhibit: string): PackageOverlayProperties[] {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
-      if (node.data.exhibits && !overlay.sync) {
-        overlay.sync = this.initMultideviceSync(node.data.exhibits as ExhibitProperties[]);
-      }
-      node.data.overlay = overlay;
+      return this.singleDeviceComponent.overlays(node);
     }
-    return null;
   }
 
-  getOverlay(exhibit: string): PackageOverlayProperties {
+  getEnabledOutputs(exhibit: string): string[] {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
-      return node.data.overlay as PackageOverlayProperties;
+      return this.singleDeviceComponent.getEnabledOutputs(node);
     }
-    return null;
+  }
+
+  setEnabledOutputs(exhibits: ExhibitProperties[], outputs: string[]) {
+    let node = this.findNodeByExhibit(exhibits[0].hostname);
+    if (node) {
+      this.singleDeviceComponent.setEnabledOutputs(node, exhibits, outputs);
+    }
   }
 
   getOverlayInputs(exhibit: string): string {
@@ -212,7 +255,7 @@ export class PackageGraphComponent implements AfterViewInit {
       if (node.data.exhibit) {
         let dev = node.data.exhibit as ExhibitProperties;
         exhibits.push(dev.hostname);
-      } else {
+      } else if (node.data.exhibits) {
         let devs = node.data.exhibits as ExhibitProperties[];
         exhibits.push(...(devs.map(ex => ex.hostname)));
       }
@@ -235,36 +278,14 @@ export class PackageGraphComponent implements AfterViewInit {
   addCustomInput(exhibit: string, input: CustomInput) {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
-      if (!node.data.additionalInputs) {
-        node.data.additionalInputs = new Array<CustomInput>();
-      }
-      (node.data.additionalInputs as CustomInput[]).push(
-        input
-      );
-      switch (input.type) {
-        case DataType.Void:
-          node.addInput(new ReteInput(input.effect, input.effect, voidSocket))
-          break;
-      }
-      node.update();
+      this.singleDeviceComponent.addCustomInput(node, input);
     }
   }
 
   addCustomOutput(exhibit: string, output: CustomOutput) {
     let node = this.findNodeByExhibit(exhibit);
     if (node) {
-      if (!node.data.additionalOutputs) {
-        node.data.additionalOutputs = new Array<CustomOutput>();
-      }
-      (node.data.additionalOutputs as CustomOutput[]).push(
-        output
-      );
-      switch (output.type) {
-        case DataType.Void:
-          node.addOutput(new ReteOutput(output.path, output.path, voidSocket))
-          break;
-      }
-      node.update();
+      this.singleDeviceComponent.addCustomOutput(node, output);
     }
   }
 
@@ -293,4 +314,9 @@ export class PackageGraphComponent implements AfterViewInit {
 
     return Convert.syncToJson(sync);
   }
+}
+
+export interface DeviceRemovedArgs {
+  devices: ExhibitProperties[],
+  overlays: PackageOverlayProperties[]
 }

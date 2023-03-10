@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Settings } from 'src/app/model/package';
 import { PackageOverlayProperties, DataType } from 'src/app/services/api.generated.service';
@@ -8,14 +8,14 @@ import { PackageOverlayProperties, DataType } from 'src/app/services/api.generat
   templateUrl: './overlay-detail.component.html',
   styleUrls: ['./overlay-detail.component.css']
 })
-export class OverlayDetailComponent {
+export class OverlayDetailComponent implements OnInit {
   @Input() overlay: PackageOverlayProperties;
   @Output() onAddCustomInput = new EventEmitter<CustomInput>();
   @Output() onAddCustomOutput = new EventEmitter<CustomOutput>();
   @Output() onOverlayChanged = new EventEmitter<PackageOverlayProperties>();
   @Output() onSettingsChanged = new EventEmitter<Settings>();
 
-  eventTypes = ['Bez hodnoty', 'Bool', 'Číslo', 'Událost', 'Komplexní'];
+  eventTypes = [];
 
   overwriteSettings = this.fb.control(false);
   overwriteInputs = this.fb.control(false);
@@ -35,10 +35,19 @@ export class OverlayDetailComponent {
 
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+    let values = Object.values(DataType);
+    this.eventTypes = values.splice(0, values.length / 2) as string[];
+  }
+
+  ngOnInit(): void {
+    this.overwriteInputs.setValue(this.overlay.overwriteInputs);
+    this.overwriteSettings.setValue(this.overlay.overwriteSettings);
+  }
 
   addCustomInput() {
     this.onAddCustomInput.emit({
+      packageId: this.overlay.packageId,
       effect: this.customInputFG.get('customEffect').value,
       type: this.customInputFG.get('customValueType').value,
     });
@@ -61,6 +70,7 @@ export class OverlayDetailComponent {
 
 export class CustomInput
 {
+  packageId: number;
   effect: string;
   type: DataType;
 }

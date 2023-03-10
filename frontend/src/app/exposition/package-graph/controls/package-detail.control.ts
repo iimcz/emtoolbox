@@ -9,7 +9,7 @@ import { ExhibitProperties, PackageProperties } from 'src/app/services/api.gener
     styleUrls: ['./package-detail.control.css'],
 })
 export class PackageDetailComponent implements OnInit {
-    @Input() package: PackageProperties;
+    @Input() packages: PackageProperties[];
   
     ngOnInit() {
     }
@@ -19,16 +19,16 @@ export class PackageDetailControl extends Control implements AngularControl {
     component: Type<PackageDetailComponent>
     props: { [key: string]: unknown }
 
-    constructor(public key, pkg) {
+    constructor(public key, pkgs) {
         super(key);
 
         this.component = PackageDetailComponent;
         this.props = {
-            package: pkg
+            packages: pkgs
         };
     }
 
-    setPackage(val: PackageProperties) {
-        this.props.package = val;
+    setPackages(val: PackageProperties[]) {
+        this.props.packages = val;
     }
 }

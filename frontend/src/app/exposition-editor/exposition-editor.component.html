@@ -9,16 +9,50 @@
         <app-exposition-detail #detailComponent [expositionId]="this.expositionId"></app-exposition-detail>
         <button mat-raised-button (click)="save()" color="primary" style="margin: 10px; width: 95%;">Uložit
             Expozici</button>
-        <button mat-raised-button (click)="upload()" style="margin: 10px; width: 95%;">Nahrát Expozici</button>
+        <button mat-raised-button (click)="upload()" style="margin: 10px; width: 95%;">Spustit Expozici</button>
     </div>
     <div class="flex-1">
         <app-package-graph #graphComponent [expositionId]="this.expositionId"
             (onDeviceSelected)="selectExhibit($event)"></app-package-graph>
     </div>
     <div class="flex-25p">
-        <div class="flex-column">
+        <div class="flex-col">
             <div class="flex-30p">
-                <mat-tab-group>
+                <mat-tab-group #deviceTabGroup>
+                    <mat-tab label="Zvolené zařízení">
+                        <div *ngIf="!selectedExhibits">
+                            <h2>
+                                Žádné zařízení není vybráno.
+                            </h2>
+                        </div>
+                        <div *ngIf="selectedExhibits">
+                            <mat-form-field class="vertical-margin-small full-width">
+                                <mat-label>Startovní balíček</mat-label>
+                                <mat-select (selectionChange)="selectStartupPackage($event)" [value]="startupPackageId">
+                                    <mat-option *ngFor="let pkg of selectedPackages" [value]="pkg.id">
+                                        {{pkg.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div class="flex-row justify-center gap-16 vertical-margin-small">
+                                <button mat-raised-button (click)="selectSensors()"><mat-icon>sensors</mat-icon>Aktivní
+                                    senzory</button>
+                                <button mat-raised-button
+                                    (click)="selectPackage()"><mat-icon>inventory_2</mat-icon>Přidat balíček</button>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <h4>Aktivní balíčky</h4>
+                            <mat-tab-group #packageTabGroup>
+                                <mat-tab *ngFor="let overlay of selectedOverlays"
+                                    [label]="packageNameForOverlay(overlay)">
+                                    <app-overlay-detail [overlay]="overlay" (onAddCustomInput)="addCustomInput($event)"
+                                        (onAddCustomOutput)="addCustomOutput($event)"
+                                        (onOverlayChanged)="overlayChanged($event)"
+                                        (onSettingsChanged)="settingsChanged($event)"></app-overlay-detail>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                    </mat-tab>
                     <mat-tab label="Dostupná zařízení">
                         <app-device-list [showActions]="false" [showPending]="false"
                             (onDeviceSelected)="addSingleDevice($event)"></app-device-list>
@@ -27,25 +61,12 @@
                         <app-device-list [showActions]="false" [checkBoxes]="true"
                             (onDeviceChecked)="deviceCheckChanged($event)"></app-device-list>
                         <p class="horizontal-margin-small">
-                            <button mat-raised-button [disabled]="checkedDevicesForMultidevice.length < 2" (click)="addMultiDevice()">Přidat synchronizovanou
+                            <button mat-raised-button [disabled]="checkedDevicesForMultidevice.length < 2"
+                                (click)="addMultiDevice()">Přidat synchronizovanou
                                 skupinu</button>
                         </p>
                     </mat-tab>
                 </mat-tab-group>
-            </div>
-            <div class="flex-1">
-                <h4>Detaily</h4>
-                <div class="flex-row full-width">
-                    <div class="flex-1">Balíček: {{selectedPackage?.name}}</div>
-                    <div class="flex-30p">
-                        <button mat-raised-button (click)="selectPackage()" [disabled]="!selectedExhibit">Zvolit
-                            balíček</button>
-                    </div>
-                </div>
-                <app-overlay-detail (onAddCustomInput)="addCustomInput($event)"
-                    (onAddCustomOutput)="addCustomOutput($event)" (onOverlayChanged)="overlayChanged($event)"
-                    (onSettingsChanged)="settingsChanged($event)"
-                    [style]="{visibility: selectedExhibit ? 'visible' : 'hidden'}"></app-overlay-detail>
             </div>
         </div>
     </div>

@@ -21,7 +21,7 @@ export class MultiViewDeviceComponent extends ViewDeviceComponent {
         node.addControl(new PackageDetailControl('pkg', node.data.package));
 
         for (let ex of exhibits) {
-            await this.addSensorConnectivity(node, ex, true);
+            await this.addSensorConnectivity(node, ex);
         }
         await this.addCustomConnectivity(node);
     }

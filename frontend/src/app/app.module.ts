@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { InventoryModule } from './inventory/inventory.module';
 import { OverlaysModule } from './overlays/overlays.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatInputModule,
     MatIconModule,
     MatTabsModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: API_BASE_URL, useValue: environment.apiBaseUrl },

@@ -1,0 +1,17 @@
+<h3 mat-dialog-title>Dostupné senzory</h3>
+<mat-dialog-content style="min-width: 600px;">
+    <div *ngFor="let exhibit of exhibits; let i = index" class="flex-col">
+        <h4>Zařízení: {{exhibit.hostname}}</h4>
+        <div *ngFor="let dataType of dataTypes; let j = index">
+            <mat-expansion-panel *ngIf="typeSensors[i][j].length > 0">
+                <mat-expansion-panel-header>{{dataType}}</mat-expansion-panel-header>
+                <mat-slide-toggle *ngFor="let sensor of typeSensors[i][j]" (change)="changeSensor($event, sensor)" [checked]="enabledSensors.includes(sensor.path)">{{sensor.friendlyName ??
+                    sensor.path}}</mat-slide-toggle>
+            </mat-expansion-panel>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="sensorsSaved()">Potvrdit výběr</button>
+    <button mat-raised-button mat-dialog-close>Zrušit</button>
+</mat-dialog-actions>

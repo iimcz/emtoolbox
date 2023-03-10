@@ -15,6 +15,9 @@ import { ExpositionDetailComponent } from './exposition-detail/exposition-detail
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MyNodeComponent } from './package-graph/node/node.component';
+import { PackageDetailComponent } from './package-graph/controls/package-detail.control';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DeviceDetailComponent } from './package-graph/controls/device-detail.control';
 
 
 
@@ -25,6 +28,8 @@ import { MyNodeComponent } from './package-graph/node/node.component';
     CreateExpositionDialogComponent,
     ExpositionDetailComponent,
     MyNodeComponent,
+    PackageDetailComponent,
+    DeviceDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +44,7 @@ import { MyNodeComponent } from './package-graph/node/node.component';
     ReactiveFormsModule,
     MatIconModule,
     MatSelectModule,
+    MatTooltipModule,
   ],
   exports: [
     PackageGraphComponent,
