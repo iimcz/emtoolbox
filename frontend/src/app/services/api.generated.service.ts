@@ -306,6 +306,61 @@ export class ExhibitClient {
         return _observableOf<FileResponse>(null as any);
     }
 
+    reloadExhibit(exhibit_id: string | null): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/exhibit/reload/{exhibit_id}";
+        if (exhibit_id === undefined || exhibit_id === null)
+            throw new Error("The parameter 'exhibit_id' must be defined.");
+        url_ = url_.replace("{exhibit_id}", encodeURIComponent("" + exhibit_id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processReloadExhibit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processReloadExhibit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse>;
+        }));
+    }
+
+    protected processReloadExhibit(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse>(null as any);
+    }
+
     getAllExhibits(): Observable<ExhibitProperties[]> {
         let url_ = this.baseUrl + "/exhibit/all";
         url_ = url_.replace(/[?&]$/, "");
@@ -809,17 +864,72 @@ export class ExpositionClient {
         return _observableOf<FileResponse>(null as any);
     }
 
-    setPackageOverlay(id: number, exhibit_id: string | null, pkg_overlay: PackageOverlayProperties): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/exposition/overlay/{id}/{exhibit_id}";
+    addPackageOverlay(id: number, newOverlay: NewOverlayProperties): Observable<PackageOverlayProperties> {
+        let url_ = this.baseUrl + "/exposition/overlay/{id}/new";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        if (exhibit_id === undefined || exhibit_id === null)
-            throw new Error("The parameter 'exhibit_id' must be defined.");
-        url_ = url_.replace("{exhibit_id}", encodeURIComponent("" + exhibit_id));
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(pkg_overlay);
+        const content_ = JSON.stringify(newOverlay);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddPackageOverlay(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddPackageOverlay(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PackageOverlayProperties>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PackageOverlayProperties>;
+        }));
+    }
+
+    protected processAddPackageOverlay(response: HttpResponseBase): Observable<PackageOverlayProperties> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PackageOverlayProperties.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PackageOverlayProperties>(null as any);
+    }
+
+    setPackageOverlay(id: number, overlayId: number, pkgOverlay: PackageOverlayProperties): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/exposition/overlay/{id}/{overlayId}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (overlayId === undefined || overlayId === null)
+            throw new Error("The parameter 'overlayId' must be defined.");
+        url_ = url_.replace("{overlayId}", encodeURIComponent("" + overlayId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pkgOverlay);
 
         let options_ : any = {
             body: content_,
@@ -871,14 +981,14 @@ export class ExpositionClient {
         return _observableOf<FileResponse>(null as any);
     }
 
-    getPackageOverlay(id: number, exhibit_id: string | null): Observable<PackageOverlayProperties> {
-        let url_ = this.baseUrl + "/exposition/overlay/{id}/{exhibit_id}";
+    getPackageOverlay(id: number, overlayId: number): Observable<PackageOverlayProperties> {
+        let url_ = this.baseUrl + "/exposition/overlay/{id}/{overlayId}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        if (exhibit_id === undefined || exhibit_id === null)
-            throw new Error("The parameter 'exhibit_id' must be defined.");
-        url_ = url_.replace("{exhibit_id}", encodeURIComponent("" + exhibit_id));
+        if (overlayId === undefined || overlayId === null)
+            throw new Error("The parameter 'overlayId' must be defined.");
+        url_ = url_.replace("{overlayId}", encodeURIComponent("" + overlayId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -925,14 +1035,14 @@ export class ExpositionClient {
         return _observableOf<PackageOverlayProperties>(null as any);
     }
 
-    deletePackageOverlay(id: number, package_id: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/exposition/overlay/{id}/{package_id}";
+    deletePackageOverlay(id: number, overlayId: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/exposition/overlay/{id}/{overlayId}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        if (package_id === undefined || package_id === null)
-            throw new Error("The parameter 'package_id' must be defined.");
-        url_ = url_.replace("{package_id}", encodeURIComponent("" + package_id));
+        if (overlayId === undefined || overlayId === null)
+            throw new Error("The parameter 'overlayId' must be defined.");
+        url_ = url_.replace("{overlayId}", encodeURIComponent("" + overlayId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -981,6 +1091,67 @@ export class ExpositionClient {
             }));
         }
         return _observableOf<FileResponse>(null as any);
+    }
+
+    findPackageOverlays(id: number, exhibitId: string | null): Observable<PackageOverlayProperties[]> {
+        let url_ = this.baseUrl + "/exposition/overlay/{id}/find/{exhibitId}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (exhibitId === undefined || exhibitId === null)
+            throw new Error("The parameter 'exhibitId' must be defined.");
+        url_ = url_.replace("{exhibitId}", encodeURIComponent("" + exhibitId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFindPackageOverlays(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFindPackageOverlays(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PackageOverlayProperties[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PackageOverlayProperties[]>;
+        }));
+    }
+
+    protected processFindPackageOverlays(response: HttpResponseBase): Observable<PackageOverlayProperties[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PackageOverlayProperties.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PackageOverlayProperties[]>(null as any);
     }
 
     deletePackageOverlays(id: number): Observable<FileResponse> {
@@ -1492,7 +1663,9 @@ export interface IExpositionMeta {
 
 export class PackageOverlayProperties implements IPackageOverlayProperties {
     id?: number | undefined;
-    packageId?: number;
+    packageId?: number | undefined;
+    exhibitHostname?: string | undefined;
+    isStartupPackage?: boolean;
     overwriteSettings?: boolean;
     settings?: string | undefined;
     overwriteInputs?: boolean;
@@ -1512,6 +1685,8 @@ export class PackageOverlayProperties implements IPackageOverlayProperties {
         if (_data) {
             this.id = _data["id"];
             this.packageId = _data["packageId"];
+            this.exhibitHostname = _data["exhibitHostname"];
+            this.isStartupPackage = _data["isStartupPackage"];
             this.overwriteSettings = _data["overwriteSettings"];
             this.settings = _data["settings"];
             this.overwriteInputs = _data["overwriteInputs"];
@@ -1531,6 +1706,8 @@ export class PackageOverlayProperties implements IPackageOverlayProperties {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["packageId"] = this.packageId;
+        data["exhibitHostname"] = this.exhibitHostname;
+        data["isStartupPackage"] = this.isStartupPackage;
         data["overwriteSettings"] = this.overwriteSettings;
         data["settings"] = this.settings;
         data["overwriteInputs"] = this.overwriteInputs;
@@ -1542,12 +1719,54 @@ export class PackageOverlayProperties implements IPackageOverlayProperties {
 
 export interface IPackageOverlayProperties {
     id?: number | undefined;
-    packageId?: number;
+    packageId?: number | undefined;
+    exhibitHostname?: string | undefined;
+    isStartupPackage?: boolean;
     overwriteSettings?: boolean;
     settings?: string | undefined;
     overwriteInputs?: boolean;
     inputs?: string | undefined;
     sync?: string | undefined;
+}
+
+export class NewOverlayProperties implements INewOverlayProperties {
+    packageId?: number;
+    exhibitId?: string | undefined;
+
+    constructor(data?: INewOverlayProperties) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.packageId = _data["packageId"];
+            this.exhibitId = _data["exhibitId"];
+        }
+    }
+
+    static fromJS(data: any): NewOverlayProperties {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewOverlayProperties();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["packageId"] = this.packageId;
+        data["exhibitId"] = this.exhibitId;
+        return data;
+    }
+}
+
+export interface INewOverlayProperties {
+    packageId?: number;
+    exhibitId?: string | undefined;
 }
 
 export class PackageProperties implements IPackageProperties {
