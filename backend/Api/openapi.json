@@ -973,6 +973,10 @@
             "format": "int32",
             "nullable": true
           },
+          "exhibitHostname": {
+            "type": "string",
+            "nullable": true
+          },
           "isStartupPackage": {
             "type": "boolean"
           },

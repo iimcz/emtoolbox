@@ -4,6 +4,7 @@ namespace backend.ViewModels
     {
         public int? Id { get; set; }
         public int? PackageId { get; set; }
+        public string ExhibitHostname { get; set; }
         public bool IsStartupPackage { get; set; }
         public bool OverwriteSettings { get; set; }
         public string Settings { get; set; }

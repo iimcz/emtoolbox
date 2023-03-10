@@ -154,6 +154,7 @@ namespace backend.Controllers
             return new PackageOverlayProperties {
                 Id = overlay.Id,
                 PackageId = overlay.PackageId,
+                ExhibitHostname = exhibit.Hostname,
                 IsStartupPackage = overlay.IsStartupPackage,
                 OverwriteInputs = overlay.OverwriteInputs,
                 Inputs = overlay.InputsJson,
@@ -202,7 +203,15 @@ namespace backend.Controllers
 
             return new PackageOverlayProperties
             {
-
+                Id = overlay.Id,
+                PackageId = overlay.PackageId,
+                IsStartupPackage = overlay.IsStartupPackage,
+                ExhibitHostname = overlay.AssignedExhibit.Hostname,
+                OverwriteInputs = overlay.OverwriteInputs,
+                Inputs = overlay.InputsJson,
+                OverwriteSettings = overlay.OverwriteSettings,
+                Settings = overlay.SettingsJson,
+                Sync = overlay.SyncJson
             };
         }
 
@@ -222,6 +231,7 @@ namespace backend.Controllers
                 .Select(ov => new PackageOverlayProperties {
                     Id = ov.Id,
                     PackageId = ov.PackageId,
+                    ExhibitHostname = ov.AssignedExhibit.Hostname,
                     IsStartupPackage = ov.IsStartupPackage,
                     OverwriteInputs = ov.OverwriteInputs,
                     Inputs = ov.InputsJson,
