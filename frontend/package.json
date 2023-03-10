@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "nswag": "nswag run /runtime:NetCore50"
+    "nswag": "nswag run /runtime:NetCore70"
   },
   "private": true,
   "dependencies": {
@@ -27,7 +27,7 @@
     "rete-angular-render-plugin": "^0.2.2",
     "rete-area-plugin": "^0.2.1",
     "rete-connection-plugin": "^0.9.0",
-    "rete-context-menu-plugin": "^1.0.0-alpha9",
+    "rete-context-menu-plugin": "^0.6.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "vue": "^3.2.47",
