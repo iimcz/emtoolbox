@@ -18,6 +18,7 @@ import { MyNodeComponent } from './package-graph/node/node.component';
 import { PackageDetailComponent } from './package-graph/controls/package-detail.control';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DeviceDetailComponent } from './package-graph/controls/device-detail.control';
+import { ConstantComponent } from './package-graph/controls/transformations/constant.control';
 
 
 
@@ -30,6 +31,7 @@ import { DeviceDetailComponent } from './package-graph/controls/device-detail.co
     MyNodeComponent,
     PackageDetailComponent,
     DeviceDetailComponent,
+    ConstantComponent,
   ],
   imports: [
     CommonModule,
