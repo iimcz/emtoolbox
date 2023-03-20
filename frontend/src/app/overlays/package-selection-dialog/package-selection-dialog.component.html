@@ -1,6 +1,9 @@
+<h3 mat-dialog-title>Vyberte balíček</h3>
 <mat-dialog-content>
-    <h3 mat-dialog-title>Vyberte balíček</h3>
     <section class="large-table">
         <app-package-list (onPackageSelected)="packageSelected($event)"></app-package-list>
     </section>
 </mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Zrušit</button>
+</mat-dialog-actions>

@@ -175,8 +175,9 @@ export interface VideoEvent {
 }
 
 export interface Sync {
-    canvasDimensions: CanvasDimensions;
-    elements:         Element[];
+    canvasDimensions?: CanvasDimensions;
+    elements?:         Element[];
+    relayAddress:      string;
 }
 
 export interface CanvasDimensions {
@@ -185,9 +186,7 @@ export interface CanvasDimensions {
 }
 
 export interface Element {
-    address?:          string;
     hostname:          string;
-    role:              string;
     viewportTransform: string;
 }
 
@@ -609,17 +608,16 @@ const typeMap: any = {
         { json: "timestamp", js: "timestamp", typ: u(undefined, 3.14) },
     ], false),
     "Sync": o([
-        { json: "canvasDimensions", js: "canvasDimensions", typ: r("CanvasDimensions") },
-        { json: "elements", js: "elements", typ: a(r("Element")) },
+        { json: "canvasDimensions", js: "canvasDimensions", typ: u(undefined, r("CanvasDimensions")) },
+        { json: "elements", js: "elements", typ: u(undefined, a(r("Element"))) },
+        { json: "relayAddress", js: "relayAddress", typ: "" },
     ], false),
     "CanvasDimensions": o([
         { json: "height", js: "height", typ: u(undefined, 0) },
         { json: "width", js: "width", typ: u(undefined, 0) },
     ], false),
     "Element": o([
-        { json: "address", js: "address", typ: u(undefined, "") },
         { json: "hostname", js: "hostname", typ: "" },
-        { json: "role", js: "role", typ: "" },
         { json: "viewportTransform", js: "viewportTransform", typ: "" },
     ], false),
     "RoundingMethod": [
