@@ -183,6 +183,7 @@ namespace backend.Controllers
             overlay.SettingsJson = pkgOverlay.Settings;
             overlay.OverwriteSettings = pkgOverlay.OverwriteSettings;
             overlay.SyncJson = pkgOverlay.Sync;
+            overlay.IsStartupPackage = pkgOverlay.IsStartupPackage;
 
             await _dbContext.SaveChangesAsync();
             return Ok();
@@ -254,6 +255,24 @@ namespace backend.Controllers
                 return NotFound();
             exposition.PackageOverlays.Remove(overlay);
             await _dbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("overlay/{id}/specific")]
+        public async Task<ActionResult> DeleteExceptSpecified(int id, [FromBody] List<int> overlayIds)
+        {
+            Exposition exposition = await _dbContext.Expositions.FindAsync(id);
+            if (exposition == null)
+                return NotFound();
+            await _dbContext.Entry(exposition).Collection<PackageOverlay>(ex => ex.PackageOverlays).LoadAsync();
+
+            var deprecated = exposition.PackageOverlays.Where(o => !overlayIds.Contains(o.Id)).ToList();
+            foreach (var overlay in deprecated)
+            {
+                exposition.PackageOverlays.Remove(overlay);
+            }
+            await _dbContext.SaveChangesAsync();
+
             return Ok();
         }
 
