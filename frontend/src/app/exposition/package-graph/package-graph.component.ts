@@ -1,4 +1,4 @@
-import { NodeEditor, Input as ReteInput, Output as ReteOutput } from 'rete';
+import { NodeEditor, Input as ReteInput, Output as ReteOutput, Connection, Node, Socket } from 'rete';
 import ConnectionPlugin from 'rete-connection-plugin';
 import { AngularRenderPlugin } from 'rete-angular-render-plugin';
 import ContextMenuPlugin from 'rete-context-menu-plugin';
@@ -8,8 +8,8 @@ import { ViewDeviceComponent } from './rete-components/view-device-component';
 import { DataType, ExhibitClient, ExhibitProperties, ExpositionClient, ExpositionProperties, PackageOverlayProperties, PackageProperties } from 'src/app/services/api.generated.service';
 import { DeviceDetailControl } from './controls/device-detail.control';
 import { CustomInput, CustomOutput } from 'src/app/overlays/overlay-detail/overlay-detail.component';
-import { boolSocket, voidSocket } from './rete-sockets';
-import { Action, CanvasDimensions, Convert, Mapping, Type } from 'src/app/model/package';
+import { boolSocket, floatSocket, integerSocket, stringSocket, vector2Socket, vector3Socket, voidSocket } from './rete-sockets';
+import { Action, CanvasDimensions, Convert, Mapping, Transform, Type } from 'src/app/model/package';
 import { MultiViewDeviceComponent } from './rete-components/multiview-device-component';
 import { Observable, of, scheduled } from 'rxjs';
 import { map, mergeMap, zipAll } from 'rxjs/operators';
@@ -117,11 +117,13 @@ export class PackageGraphComponent implements AfterViewInit {
     let node = this.findNodeByExhibit(id);
     if (node) {
       this.editor.selectNode(node);
+      this.focusViewOn(node);
     } else {
       this.deviceClient.getExhibit(id).subscribe(exhibit => {
         this.singleDeviceComponent.createNode({ exhibit: exhibit }).then(n => {
           this.editor.addNode(n);
           this.editor.selectNode(n);
+          this.focusViewOn(n);
         });
       });
     }
@@ -131,6 +133,7 @@ export class PackageGraphComponent implements AfterViewInit {
     let node = this.findNodeByExhibit(ids[0]);
     if (node) {
       this.editor.selectNode(node);
+      this.focusViewOn(node);
     } else {
       of(...ids).pipe(
         map(id => this.deviceClient.getExhibit(id)),
@@ -139,9 +142,15 @@ export class PackageGraphComponent implements AfterViewInit {
         this.multiDeviceComponent.createNode({ exhibits: data }).then(n => {
           this.editor.addNode(n);
           this.editor.selectNode(n);
+          this.focusViewOn(n);
         });
       });
     }
+  }
+
+  focusViewOn(node: Node) {
+    const halfScreenSize = [this.editor.view.area.container.clientWidth / 2, this.editor.view.area.container.clientHeight / 2];
+    this.editor.view.area.translate(-node.position[0] + halfScreenSize[0], -node.position[1] + halfScreenSize[1]);
   }
 
   getExhibit(exhibit: string) {
@@ -159,6 +168,11 @@ export class PackageGraphComponent implements AfterViewInit {
     let node = this.findNodeByExhibit(exhibit);
 
     if (node) {
+      if (node.data.exhibits) {
+        ov.sync = this.initMultideviceSync(node.data.exhibits as ExhibitProperties[]);
+      } else {
+        ov.sync = Convert.syncToJson({ relayAddress: '' } as Sync); // Provide at least an empty relay address so the parser doesn't freak out later.
+      }
       this.singleDeviceComponent.addPackage(node, exhibit, pkg, ov);
     }
   }
@@ -191,39 +205,41 @@ export class PackageGraphComponent implements AfterViewInit {
     }
   }
 
-  getOverlayInputs(exhibit: string): string {
+  getOverlayInputs(exhibit: string, package_id: string): string {
     let node = this.findNodeByExhibit(exhibit);
-    let inputs: Action[] = [];
+    let overlayInputs: Action[] = [];
     if (node) {
-      for (let input of node.inputs) {
+      const inputs = this.singleDeviceComponent.getPackageReteInputs(node, package_id);
+      for (const input of inputs) {
         for (let conn of input[1].connections) {
-          let output = conn.output;
-          let otherNode = output.node;
-          let srcExhibit = otherNode.data.exhibit as ExhibitProperties;
-          if (!srcExhibit)
+          let output = this.getSourceOutput(conn);
+          let transformation = this.getFirstTransformation(conn);
+
+          if (!output)
             continue;
 
           let action = {
-            effect: input[0]
+            type: this.socketToActionType(input[1].socket),
+            effect: input[0],
+            mapping: {
+              source: this.stripLocalOutputHostname(input[1], output)
+            } as Mapping
           } as Action;
 
-          // TODO: consolidate types
-          switch (input[1].socket) {
-            case voidSocket:
-              break;
+          if (transformation) {
+            action.mapping.transform = transformation;
           }
-
-          action.mapping = this.createActionMapping(output, srcExhibit, srcExhibit.hostname === exhibit);
-          inputs.push(action);
+          
+          overlayInputs.push(action);
         }
       }
 
       let result = '[';
       let count = 0;
-      for (let input of inputs) {
-        //result += Convert.actionToJson(input);
+      for (let input of overlayInputs) {
+        result += Convert.actionToJson(input);
         count++;
-        if (count < inputs.length)
+        if (count < overlayInputs.length)
           result += ',';
       }
       result += ']';
@@ -231,6 +247,56 @@ export class PackageGraphComponent implements AfterViewInit {
       return result;
     }
     return '';
+  }
+
+  getSourceOutput(conn: Connection): ReteOutput {
+    let last = conn.output;
+
+    while (!(last.node.data.exhibit || last.node.data.exhibits)) {
+      // No single or multi-device, continue along the chain of transformations which always have a single input.
+      last = last.node.getConnections()[0].output;
+    }
+
+    if (last.node.data.exhibit || last.node.data.exhibits) {
+      return last;
+    }
+    return null;
+  }
+
+  socketToActionType(socket: Socket): Type {
+    switch (socket) {
+      case voidSocket:
+        return Type.Void;
+      case boolSocket:
+        return Type.Bool;
+      case integerSocket:
+        return Type.Integer;
+      case floatSocket:
+        return Type.Float;
+      case stringSocket:
+        return Type.String;
+      case vector2Socket:
+      case vector3Socket:
+        return Type.Complex;
+    }
+  }
+
+  stripLocalOutputHostname(input: ReteInput, output: ReteOutput): string {
+    if (input.node == output.node) {
+      if (input.node.data.exhibit) {
+        return this.singleDeviceComponent.stripHostname(output.key);
+      }
+    }
+    return output.key;
+  }
+
+  getFirstTransformation(conn: Connection): Transform {
+    // TODO: maybe consider some traverse logic, but right now only logical possibility
+    // is a single transformation right before the input, if any.
+    if (conn.output.node.data.transformation) {
+      return conn.output.node.data.transformation;
+    }
+    return null;
   }
 
   createActionMapping(output: ReteOutput, exhibit: ExhibitProperties, isRelative: boolean): Mapping {
@@ -294,7 +360,7 @@ export class PackageGraphComponent implements AfterViewInit {
 
     // TODO: better setup
     sync.canvasDimensions = {
-      width: exhibits.reduce((val, ex, _) => val + (ex.hostname.startsWith('ipw') ? 4096 : 2048), 0),
+      width: exhibits.reduce((val, ex, _) => val + (ex.deviceType === 'ipw' ? 4096 : 2048), 0),
       height: exhibits.reduce((val, ex, _) => 2048, 0)
     } as CanvasDimensions;
 
@@ -302,7 +368,6 @@ export class PackageGraphComponent implements AfterViewInit {
     sync.elements.push(...(exhibits.map((ex, i) => {
       return {
         hostname: ex.hostname,
-        role: '',
         viewportTransform: (ex.hostname.startsWith('ipw') ? '4096x2048+' : '2048x2048+')
       } as Element
     })));
@@ -311,6 +376,8 @@ export class PackageGraphComponent implements AfterViewInit {
       el.viewportTransform += (xoffset + '+0');
       xoffset += parseInt(el.viewportTransform.substring(0, el.viewportTransform.indexOf('x')));
     }
+
+    sync.relayAddress = ''; // Will be filled by the editor in context of the whole exposition.
 
     return Convert.syncToJson(sync);
   }

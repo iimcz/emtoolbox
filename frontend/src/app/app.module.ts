@@ -27,6 +27,7 @@ import { InventoryModule } from './inventory/inventory.module';
 import { OverlaysModule } from './overlays/overlays.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatTabsModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     { provide: API_BASE_URL, useValue: environment.apiBaseUrl },

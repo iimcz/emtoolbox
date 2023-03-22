@@ -190,6 +190,16 @@ export class ViewDeviceComponent extends Component implements AngularComponent {
         return node.data.enabledOutputs as string[];
     }
 
+    getPackageReteInputs(node: Node, package_id: string): [string, Input][] {
+        let inputs = [];
+        for (const input of node.inputs) {
+            if (input[0].startsWith(package_id + '/')) {
+                inputs.push(input);
+            }
+        }
+        return inputs;
+    }
+
     packages(node: Node): PackageProperties[] {
         return (node.data.packages as PackageProperties[]);
     }
