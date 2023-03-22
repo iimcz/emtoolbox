@@ -682,6 +682,55 @@
         }
       }
     },
+    "/exposition/overlay/{id}/specific": {
+      "delete": {
+        "tags": [
+          "Exposition"
+        ],
+        "operationId": "Exposition_DeleteExceptSpecified",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "overlayIds",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/exposition/overlay/{id}/all": {
       "delete": {
         "tags": [
@@ -851,6 +900,10 @@
         "additionalProperties": false,
         "properties": {
           "hostname": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceType": {
             "type": "string",
             "nullable": true
           },
