@@ -230,6 +230,7 @@ namespace backend.Communication
 
                     if (exhibit != null)
                     {
+                        exhibit.DeviceType = excon.Descriptor.DeviceType;
                         var sensors = excon.Descriptor.AvailableSensors.Select((sensDescriptor, _) =>
                         {
                             _logger.LogDebug($"[DESC:{excon.ConnectionId}] SENSOR: {sensDescriptor.Path} ({sensDescriptor.DataType}, Model: {sensDescriptor.Model})");
@@ -245,7 +246,7 @@ namespace backend.Communication
                         // If sensors differ or if there were no previous sensors, throw away all existing sensors and add current ones.
                         if (exhibit.Sensors.Count <= 0 || oldSensors.Intersect(sensors, new WeakSensorComparer()).Count() != exhibit.Sensors.Count)
                         {
-                            _logger.LogDebug($" [{excon.ConnectionId}] Saving sensor info.");
+                            _logger.LogDebug($"[{excon.ConnectionId}] Saving sensor info.");
                             exhibit.Sensors.Clear();
                             exhibit.Sensors.AddRange(sensors);
                         }

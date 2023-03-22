@@ -6,16 +6,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using backend.Communication;
 using backend.Generated.CMToolbox;
-using backend.Middleware;
 using backend.Model;
 using backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Naki3D.Common.Json;
-
-using N3DAction = Naki3D.Common.Json.Action;
 
 namespace backend.Controllers
 {
@@ -99,6 +95,7 @@ namespace backend.Controllers
             List<ExhibitProperties> exhibits = await _dbContext.Exhibits.Include(ex => ex.Sensors).Include(ex => ex.Tags).Select(ex => new ExhibitProperties
             {
                 Hostname = ex.Hostname,
+                DeviceType = ex.DeviceType,
                 Sensors = ex.Sensors.Select(s => new SensorProperties
                 {
                     Path = s.Path,
@@ -121,6 +118,7 @@ namespace backend.Controllers
             return Ok(new ExhibitProperties()
             {
                 Hostname = exhibit.Hostname,
+                DeviceType = exhibit.DeviceType,
                 Sensors = exhibit.Sensors.Select(s => new SensorProperties
                 {
                     Path = s.Path,
@@ -145,7 +143,7 @@ namespace backend.Controllers
             var startupOverlays = new List<PackageOverlay>();
             foreach (var overlay in exposition.PackageOverlays)
             {
-                _logger.LogWarning(" - Sending package {0} to {1} (Is startup: {3})", overlay.PackageId, overlay.AssignedExhibit.Hostname, overlay.IsStartupPackage);
+                _logger.LogInformation(" - Sending package {0} to {1} (Is startup: {3})", overlay.PackageId, overlay.AssignedExhibit.Hostname, overlay.IsStartupPackage);
 
                 PresentationPackage package = await _packagesClient.GetPackageAsync(overlay.PackageId);
 
@@ -163,7 +161,9 @@ namespace backend.Controllers
 
             foreach (var overlay in startupOverlays)
             {
+                _logger.LogInformation(" = Setting package {0} on {1} as startup package", overlay.PackageId, overlay.AssignedExhibit.Hostname);
                 await _connectionManager.SetStartupPackage(overlay.AssignedExhibit.Hostname, overlay.PackageId.ToString());
+                _logger.LogInformation(" = Starting package {0} on {1}", overlay.PackageId, overlay.AssignedExhibit.Hostname);
                 await _connectionManager.StartPackage(overlay.AssignedExhibit.Hostname, overlay.PackageId.ToString());
             }
 
