@@ -14,6 +14,7 @@ namespace backend.Model
         public Exposition PlannedExposition { get; set; }
         public List<Sensor> Sensors { get; set; }
         public int? LastLoadedPackage { get; set; }
+        public string ConnectedAddress { get; set; }
         public ICollection<ExhibitTag> Tags { get; set; }
     }
 }

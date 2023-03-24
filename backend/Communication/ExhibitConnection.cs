@@ -41,6 +41,7 @@ namespace backend.Communication
 
         public string ConnectionId { get; private set; }
         public string ExhibitType { get; private set; }
+        public string NetworkAddress => _beaconSource.Address.ToString();
 
 
         public bool IsCompatible { get; private set; }

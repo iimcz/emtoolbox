@@ -95,6 +95,7 @@ namespace backend.Controllers
             List<ExhibitProperties> exhibits = await _dbContext.Exhibits.Include(ex => ex.Sensors).Include(ex => ex.Tags).Select(ex => new ExhibitProperties
             {
                 Hostname = ex.Hostname,
+                NetworkAddress = ex.ConnectedAddress,
                 DeviceType = ex.DeviceType,
                 Sensors = ex.Sensors.Select(s => new SensorProperties
                 {
@@ -118,6 +119,7 @@ namespace backend.Controllers
             return Ok(new ExhibitProperties()
             {
                 Hostname = exhibit.Hostname,
+                NetworkAddress = exhibit.ConnectedAddress,
                 DeviceType = exhibit.DeviceType,
                 Sensors = exhibit.Sensors.Select(s => new SensorProperties
                 {
