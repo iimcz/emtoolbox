@@ -13,7 +13,7 @@
     </div>
     <div class="flex-1">
         <app-package-graph #graphComponent [expositionId]="this.expositionId"
-            (onDeviceSelected)="selectExhibit($event)"></app-package-graph>
+            (onDeviceSelected)="selectExhibit($event)" (onDeviceDeleted)="deleteExhibit($event)"></app-package-graph>
     </div>
     <div class="flex-25p">
         <div class="flex-col">

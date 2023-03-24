@@ -6,7 +6,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { ExpositionDetailComponent } from '../exposition/exposition-detail/exposition-detail.component';
-import { PackageGraphComponent } from '../exposition/package-graph/package-graph.component';
+import { DeviceRemovedArgs, PackageGraphComponent } from '../exposition/package-graph/package-graph.component';
 import { CheckedEvent } from '../inventory/device-list/device-list.component';
 import { SensorSelectionDialogComponent } from '../inventory/dialogs/sensor-selection-dialog/sensor-selection-dialog.component';
 import { Convert, Settings, Sync } from '../model/package';
@@ -79,7 +79,7 @@ export class ExpositionEditorComponent implements OnInit {
         if (overlay.sync) {
           sync = Convert.toSync(overlay.sync);
         }
-        sync.relayAddress = syncMaster.hostname;
+        sync.relayAddress = syncMaster.networkAddress;
         overlay.sync = Convert.syncToJson(sync);
 
         updates.push(this.expositionClient.setPackageOverlay(this.expositionId, overlay.id, overlay));
@@ -140,7 +140,9 @@ export class ExpositionEditorComponent implements OnInit {
           overlays => {
             overlays.map(ov => {
               this.graph.addPackageOverlay(ov.exhibitHostname, pkg, ov);
-            })
+            });
+            // Refresh selected exhibits
+            this.selectExhibit(this.selectedExhibits);
           }
         );
       }
@@ -171,6 +173,12 @@ export class ExpositionEditorComponent implements OnInit {
     } else {
       this.selectedOverlays = null;
       this.selectedPackages = null;
+    }
+  }
+
+  deleteExhibit(event: DeviceRemovedArgs) {
+    if (this.selectedExhibits.includes(event.devices[0])) {
+      this.selectedExhibits = null;
     }
   }
 
