@@ -1504,6 +1504,7 @@ export class PackageClient {
 
 export class ExhibitProperties implements IExhibitProperties {
     hostname?: string | undefined;
+    networkAddress?: string | undefined;
     deviceType?: string | undefined;
     tags?: string[] | undefined;
     sensors?: SensorProperties[] | undefined;
@@ -1520,6 +1521,7 @@ export class ExhibitProperties implements IExhibitProperties {
     init(_data?: any) {
         if (_data) {
             this.hostname = _data["hostname"];
+            this.networkAddress = _data["networkAddress"];
             this.deviceType = _data["deviceType"];
             if (Array.isArray(_data["tags"])) {
                 this.tags = [] as any;
@@ -1544,6 +1546,7 @@ export class ExhibitProperties implements IExhibitProperties {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["hostname"] = this.hostname;
+        data["networkAddress"] = this.networkAddress;
         data["deviceType"] = this.deviceType;
         if (Array.isArray(this.tags)) {
             data["tags"] = [];
@@ -1561,6 +1564,7 @@ export class ExhibitProperties implements IExhibitProperties {
 
 export interface IExhibitProperties {
     hostname?: string | undefined;
+    networkAddress?: string | undefined;
     deviceType?: string | undefined;
     tags?: string[] | undefined;
     sensors?: SensorProperties[] | undefined;

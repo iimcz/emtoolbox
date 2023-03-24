@@ -903,6 +903,10 @@
             "type": "string",
             "nullable": true
           },
+          "networkAddress": {
+            "type": "string",
+            "nullable": true
+          },
           "deviceType": {
             "type": "string",
             "nullable": true
