@@ -164,23 +164,22 @@ namespace backend.Communication
 
             if (_connections.ContainsKey(device.ConnectionId))
             {
-                _logger.LogWarning("Received beacon identified as already connected device. Ignoring...");
+                _logger.LogDebug("Received beacon identified as already connected device. Ignoring...");
             }
             else
             {
                 _logger.LogInformation("New device beacon reveiced: {0}", device.ConnectionId);
                 _connections.TryAdd(device.ConnectionId, device);
+
+                if (isKnownExhibit(device.ConnectionId))
+                {
+                    _logger.LogInformation("Device {0} is known. Accepting connection.", device.ConnectionId);
+                    await Task.Delay(5000); // TODO: handle this better - this is a grace period for the device to gather all its sensors
+                    await AcceptPendingConnection(device.ConnectionId);
+                }
             }
             
-            if (isKnownExhibit(device.ConnectionId))
-            {
-                _logger.LogInformation("Device {0} is known. Accepting connection.", device.ConnectionId);
-                await Task.Delay(5000); // TODO: handle this better - this is a grace period for the device to gather all its sensors
-                await AcceptPendingConnection(device.ConnectionId);
-            }
-
             OnIncomingConnectionEvent?.Invoke();
-
             _beaconListener.BeginReceive(BeaconListenerCallback, null);
         }
 
@@ -250,6 +249,9 @@ namespace backend.Communication
                             exhibit.Sensors.Clear();
                             exhibit.Sensors.AddRange(sensors);
                         }
+
+                        // Save last connected address
+                        exhibit.ConnectedAddress = sender.NetworkAddress;
 
                         dbContext.SaveChanges();
                     }
